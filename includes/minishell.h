@@ -6,22 +6,36 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/06/08 16:13:35 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/06/14 16:39:30 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <fcntl.h>
+/******************************************************************************/
+/*								Includes  									  */
+/******************************************************************************/
+
 # include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <string.h>
-# include <sys/wait.h>
 # include <errno.h>
+# include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <signal.h>
+# include <limits.h>
+# include <fcntl.h>
+# include <sys/stat.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 # include "../libft/includes/libft.h"
+
+/******************************************************************************/
+/*								Structs 									  */
+/******************************************************************************/
 
 typedef struct s_data
 {
@@ -38,5 +52,9 @@ typedef struct s_data
 	char	**cmd_options;
 	char	*cmd_path;
 }			t_data;
+
+/******************************************************************************/
+/*								Functions									  */
+/******************************************************************************/
 
 #endif

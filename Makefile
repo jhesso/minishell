@@ -6,12 +6,13 @@
 #    By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 16:12:22 by jhesso            #+#    #+#              #
-#    Updated: 2023/06/08 16:12:22 by jhesso           ###   ########.fr        #
+#    Updated: 2023/06/14 16:46:46 by jhesso           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 CFLAGS		=	-Wall -Wextra -Werror
+READLINE	=	-lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
 LIBFT		=	libft.a
 LIBFT_DIR	=	libft/
 SRC_PATH	=	src/
@@ -41,7 +42,7 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 
 $(NAME): $(OBJS) libft
 	@echo "$(BLUE)Compiling $(NAME)$(RESET)"
-	@cc $(CFLAGS) $(OBJS) -o $(NAME) -L$(LIBFT_DIR) -lft
+	@cc $(CFLAGS) $(OBJS) -o $(NAME) -L$(LIBFT_DIR) -lft $(READLINE)
 	@echo "$(GREEN)done$(RESET)"
 
 clean:
