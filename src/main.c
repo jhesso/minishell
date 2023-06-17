@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/06/14 17:37:20 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/06/17 12:58:15 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	minishell(void)
 
 	while (1)
 	{
-		command_line = readline("minishell >");
+		command_line = readline(BLUE_BOLD "minishell >" RESET_COLOR);
 		if (!ft_strncmp(command_line, "exit", 4))
 			exit(EXIT_SUCCESS);
 		ft_putendl_fd(command_line, STDOUT_FILENO);
