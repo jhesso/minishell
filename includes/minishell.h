@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/06/14 16:39:30 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/06/18 15:35:39 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,19 @@ typedef struct s_data
 	int		*pids;
 	char	**cmd_options;
 	char	*cmd_path;
-}			t_data;
+}			t_data;    //comment for jhesso: Lets delete this type of data and only add this
+					//when we need so we dont have unnecessary things in the end!
 
 /******************************************************************************/
 /*								Functions									  */
 /******************************************************************************/
+
+/* Lexing */
+typedef struct s_lexer
+{
+	char	**tokens;
+}			t_lexer;
+
+void	lexing(char *command_line, t_lexer *tokens);
 
 #endif
