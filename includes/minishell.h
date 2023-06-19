@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/06/19 16:45:41 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/06/19 17:47:28 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define RESET_COLOR	"\033[0m"    //reset color! Might delete it in the end, or change the location!
 # define BLUE_BOLD   	"\033[0;34m" //color! Might delete it in the end, or change the location!
-# define PROMPT			"BLUE_BOLD minishell$ RESET_COLOR"
+# define PROMPT			"BLUE_BOLD minishell$ RESET_COLOR" // I dont think this works as I wanted it to
 
 /******************************************************************************/
 /*								Includes  									  */
