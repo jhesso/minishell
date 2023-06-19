@@ -6,12 +6,15 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/06/18 15:35:39 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/06/19 15:26:56 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# define RESET_COLOR	"\033[0m"    //reset color! Might delete it in the end, or change the location!
+# define BLUE_BOLD   	"\033[0;34m" //color! Might delete it in the end, or change the location!
 
 /******************************************************************************/
 /*								Includes  									  */
@@ -37,33 +40,16 @@
 /*								Structs 									  */
 /******************************************************************************/
 
-typedef struct s_data
+typedef struct s_lexer
 {
-	char	**envp;
-	char	**av;
-	int		ac;
-	int		heredoc;
-	int		fd_in;
-	int		fd_out;
-	int		*pipe;
-	int		nbr_cmd;
-	int		child;
-	int		*pids;
-	char	**cmd_options;
-	char	*cmd_path;
-}			t_data;    //comment for jhesso: Lets delete this type of data and only add this
-					//when we need so we dont have unnecessary things in the end!
+	char	**tokens;
+}			t_lexer;
 
 /******************************************************************************/
 /*								Functions									  */
 /******************************************************************************/
 
 /* Lexing */
-typedef struct s_lexer
-{
-	char	**tokens;
-}			t_lexer;
-
 void	lexing(char *command_line, t_lexer *tokens);
 
 #endif
