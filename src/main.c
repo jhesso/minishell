@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/06/19 17:46:43 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/06/19 17:59:30 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	minishell(void)
 	t_lexer	tokens; //dgerguri: will save the **arr of tokens.
 	//I initialized here, to make it easier to be used from parsing and further steps!
 
+	using_history();
 	while (1)
 	{
 		command_line = readline(BLUE_BOLD "minishell$ " RESET_COLOR);
@@ -43,6 +44,8 @@ int	main(int ac, char **av, char **envp)
 	// init structs
 	minishell();
 	//exit shell
-	rl_clear_history(); // this needs to be moved to our exit routine once we have one
+	//! seems that clear_history() is not allowed in the subject but checking the
+	//! readline/history.h there is no function called rl_clear_history which is allowed in the subject
+	clear_history(); // this needs to be moved to our exit routine once we have one
 	return (0);
 }
