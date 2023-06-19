@@ -6,11 +6,41 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 15:46:22 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/06/19 15:06:05 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/06/19 18:36:51 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	get_words_with_characters(char const *s, char c, int amount)
+{
+	int	i;
+	int flag;
+
+	i = 0;
+	flag = 0;
+	while(s[i]!= '\0')
+	{
+		if (ft_strrchr("|;><", s[i]))
+		{
+			if (i == 0 && s[i + 1] == c)
+			{
+				amount = amount + 0;
+				flag = 1;
+			}
+			if (s[i - 1] == c)
+				amount = amount + 0;
+			if (s[i + 1] != c && s[i - 1] != '\0' && s[i - 1] != c)
+				amount = amount + 1;
+			if (s[i + 1] != '\0' && s[i + 1] == c && s[i - 1] != '\0' && s[i - 1] == c)
+				amount = amount + 0;
+			else if (!ft_strrchr("|;><", s[i + 1]) && flag == 0)
+				amount++;
+		}
+		i++;
+	}
+	return (amount);
+}
 
 static int	get_amount_of_words(char const *s, char c)
 {
@@ -29,20 +59,7 @@ static int	get_amount_of_words(char const *s, char c)
 		}
 		i++;
 	}
-	i = 0;
-	while(s[i]!= '\0')
-	{
-		if (ft_strrchr("|;><", s[i]))
-		{
-			if (s[i + 1] != '\0' && s[i + 1] != c && s[i - 1] != '\0' && s[i - 1] != c && !ft_strrchr("|;><", s[i + 1]))
-				amount = amount + 2;
-			if (s[i + 1] != '\0' && s[i + 1] == c && s[i - 1] != '\0' && s[i - 1] == c)
-				amount = amount + 0;
-			else
-				amount++;
-		}
-		i++;
-	}
+	amount = get_words_with_characters(s, c, amount);
 	return (amount);
 }
 
@@ -82,12 +99,6 @@ static char	**free_allocated_strings(char **ret, int row)
 	return (NULL);
 }
 
-/*	ft_split()
-*	splits given string s based on the delimiter char c into a 2d array of
-*	strings
-*	returns said 2d arr of strings or NULL if failed
-*	the caller is required to handle freeing the array after done using
-*/
 char	**ft_split_(char const *s, char c)
 {
 	char			**ret;
