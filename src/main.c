@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/06/19 16:33:49 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/06/19 16:45:50 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	minishell(void)
 
 	while (1)
 	{
-		command_line = readline(BLUE_BOLD "minishell$ " RESET_COLOR);
+		command_line = readline(PROMPT);
 		if (!ft_strncmp(command_line, "exit", 4))
 			exit(EXIT_SUCCESS);
 		ft_putendl_fd(command_line, STDOUT_FILENO);

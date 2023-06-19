@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/06/19 15:26:56 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/06/19 16:45:41 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # define RESET_COLOR	"\033[0m"    //reset color! Might delete it in the end, or change the location!
 # define BLUE_BOLD   	"\033[0;34m" //color! Might delete it in the end, or change the location!
+# define PROMPT			"BLUE_BOLD minishell$ RESET_COLOR"
 
 /******************************************************************************/
 /*								Includes  									  */
