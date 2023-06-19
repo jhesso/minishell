@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/06/19 16:45:50 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/06/19 17:44:32 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	minishell(void)
 		command_line = readline(PROMPT);
 		if (!ft_strncmp(command_line, "exit", 4))
 			exit(EXIT_SUCCESS);
+		if (command_line && *command_line) // check that command_line is not just an empty line
+			add_history(command_line); // from what I understand, this adds the line to history but only for this session
 		ft_putendl_fd(command_line, STDOUT_FILENO);
 		lexing(command_line, &tokens);
 		free (command_line);
@@ -41,5 +43,6 @@ int	main(int ac, char **av, char **envp)
 	// init structs
 	minishell();
 	//exit shell
+	rl_clear_history(); // this needs to be moved to our exit routine once we have one
 	return (0);
 }
