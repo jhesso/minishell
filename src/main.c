@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/06/19 15:27:06 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/06/19 16:33:49 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 void	minishell(void)
 {
 	char	*command_line;
-	t_lexer	tokens; //dgerguri: will savve the **arr of tokens.
-	//I initialized here, to make it easier to bbe used from parsing and further steps!
+	t_lexer	tokens; //dgerguri: will save the **arr of tokens.
+	//I initialized here, to make it easier to be used from parsing and further steps!
 
 	while (1)
 	{
