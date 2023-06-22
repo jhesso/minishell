@@ -6,18 +6,18 @@
 #    By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 16:12:22 by jhesso            #+#    #+#              #
-#    Updated: 2023/06/18 15:41:46 by dgerguri         ###   ########.fr        #
+#    Updated: 2023/06/22 15:09:40 by dgerguri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra -Werror -fsanitize=address
 READLINE	=	-lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
 LIBFT		=	libft.a
 LIBFT_DIR	=	libft/
 SRC_PATH	=	src/
 OBJ_PATH	=	obj/
-SRC			=	main.c lexing.c
+SRC			=	main.c lexing.c lexing_utils.c
 SRCS		=	$(addprefix $(SRC_PATH), $(SRC))
 OBJ			=	$(SRC:.c=.o)
 OBJS		=	$(addprefix $(OBJ_PATH), $(OBJ))

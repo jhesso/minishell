@@ -6,38 +6,66 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 15:46:22 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/06/19 18:36:51 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/06/22 18:25:31 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static int quotes(char const *s, int i)
+{
+	char	c;
+
+	c = s[i];
+	i += 1;
+	while (s[i] && s[i] != c)
+		i++;
+	return (i);
+}
+
 static int	get_words_with_characters(char const *s, char c, int amount)
 {
 	int	i;
-	int flag;
 
 	i = 0;
-	flag = 0;
-	while(s[i]!= '\0')
+	if (s[i] && ft_strrchr("|><", s[i]))
 	{
-		if (ft_strrchr("|;><", s[i]))
-		{
-			if (i == 0 && s[i + 1] == c)
-			{
-				amount = amount + 0;
-				flag = 1;
-			}
-			if (s[i - 1] == c)
-				amount = amount + 0;
-			if (s[i + 1] != c && s[i - 1] != '\0' && s[i - 1] != c)
-				amount = amount + 1;
-			if (s[i + 1] != '\0' && s[i + 1] == c && s[i - 1] != '\0' && s[i - 1] == c)
-				amount = amount + 0;
-			else if (!ft_strrchr("|;><", s[i + 1]) && flag == 0)
-				amount++;
-		}
 		i++;
+		while (s[i] && s[i] == s[i - 1])
+			i++;
+	}
+	else if (s[i] && ft_strrchr("\'\"", s[i]))
+	{
+		i = quotes(s, i);
+		i++;
+	}
+	else if (s[i] && !ft_strrchr("|><", s[i]) && s[i] != c)
+		while (s[i] && !ft_strrchr("|><", s[i]) && s[i] != c)
+			i++;
+	while (s[i])
+	{
+		if (s[i] && s[i] != c && !ft_strrchr("|><", s[i]) && !ft_strrchr("\'\"", s[i]))
+		{
+			if (s[i] && s[i - 1] != c && !ft_strrchr("\'\"", s[i - 1]))
+				amount++;
+			while (s[i] && s[i] != c && !ft_strrchr("|><", s[i]))
+				i++;
+		}
+		if (s[i] == c)
+			i++;
+		if (s[i] && ft_strrchr("|><", s[i]))
+		{
+			if (s[i - 1] != c)
+				amount++;
+			i++;
+			while (s[i] && s[i] == s[i - 1])
+				i++;
+		}
+		if (s[i] && ft_strrchr("\'\"", s[i]))
+		{
+			i = quotes(s, i);
+			i++;
+		}
 	}
 	return (amount);
 }
@@ -49,12 +77,14 @@ static int	get_amount_of_words(char const *s, char c)
 
 	amount = 0;
 	i = 0;
-	while (s[i] != '\0')
+	while (s[i])
 	{
-		if (s[i] != c)
+		if (s[i] && s[i] != c)
 		{
 			amount++;
-			while (s[i] != c && s[i + 1] != '\0')
+			if (s[i] && ft_strrchr("\'\"", s[i]))
+				i = quotes(s, i);
+			while (s[i] && s[i] != c && s[i + 1] != '\0' && !ft_strrchr("\'\"", s[i]) && !ft_strrchr("\'\"", s[i + 1]))
 				i++;
 		}
 		i++;
@@ -62,6 +92,7 @@ static int	get_amount_of_words(char const *s, char c)
 	amount = get_words_with_characters(s, c, amount);
 	return (amount);
 }
+
 
 static	int	get_word_len(char const *s, char c, int start)
 {
@@ -72,21 +103,25 @@ static	int	get_word_len(char const *s, char c, int start)
 	while (s[i] == c)
 		i++;
 	len = 0;
-	while (s[i] != '\0' && s[i] != c)
+	if (s[i] && ft_strrchr("\'\"", s[i]))
 	{
-		i++;
-		len++;
+		len = i;
+		i = quotes(s, i);
+		len = i - len + 1;
 	}
-	i = start;
-	while (s[i] == c)
-		i++;
-	len = 0;
-	if (ft_strrchr("|;><", s[i]))
-		return (1);
-	while(s[i]!= '\0' && s[i] != c && !ft_strrchr("|;><", s[i]))
+	else if (s[i] && s[i] != c && !ft_strrchr("|><", s[i]))
 	{
-		i++;
+		while (s[i] && s[i] != c && !ft_strrchr("|><\"\'", s[i++]))
+			len++;
+	}
+	else if (s[i] && s[i] != c && ft_strrchr("|><", s[i++]))
+	{
 		len++;
+		while (s[i] && s[i] == s[i - 1])
+		{
+				len++;
+				i++;
+		}
 	}
 	return (len);
 }
@@ -128,11 +163,9 @@ char	**ft_split_(char const *s, char c)
 	return (ret);
 }
 
-
-
-
 void	lexing(char *command_line, t_lexer *tokens)
 {
+	check_quotes(command_line, tokens);
 	tokens->tokens = ft_split_(command_line, ' ');
 	int i = 0;
 	while (tokens->tokens[i] != NULL)
