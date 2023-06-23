@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 15:46:22 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/06/22 18:25:31 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/06/23 15:41:40 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ static int	get_words_with_characters(char const *s, char c, int amount)
 		i = quotes(s, i);
 		i++;
 	}
-	else if (s[i] && !ft_strrchr("|><", s[i]) && s[i] != c)
-		while (s[i] && !ft_strrchr("|><", s[i]) && s[i] != c)
+	else if (s[i] && !ft_strrchr("|><", s[i]) && s[i] != c && !ft_strrchr("\"\'", s[i]))
+		while (s[i] && !ft_strrchr("|><", s[i]) && s[i] != c && !ft_strrchr("\"\'", s[i]))
 			i++;
+	// printf("Amount: %d %d %c\n", amount, i, s[i]);
 	while (s[i])
 	{
 		if (s[i] && s[i] != c && !ft_strrchr("|><", s[i]) && !ft_strrchr("\'\"", s[i]))
