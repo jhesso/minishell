@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/06/21 21:52:24 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/06/23 17:40:27 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,16 @@ typedef struct s_lexer
 	int		double_quote; //if we dont need later we can delete and create variables inside the function check_quotes!
 	int		single_quote; //if we dont need later we can delete and create variables inside the function check_quotes!
 }			t_lexer;
+
+typedef struct			s_commands
+{
+	char				*command;
+	char				**options; // options for the command
+	char				**input; // input redirections (filenames)
+	char				**output; // output redirections (filenames)
+	char				*heredoc_delim; // heredoc delimiter word
+	struct s_commands	*next;
+}						t_commands;
 
 /******************************************************************************/
 /*								Functions									  */
