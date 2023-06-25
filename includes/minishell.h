@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/06/23 17:40:27 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/06/25 19:49:36 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 /*								Structs 									  */
 /******************************************************************************/
 
-typedef struct s_lexer
+typedef struct s_lexer // this doesnt have to be a struct it can also be a variable inside the funciton!
 {
 	char	**tokens;
 	int		double_quote; //if we dont need later we can delete and create variables inside the function check_quotes!
@@ -65,7 +65,13 @@ typedef struct			s_commands
 /* lexing */
 void	lexing(char *command_line, t_lexer *tokens);
 
+/* split_cmd */
+char	**split_to_tokens(char const *s, char c);
+
 /* lexing_utils */
-void	check_quotes(char *command_line, t_lexer *tokens);
+void	quote_checker(char *command_line, t_lexer *tokens);
+
+/* syntax check */
+void	syntax_checker(char **tokens);
 
 #endif
