@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 15:46:22 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/06/25 19:50:30 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/06/29 17:13:15 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// static int	count_redirections(char **tokens, int)
+
+// t_commands	*command_type(char **tokens)
+// {
+// 	int array;
+// 	int i;
+
+// 	array = 0;
+// 	i = 0;
+// 	while (tokens[array])
+// 	{
+// 		if (ft_strrchr("<", tokens[array][i]))
+// 	}
+// }
 
 void	lexing(char *command_line, t_lexer *tokens)
 {
