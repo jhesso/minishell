@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexing.c                                           :+:      :+:    :+:   */
+/*   split_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/17 15:46:22 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/06/23 15:41:40 by dgerguri         ###   ########.fr       */
+/*   Created: 2023/06/25 19:28:05 by dgerguri          #+#    #+#             */
+/*   Updated: 2023/06/25 19:38:14 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static int	get_words_with_characters(char const *s, char c, int amount)
 	else if (s[i] && !ft_strrchr("|><", s[i]) && s[i] != c && !ft_strrchr("\"\'", s[i]))
 		while (s[i] && !ft_strrchr("|><", s[i]) && s[i] != c && !ft_strrchr("\"\'", s[i]))
 			i++;
-	// printf("Amount: %d %d %c\n", amount, i, s[i]);
 	while (s[i])
 	{
 		if (s[i] && s[i] != c && !ft_strrchr("|><", s[i]) && !ft_strrchr("\'\"", s[i]))
@@ -85,7 +84,8 @@ static int	get_amount_of_words(char const *s, char c)
 			amount++;
 			if (s[i] && ft_strrchr("\'\"", s[i]))
 				i = quotes(s, i);
-			while (s[i] && s[i] != c && s[i + 1] != '\0' && !ft_strrchr("\'\"", s[i]) && !ft_strrchr("\'\"", s[i + 1]))
+			while (s[i] && s[i] != c && s[i + 1] != '\0'
+				&& !ft_strrchr("\'\"", s[i]) && !ft_strrchr("\'\"", s[i + 1]))
 				i++;
 		}
 		i++;
@@ -127,6 +127,7 @@ static	int	get_word_len(char const *s, char c, int start)
 	return (len);
 }
 
+/* We should put this into another file and make a free array function that can be use often!!!*/
 static char	**free_allocated_strings(char **ret, int row)
 {
 	while (row >= 0)
@@ -135,7 +136,7 @@ static char	**free_allocated_strings(char **ret, int row)
 	return (NULL);
 }
 
-char	**ft_split_(char const *s, char c)
+char	**split_to_tokens(char const *s, char c)
 {
 	char			**ret;
 	unsigned int	i;
@@ -162,16 +163,4 @@ char	**ft_split_(char const *s, char c)
 	}
 	ret[row] = NULL;
 	return (ret);
-}
-
-void	lexing(char *command_line, t_lexer *tokens)
-{
-	check_quotes(command_line, tokens);
-	tokens->tokens = ft_split_(command_line, ' ');
-	int i = 0;
-	while (tokens->tokens[i] != NULL)
-	{
-		printf("%s\n", tokens->tokens[i]);
-		i++;
-	}
 }
