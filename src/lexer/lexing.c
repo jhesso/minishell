@@ -3,27 +3,85 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 15:46:22 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/06/29 17:13:15 by dardangergu      ###   ########.fr       */
+/*   Updated: 2023/07/04 20:36:46 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static int	count_redirections(char **tokens, int)
+// static int	count_redirections(char **tokens, int start, char c, int type)
+// {
+// 	int i;
+// 	int	amount;
+
+// 	i = 0;
+// 	amount = 0;
+// 	while (tokens[start] && tokens[start][i] != '|' && type == 1)
+// 	{
+// 		if (tokens[start][i] == c && ft_strlen(tokens[start][i]) == 1);
+// 			amount++;
+// 		i++;
+// 	}
+// 	while (tokens[start] && tokens[start][i] != '|' && type == 2)
+// 	{
+// 		if (tokens[start][i] == c && ft_strlen(tokens[start][i]) == 2);
+// 			amount++;
+// 		i++;
+// 	}
+// 	return (amount);
+// }
+// // void	allocation(t_commands *commands, int amount)
+// // {
+// // 	 = malloc(sizeof(char *) * (word_count + 1));
+// // 	if (ret == NULL)
+// // 		return (NULL);
+// // }
+// int	mem_allocation(t_commands *commands, char **tokens, int start)
+// {
+// 	int	re_input;
+// 	int	re_output;
+// 	int	here_doc;
+// 	int	re_output_append;
+
+// 	while (tokens[start])
+// 	{
+// 		re_input = count_redirections(tokens, start, '<', 1);
+// 		commands->input = malloc(sizeof(char *) * (re_input) + 1);
+// 		if (commands->input == NULL)
+// 			return (NULL);
+// 		re_output = count_redirections(tokens, start, '<', 1);
+// 		commands->output = malloc(sizeof(char *) * (re_output) + 1);
+// 		if (commands->output == NULL)
+// 			return (NULL);
+// 		here_doc = count_redirections(tokens, start, '<', 1);
+// 		commands->heredoc_delim = malloc(sizeof(char *) * (here_doc) + 1);
+// 		if (commands->heredoc_delim == NULL)
+// 			return (NULL);
+// 	}
+// 	return(start);
+// }
 
 // t_commands	*command_type(char **tokens)
 // {
-// 	int array;
-// 	int i;
+// 	t_commands	*commands; //change the name
+// 	int			array;
+// 	int			i;
 
+// 	commands = NULL;
 // 	array = 0;
 // 	i = 0;
+
 // 	while (tokens[array])
 // 	{
-// 		if (ft_strrchr("<", tokens[array][i]))
+// 		while (tokens[array][i] != '|')
+// 		{
+// 			array = mem_allocation(commands, tokens, array); //change the name!
+// 		}
+// 		array++;
+// 		commands = commands->next;
 // 	}
 // }
 
