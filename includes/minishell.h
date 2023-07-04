@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/06/25 19:49:36 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/07/04 15:31:48 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct			s_commands
 	char				**options; // options for the command
 	char				**input; // input redirections (filenames)
 	char				**output; // output redirections (filenames)
-	char				*heredoc_delim; // heredoc delimiter word
+	char				**heredoc_delim; // heredoc delimiter word
 	struct s_commands	*next;
 }						t_commands;
 
