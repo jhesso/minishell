@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/07/04 15:31:48 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/07/05 15:22:28 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ typedef struct s_lexer // this doesnt have to be a struct it can also be a varia
 typedef struct			s_commands
 {
 	char				*command;
-	char				**options; // options for the command
-	char				**input; // input redirections (filenames)
-	char				**output; // output redirections (filenames)
-	char				**heredoc_delim; // heredoc delimiter word
+	char				**options;			// options for the command
+	char				**input;			// input redirections (filenames)
+	char				**output;			// output redirections (filenames)
+	char				**heredoc_delim;	// heredoc delimiter word
 	struct s_commands	*next;
 }						t_commands;
 
