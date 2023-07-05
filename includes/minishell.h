@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/07/04 15:31:48 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/07/05 17:03:21 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,14 @@ typedef struct			s_commands
 	char				**heredoc_delim; // heredoc delimiter word
 	struct s_commands	*next;
 }						t_commands;
+
+typedef struct		s_malloc_sizes
+{
+	int	re_input;
+	int	re_output;
+	int	here_doc;
+	int options;
+}	t_malloc_sizes;
 
 /******************************************************************************/
 /*								Functions									  */

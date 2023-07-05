@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 20:11:37 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/06/25 18:22:01 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/07/05 17:32:11 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 static void syntax_error_messages(int type, char *message)
 {
-	ft_putstr_fd("minishell: syntax error near unexpected token '", 1);
+	ft_putstr_fd("minishell: syntax error near unexpected token '", 2);
 	if (type == 1)
 	{
-		ft_putstr_fd("newline'\n", 1);
+		ft_putstr_fd("newline'\n", 2);
 	}
 	else if (type == 2)
 	{
-		ft_putstr_fd(message, 1);
-		ft_putstr_fd("'\n", 1);
+		ft_putstr_fd(message, 2);
+		ft_putstr_fd("'\n", 2);
 	}
 	// if (type == 2 || type == 1)
 	// 	error code = 258; will have to figure it out how we do this!! when we do $?
