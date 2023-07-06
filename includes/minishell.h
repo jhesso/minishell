@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/07/05 17:03:21 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/07/06 17:22:25 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,15 @@ typedef struct s_lexer // this doesnt have to be a struct it can also be a varia
 	int		single_quote; //if we dont need later we can delete and create variables inside the function check_quotes!
 }			t_lexer;
 
-typedef struct			s_commands
+typedef struct			s_tokens
 {
 	char				*command;
 	char				**options; // options for the command
 	char				**input; // input redirections (filenames)
 	char				**output; // output redirections (filenames)
 	char				**heredoc_delim; // heredoc delimiter word
-	struct s_commands	*next;
-}						t_commands;
+	struct s_tokens	*next;
+}						t_tokens;
 
 typedef struct		s_malloc_sizes
 {
@@ -71,7 +71,8 @@ typedef struct		s_malloc_sizes
 /******************************************************************************/
 
 /* lexing */
-void	lexing(char *command_line, t_lexer *tokens);
+// void	lexing(char *command_line, t_lexer *tokens);
+t_tokens	*lexing(char *command_line, t_lexer *tokens);
 
 /* split_cmd */
 char	**split_to_tokens(char const *s, char c);
