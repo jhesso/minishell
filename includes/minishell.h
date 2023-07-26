@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/07/26 15:13:20 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/07/26 20:44:28 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,20 +74,30 @@ typedef struct		s_malloc_sizes
 }	t_malloc_sizes;
 
 /******************************************************************************/
-/*								Functions									  */
+/*								   Functions								  */
 /******************************************************************************/
 
-/* lexing */
-// void	lexing(char *command_line, t_lexer *tokens);
-t_tokens	*lexing(char *command_line, t_lexer *tokens);
+/*----------------------------------Parsing-----------------------------------*/
+/* lexing.c */
+t_tokens		*lexing(char *command_line);
 
-/* split_cmd */
-char	**split_to_tokens(char const *s, char c);
+/* split_cmd.c */
+char			**split_to_tokens(char const *s, char c);
 
-/* lexing_utils */
-void	quote_checker(char *command_line, t_lexer *tokens);
+/* lexing_utils.c */
+void			quote_checker(char *command_line, t_lexer *tokens);
 
-/* syntax check */
-void	syntax_checker(char **tokens);
+/* syntax_checker.c */
+void			syntax_checker(char **tokens);
+
+/* list.c */
+t_tokens		*create_lst_tokens(char **command_line);
+
+/* lst_utils.c */
+void			malloc_error(void);
+t_malloc_sizes	init_counter(void);
+void			init_node(t_tokens **node);
+void			lst_print(t_tokens *lst_tokens);
+void			lst_add_back(t_tokens **lst_tokens, t_tokens *node);
 
 #endif

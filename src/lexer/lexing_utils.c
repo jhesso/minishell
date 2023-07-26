@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 20:11:25 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/06/25 19:27:11 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/07/26 20:22:16 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ void	quote_checker(char *command_line, t_lexer *tokens)
 			&& tokens->single_quote % 2 != 1 && tokens->double_quote % 2 != 1) // this only does it if it is outside the quotes bc if we do quotes echo it should echo it!
 		{
 			ft_putstr_fd("Minishell: Syntax Error: Semicolon, Backslash, or Bracket!\n", 1);
-			exit(1); // It shouldnt exit!!!!!//check this later and move it somwhere else! Will probably have to free stuff also!
+			exit(1); //! It shouldnt exit!!!!!//check this later and move it somwhere else! Will probably have to free stuff also!
 		}
 		i++;
 	}
 	if (tokens->double_quote % 2 != 0 || tokens->single_quote % 2 != 0)
 	{
 		ft_putstr_fd("Minishell: Syntax Error: Open Quotes!\n", 1);
-		exit(1); // It shouldnt exit!!!!!//check this later and move it somwhere else! Will probably have to free stuff also!
+		exit(1); //! It shouldnt exit!!!!!//check this later and move it somwhere else! Will probably have to free stuff also!
 	}
 }
