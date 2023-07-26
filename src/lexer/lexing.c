@@ -86,6 +86,11 @@ int	mem_allocation(t_tokens **lst_tokens, char **tokens, int start)
 	return (start);
 }
 
+/*	create_lst_tokens()
+*	Creates the t_tokens linked list containing the given command line
+*	This linked list is what we use for execution
+*	Returns the generated linked list or NULL if something went wrong
+*/
 t_tokens	*create_lst_tokens(char **command_line, int i, t_tokens **lst_tokens)
 {
 	// t_tokens	*lst_tokens; //change the name
