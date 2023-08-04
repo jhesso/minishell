@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:28:05 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/06/25 19:38:14 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/04 20:57:53 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ static int	get_words_with_characters(char const *s, char c, int amount)
 		}
 		if (s[i] && ft_strrchr("\'\"", s[i]))
 		{
+			if (ft_strrchr("|><", s[i - 1]))
+				amount++;
 			i = quotes(s, i);
 			i++;
 		}
@@ -84,8 +86,8 @@ static int	get_amount_of_words(char const *s, char c)
 			amount++;
 			if (s[i] && ft_strrchr("\'\"", s[i]))
 				i = quotes(s, i);
-			while (s[i] && s[i] != c && s[i + 1] != '\0'
-				&& !ft_strrchr("\'\"", s[i]) && !ft_strrchr("\'\"", s[i + 1]))
+			while (s[i] && s[i] != c && s[i + 1] != '\0')
+				// && !ft_strrchr("\'\"", s[i]) && !ft_strrchr("\'\"", s[i + 1]))
 				i++;
 		}
 		i++;
@@ -97,6 +99,7 @@ static int	get_amount_of_words(char const *s, char c)
 
 static	int	get_word_len(char const *s, char c, int start)
 {
+	printf("Start in length: %d\n", start);
 	int	i;
 	int	len;
 
@@ -106,9 +109,13 @@ static	int	get_word_len(char const *s, char c, int start)
 	len = 0;
 	if (s[i] && ft_strrchr("\'\"", s[i]))
 	{
-		len = i;
-		i = quotes(s, i);
-		len = i - len + 1;
+		while (s[i] && ft_strrchr("\'\"", s[i]))
+		{
+			len = i;
+			i = quotes(s, i);
+			i++;
+		}
+		len = i - 1;
 	}
 	else if (s[i] && s[i] != c && !ft_strrchr("|><", s[i]))
 	{
@@ -124,10 +131,10 @@ static	int	get_word_len(char const *s, char c, int start)
 				i++;
 		}
 	}
+	printf("Length: %d\n", len);
 	return (len);
 }
 
-/* We should put this into another file and make a free array function that can be use often!!!*/
 static char	**free_allocated_strings(char **ret, int row)
 {
 	while (row >= 0)
@@ -153,6 +160,7 @@ char	**split_to_tokens(char const *s, char c)
 	row = -1;
 	while (++row < word_count)
 	{
+		printf("Checking how many times it checks the length\n");
 		while (s[i] == c)
 			i++;
 		if (s[i] != c)
