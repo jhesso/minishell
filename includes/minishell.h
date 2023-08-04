@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/07/06 17:22:25 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/07/26 20:44:28 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # define RESET_COLOR	"\033[0m"    //reset color! Might delete it in the end, or change the location!
 # define BLUE_BOLD   	"\033[0;34m" //color! Might delete it in the end, or change the location!
-# define PROMPT			"BLUE_BOLD minishell$ RESET_COLOR" // I dont think this works as I wanted it to
 
 /******************************************************************************/
 /*								Includes  									  */
@@ -48,16 +47,24 @@ typedef struct s_lexer // this doesnt have to be a struct it can also be a varia
 	int		single_quote; //if we dont need later we can delete and create variables inside the function check_quotes!
 }			t_lexer;
 
+/*	s_tokens
+*	our linked list containing the given command line
+*	each 'node' of the list contains one command including all of it's
+*	options and redirections
+*/
 typedef struct			s_tokens
 {
 	char				*command;
 	char				**options; // options for the command
 	char				**input; // input redirections (filenames)
 	char				**output; // output redirections (filenames)
-	char				**heredoc_delim; // heredoc delimiter word
-	struct s_tokens	*next;
+	char				**heredoc_delim; // heredoc delimiter word(s)
+	struct s_tokens		*next;
 }						t_tokens;
 
+/*	s_malloc_sizes
+*	used to calculate and allocate the amount of memory needed for our tokens
+*/
 typedef struct		s_malloc_sizes
 {
 	int	re_input;
@@ -67,20 +74,30 @@ typedef struct		s_malloc_sizes
 }	t_malloc_sizes;
 
 /******************************************************************************/
-/*								Functions									  */
+/*								   Functions								  */
 /******************************************************************************/
 
-/* lexing */
-// void	lexing(char *command_line, t_lexer *tokens);
-t_tokens	*lexing(char *command_line, t_lexer *tokens);
+/*----------------------------------Parsing-----------------------------------*/
+/* lexing.c */
+t_tokens		*lexing(char *command_line);
 
-/* split_cmd */
-char	**split_to_tokens(char const *s, char c);
+/* split_cmd.c */
+char			**split_to_tokens(char const *s, char c);
 
-/* lexing_utils */
-void	quote_checker(char *command_line, t_lexer *tokens);
+/* lexing_utils.c */
+void			quote_checker(char *command_line, t_lexer *tokens);
 
-/* syntax check */
-void	syntax_checker(char **tokens);
+/* syntax_checker.c */
+void			syntax_checker(char **tokens);
+
+/* list.c */
+t_tokens		*create_lst_tokens(char **command_line);
+
+/* lst_utils.c */
+void			malloc_error(void);
+t_malloc_sizes	init_counter(void);
+void			init_node(t_tokens **node);
+void			lst_print(t_tokens *lst_tokens);
+void			lst_add_back(t_tokens **lst_tokens, t_tokens *node);
 
 #endif

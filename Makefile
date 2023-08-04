@@ -3,21 +3,23 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+         #
+#    By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 16:12:22 by jhesso            #+#    #+#              #
-#    Updated: 2023/07/03 16:01:13 by dardangergu      ###   ########.fr        #
+#    Updated: 2023/07/26 20:45:56 by jhesso           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
-CFLAGS		=	-Wall -Wextra -fsanitize=address#-Werror -fsanitize=address
+CFLAGS		=	-Wall -Wextra -Werror -fsanitize=address -g
 READLINE	=	-lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
 LIBFT		=	libft.a
 LIBFT_DIR	=	libft/
 SRC_PATH	=	src/
 OBJ_PATH	=	obj/
-SRC			=	main.c lexer/lexing.c lexer/lexing_utils.c lexer/syntax_checker.c lexer/split_cmd.c
+SRC			=	main.c \
+				lexer/lexing.c lexer/lexing_utils.c lexer/syntax_checker.c lexer/split_cmd.c \
+				lexer/list/list.c lexer/list/lst_utils.c
 SRCS		=	$(addprefix $(SRC_PATH), $(SRC))
 OBJ			=	$(SRC:.c=.o)
 OBJS		=	$(addprefix $(OBJ_PATH), $(OBJ))
@@ -37,6 +39,7 @@ $(LIBFT):
 $(OBJ_PATH):
 	@mkdir $(OBJ_PATH)
 	@mkdir $(OBJ_PATH)/lexer
+	@mkdir $(OBJ_PATH)/lexer/list
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@cc $(CFLAGS) -c $< -o $@ $(INCS)
