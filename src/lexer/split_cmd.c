@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:28:05 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/05 15:14:08 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/05 17:48:09 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	get_words_with_characters(char const *s, char c, int amount)
 		{
 			if (s[i] && s[i - 1] != c && !ft_strrchr("\'\"", s[i - 1]))
 				amount++;
-			while (s[i] && s[i] != c && !ft_strrchr("|><", s[i]))
+			while (s[i] && s[i] != c && !ft_strrchr("\"\'|><", s[i]))
 				i++;
 		}
 		if (s[i] == c)
@@ -99,32 +99,37 @@ static int	get_amount_of_words(char const *s, char c)
 static	int	get_word_len(char const *s, char c, int start)
 {
 	int	len;
+	int	i;
 
 	len = 0;
-	while (s[start] == c)
-		start++;
-	printf("Word length beginning:%d: Char:%c:\n", len, s[start]);
-	if (s[start] && s[start] != c && !ft_strrchr("|><", s[start]))
+	i = start;
+	while (s[i] == c)
+		i++;
+	if (s[i] && s[i] != c && !ft_strrchr("|><", s[i]))
 	{
-		while (s[start] && ft_strrchr("\'\"", s[start]) && s[start] != c && !ft_strrchr("|><", s[start]))
+		while (s[i] && s[i] != c && !ft_strrchr("|><", s[i]))
 		{
-			start = quotes(s, start) + 1;
-			printf("after quote char:%d:%c:\n", start, s[start]);
-			len = start;
+			if (s[i] && ft_strrchr("\'\"", s[i]) && s[i] != c && !ft_strrchr("|><", s[i]))
+			{
+				i = quotes(s, i) + 1;
+				len = i - start;
+			}
+			while (s[i] && s[i] != c && !ft_strrchr("\'\"|><", s[i]))
+			{
+				len++;
+				i++;
+			}
 		}
-		while (s[start] && s[start] != c && !ft_strrchr("|><", s[start++]))
-			len++;
 	}
-	else if (s[start] && s[start] != c && ft_strrchr("|><", s[start++]))
+	else if (s[i] && s[i] != c && ft_strrchr("|><", s[i++]))
 	{
 		len++;
-		while (s[start] && s[start] == s[start - 1])
+		while (s[i] && s[i] == s[i - 1])
 		{
 				len++;
-				start++;
+				i++;
 		}
 	}
-	printf("Word length end:%d: Char:%c:\n", len, s[start]);
 	return (len);
 }
 
