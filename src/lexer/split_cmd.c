@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:28:05 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/04 20:57:53 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/05 15:14:08 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ static int	get_amount_of_words(char const *s, char c)
 			if (s[i] && ft_strrchr("\'\"", s[i]))
 				i = quotes(s, i);
 			while (s[i] && s[i] != c && s[i + 1] != '\0')
-				// && !ft_strrchr("\'\"", s[i]) && !ft_strrchr("\'\"", s[i + 1]))
 				i++;
 		}
 		i++;
@@ -99,39 +98,33 @@ static int	get_amount_of_words(char const *s, char c)
 
 static	int	get_word_len(char const *s, char c, int start)
 {
-	printf("Start in length: %d\n", start);
-	int	i;
 	int	len;
 
-	i = start;
-	while (s[i] == c)
-		i++;
 	len = 0;
-	if (s[i] && ft_strrchr("\'\"", s[i]))
+	while (s[start] == c)
+		start++;
+	printf("Word length beginning:%d: Char:%c:\n", len, s[start]);
+	if (s[start] && s[start] != c && !ft_strrchr("|><", s[start]))
 	{
-		while (s[i] && ft_strrchr("\'\"", s[i]))
+		while (s[start] && ft_strrchr("\'\"", s[start]) && s[start] != c && !ft_strrchr("|><", s[start]))
 		{
-			len = i;
-			i = quotes(s, i);
-			i++;
+			start = quotes(s, start) + 1;
+			printf("after quote char:%d:%c:\n", start, s[start]);
+			len = start;
 		}
-		len = i - 1;
-	}
-	else if (s[i] && s[i] != c && !ft_strrchr("|><", s[i]))
-	{
-		while (s[i] && s[i] != c && !ft_strrchr("|><\"\'", s[i++]))
+		while (s[start] && s[start] != c && !ft_strrchr("|><", s[start++]))
 			len++;
 	}
-	else if (s[i] && s[i] != c && ft_strrchr("|><", s[i++]))
+	else if (s[start] && s[start] != c && ft_strrchr("|><", s[start++]))
 	{
 		len++;
-		while (s[i] && s[i] == s[i - 1])
+		while (s[start] && s[start] == s[start - 1])
 		{
 				len++;
-				i++;
+				start++;
 		}
 	}
-	printf("Length: %d\n", len);
+	printf("Word length end:%d: Char:%c:\n", len, s[start]);
 	return (len);
 }
 
@@ -160,7 +153,6 @@ char	**split_to_tokens(char const *s, char c)
 	row = -1;
 	while (++row < word_count)
 	{
-		printf("Checking how many times it checks the length\n");
 		while (s[i] == c)
 			i++;
 		if (s[i] != c)
