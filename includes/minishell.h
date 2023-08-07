@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/07/26 20:44:28 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/07 17:26:14 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@
 /*								Structs 									  */
 /******************************************************************************/
 
-typedef struct s_lexer // this doesnt have to be a struct it can also be a variable inside the funciton!
+typedef struct s_command // this doesnt have to be a struct it can also be a variable inside the funciton!
 {
 	char	**tokens;
 	int		double_quote; //if we dont need later we can delete and create variables inside the function check_quotes!
 	int		single_quote; //if we dont need later we can delete and create variables inside the function check_quotes!
-}			t_lexer;
+}			t_command;
 
 /*	s_tokens
 *	our linked list containing the given command line
@@ -79,13 +79,13 @@ typedef struct		s_malloc_sizes
 
 /*----------------------------------Parsing-----------------------------------*/
 /* lexing.c */
-t_tokens		*lexing(char *command_line);
+t_tokens	*lexing(t_command *command, char *command_line);
 
 /* split_cmd.c */
 char			**split_to_tokens(char const *s, char c);
 
 /* lexing_utils.c */
-void			quote_checker(char *command_line, t_lexer *tokens);
+void			quote_checker(char *command_line, t_command *command);
 
 /* syntax_checker.c */
 void			syntax_checker(char **tokens);
