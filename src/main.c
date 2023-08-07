@@ -6,7 +6,7 @@
 /*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/07 17:26:36 by dardangergu      ###   ########.fr       */
+/*   Updated: 2023/08/07 19:27:09 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ int	main(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
-	(void)envp;
 	t_command	command;
 
+	init_env(&command, envp);
 	minishell(&command);
 	//exit shell
 	//! seems that clear_history() is not allowed in the subject but checking the

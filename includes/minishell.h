@@ -6,7 +6,7 @@
 /*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/07 17:26:14 by dardangergu      ###   ########.fr       */
+/*   Updated: 2023/08/07 17:37:51 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 typedef struct s_command // this doesnt have to be a struct it can also be a variable inside the funciton!
 {
 	char	**tokens;
+	char	**env;
 	int		double_quote; //if we dont need later we can delete and create variables inside the function check_quotes!
 	int		single_quote; //if we dont need later we can delete and create variables inside the function check_quotes!
 }			t_command;
@@ -99,5 +100,9 @@ t_malloc_sizes	init_counter(void);
 void			init_node(t_tokens **node);
 void			lst_print(t_tokens *lst_tokens);
 void			lst_add_back(t_tokens **lst_tokens, t_tokens *node);
+
+/*----------------------------------Builtins-----------------------------------*/
+
+void	init_env(t_command *command, char **envp);
 
 #endif
