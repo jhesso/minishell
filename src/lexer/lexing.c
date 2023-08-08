@@ -12,10 +12,8 @@
 
 #include "minishell.h"
 
-t_tokens	*lexing(t_minihell *command, char *command_line)
+void	lexing(t_minihell *command, char *command_line) //! change return type to bool if we need to return something incase of failure
 {
-	// t_tokens	*lst_tokens;
-
 	quote_checker(command_line, command);
 	command->tokens = split_to_tokens(command_line, ' ');
 	syntax_checker(command->tokens);
@@ -25,8 +23,4 @@ t_tokens	*lexing(t_minihell *command, char *command_line)
 		printf("Token:%s\n", command->tokens[i]);
 		i++;
 	}
-	// lst_tokens = create_lst_tokens(command->tokens);
-	// lst_print(lst_tokens);
-	// return (lst_tokens);
-	return (NULL); //delete this in the end!!!!
 }

@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/08 05:07:48 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/08 05:43:55 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,19 @@
 /*								Structs 									  */
 /******************************************************************************/
 
+typedef struct s_tokens	t_tokens;
+
 /*	s_minihell
 *	the 'main' struct of the project
 */
 typedef struct s_minihell
 {
-	char		**tokens;
-	char		**env;
-	int			double_quote; //? if we dont need later we can delete and create variables inside the function check_quotes!
-	int			single_quote; //? if we dont need later we can delete and create variables inside the function check_quotes!
-	s_tokens	*lst_tokens; //* ptr to our linked list containing the given command line
-}			t_minihell;
+	char			**tokens;
+	char			**env;
+	int				double_quote; //? if we dont need later we can delete and create variables inside the function check_quotes!
+	int				single_quote; //? if we dont need later we can delete and create variables inside the function check_quotes!
+	struct s_tokens	*lst_tokens; //* ptr to our linked list containing the given command line
+}					t_minihell;
 
 /*	s_tokens
 *	our linked list containing the given command line
@@ -82,9 +84,11 @@ typedef struct		s_malloc_sizes
 /*								   Functions								  */
 /******************************************************************************/
 
-/*----------------------------------Parsing-----------------------------------*/
+
+/*----------------------------------Lexing------------------------------------*/
+
 /* lexing.c */
-t_tokens	*lexing(t_minihell *command, char *command_line);
+void			lexing(t_minihell *command, char *command_line);
 
 /* split_cmd.c */
 char			**split_to_tokens(char const *s, char c);
@@ -94,6 +98,11 @@ void			quote_checker(char *command_line, t_minihell *command);
 
 /* syntax_checker.c */
 void			syntax_checker(char **tokens);
+
+/*----------------------------------Parsing-----------------------------------*/
+
+/* parsing.c */
+bool			parse(t_minihell *minihell);
 
 /* list.c */
 t_tokens		*create_lst_tokens(char **command_line);
