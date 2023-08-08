@@ -6,11 +6,15 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 05:12:42 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/08 12:50:17 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/08 12:58:13 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+bool	expand_variables(char *str, char **env);
+
+bool	remove_quotes(char *str);
 
 /*	parse()
 *	parse the saved command line and save into a linked list
