@@ -3,3 +3,6 @@ minishell
 libft.a
 example
 minishell.code-workspace
+.vscode
+libft/obj/
+obj/
