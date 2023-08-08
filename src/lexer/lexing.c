@@ -12,15 +12,15 @@
 
 #include "minishell.h"
 
-t_tokens	*lexing(char *command_line)
+void	lexing(t_minihell *command, char *command_line) //! change return type to bool if we need to return something incase of failure
 {
-	t_tokens	*lst_tokens;
-	t_lexer		tokens;
-
-	quote_checker(command_line, &tokens);
-	tokens.tokens = split_to_tokens(command_line, ' ');
-	syntax_checker(tokens.tokens);
-	lst_tokens = create_lst_tokens(tokens.tokens);
-	lst_print(lst_tokens);
-	return (lst_tokens);
+	quote_checker(command_line, command);
+	command->tokens = split_to_tokens(command_line, ' ');
+	syntax_checker(command->tokens);
+	int i = 0;
+	while (command->tokens[i] != NULL)
+	{
+		printf("Token:%s\n", command->tokens[i]);
+		i++;
+	}
 }

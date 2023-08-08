@@ -6,7 +6,7 @@
 #    By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 16:12:22 by jhesso            #+#    #+#              #
-#    Updated: 2023/07/26 20:45:56 by jhesso           ###   ########.fr        #
+#    Updated: 2023/08/08 05:42:16 by jhesso           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ SRC_PATH	=	src/
 OBJ_PATH	=	obj/
 SRC			=	main.c \
 				lexer/lexing.c lexer/lexing_utils.c lexer/syntax_checker.c lexer/split_cmd.c \
-				lexer/list/list.c lexer/list/lst_utils.c
+				parser/parsing.c parser/list/list.c parser/list/lst_utils.c \
+				builtins/env.c
 SRCS		=	$(addprefix $(SRC_PATH), $(SRC))
 OBJ			=	$(SRC:.c=.o)
 OBJS		=	$(addprefix $(OBJ_PATH), $(OBJ))
@@ -40,6 +41,9 @@ $(OBJ_PATH):
 	@mkdir $(OBJ_PATH)
 	@mkdir $(OBJ_PATH)/lexer
 	@mkdir $(OBJ_PATH)/lexer/list
+	@mkdir $(OBJ_PATH)/parser
+	@mkdir $(OBJ_PATH)/parser/list
+	@mkdir $(OBJ_PATH)/builtins
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@cc $(CFLAGS) -c $< -o $@ $(INCS)

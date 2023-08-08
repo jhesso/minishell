@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/07/26 20:44:28 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/08 13:07:19 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,19 @@
 /*								Structs 									  */
 /******************************************************************************/
 
-typedef struct s_lexer // this doesnt have to be a struct it can also be a variable inside the funciton!
+typedef struct s_tokens	t_tokens;
+
+/*	s_minihell
+*	the 'main' struct of the project
+*/
+typedef struct s_minihell
 {
-	char	**tokens;
-	int		double_quote; //if we dont need later we can delete and create variables inside the function check_quotes!
-	int		single_quote; //if we dont need later we can delete and create variables inside the function check_quotes!
-}			t_lexer;
+	char			**tokens;
+	char			**env;
+	int				double_quote; //? if we dont need later we can delete and create variables inside the function check_quotes!
+	int				single_quote; //? if we dont need later we can delete and create variables inside the function check_quotes!
+	struct s_tokens	*lst_tokens; //* ptr to our linked list containing the given command line
+}					t_minihell;
 
 /*	s_tokens
 *	our linked list containing the given command line
@@ -77,18 +84,24 @@ typedef struct		s_malloc_sizes
 /*								   Functions								  */
 /******************************************************************************/
 
-/*----------------------------------Parsing-----------------------------------*/
+/*----------------------------------Lexing------------------------------------*/
+
 /* lexing.c */
-t_tokens		*lexing(char *command_line);
+void			lexing(t_minihell *command, char *command_line);
 
 /* split_cmd.c */
 char			**split_to_tokens(char const *s, char c);
 
 /* lexing_utils.c */
-void			quote_checker(char *command_line, t_lexer *tokens);
+void			quote_checker(char *command_line, t_minihell *command);
 
 /* syntax_checker.c */
 void			syntax_checker(char **tokens);
+
+/*----------------------------------Parsing-----------------------------------*/
+
+/* parsing.c */
+bool			parse(t_minihell *minihell);
 
 /* list.c */
 t_tokens		*create_lst_tokens(char **command_line);
@@ -99,5 +112,9 @@ t_malloc_sizes	init_counter(void);
 void			init_node(t_tokens **node);
 void			lst_print(t_tokens *lst_tokens);
 void			lst_add_back(t_tokens **lst_tokens, t_tokens *node);
+
+/*----------------------------------Builtins-----------------------------------*/
+
+void	init_env(t_minihell *command, char **envp);
 
 #endif
