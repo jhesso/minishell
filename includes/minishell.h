@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/08 13:07:19 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/08 13:51:37 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,6 @@ void			lst_add_back(t_tokens **lst_tokens, t_tokens *node);
 
 /*----------------------------------Builtins-----------------------------------*/
 
-void	init_env(t_minihell *command, char **envp);
+void  init_env(t_minihell *minihell, char **envp);
 
 #endif
