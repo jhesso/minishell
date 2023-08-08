@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/07 17:37:51 by dardangergu      ###   ########.fr       */
+/*   Updated: 2023/08/08 05:07:48 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,17 @@
 /*								Structs 									  */
 /******************************************************************************/
 
-typedef struct s_command // this doesnt have to be a struct it can also be a variable inside the funciton!
+/*	s_minihell
+*	the 'main' struct of the project
+*/
+typedef struct s_minihell
 {
-	char	**tokens;
-	char	**env;
-	int		double_quote; //if we dont need later we can delete and create variables inside the function check_quotes!
-	int		single_quote; //if we dont need later we can delete and create variables inside the function check_quotes!
-}			t_command;
+	char		**tokens;
+	char		**env;
+	int			double_quote; //? if we dont need later we can delete and create variables inside the function check_quotes!
+	int			single_quote; //? if we dont need later we can delete and create variables inside the function check_quotes!
+	s_tokens	*lst_tokens; //* ptr to our linked list containing the given command line
+}			t_minihell;
 
 /*	s_tokens
 *	our linked list containing the given command line
@@ -80,13 +84,13 @@ typedef struct		s_malloc_sizes
 
 /*----------------------------------Parsing-----------------------------------*/
 /* lexing.c */
-t_tokens	*lexing(t_command *command, char *command_line);
+t_tokens	*lexing(t_minihell *command, char *command_line);
 
 /* split_cmd.c */
 char			**split_to_tokens(char const *s, char c);
 
 /* lexing_utils.c */
-void			quote_checker(char *command_line, t_command *command);
+void			quote_checker(char *command_line, t_minihell *command);
 
 /* syntax_checker.c */
 void			syntax_checker(char **tokens);
@@ -103,6 +107,6 @@ void			lst_add_back(t_tokens **lst_tokens, t_tokens *node);
 
 /*----------------------------------Builtins-----------------------------------*/
 
-void	init_env(t_command *command, char **envp);
+void	init_env(t_minihell *command, char **envp);
 
 #endif

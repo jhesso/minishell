@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/07 19:27:09 by dardangergu      ###   ########.fr       */
+/*   Updated: 2023/08/08 05:07:48 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 *	The main loop of minishell
 *	Print a prompt, read user input and send that input to parsing
 */
-void	minishell(t_command *command)
+void	minishell(t_minihell *command)
 {
 	char		*command_line;
 	t_tokens	*lst_tokens;
@@ -42,7 +42,7 @@ int	main(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
-	t_command	command;
+	t_minihell	command;
 
 	init_env(&command, envp);
 	minishell(&command);

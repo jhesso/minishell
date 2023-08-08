@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-t_tokens	*lexing(t_command *command, char *command_line)
+t_tokens	*lexing(t_minihell *command, char *command_line)
 {
 	// t_tokens	*lst_tokens;
 

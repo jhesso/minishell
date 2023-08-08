@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lexing_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 20:11:25 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/07 17:23:38 by dardangergu      ###   ########.fr       */
+/*   Updated: 2023/08/08 05:07:48 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	quote_checker(char *command_line, t_command *command)
+void	quote_checker(char *command_line, t_minihell *command)
 {
 	int	i;
 
