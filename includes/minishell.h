@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/08 13:51:37 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/09 01:59:53 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,9 @@ typedef struct			s_tokens
 {
 	char				*command;
 	char				**options; // options for the command
-	char				**input; // input redirections (filenames)
-	char				**output; // output redirections (filenames)
+	char				**in; // input redirections (filenames)
+	char				**out; // output redirections (filenames)
+	char				**out_app; // output redirections (filenames, append mode)
 	char				**heredoc_delim; // heredoc delimiter word(s)
 	struct s_tokens		*next;
 }						t_tokens;
@@ -74,8 +75,9 @@ typedef struct			s_tokens
 */
 typedef struct		s_malloc_sizes
 {
-	int	re_input;
-	int	re_output;
+	int	re_in;
+	int	re_out;
+	int re_out_app;
 	int	here_doc;
 	int options;
 }	t_malloc_sizes;
@@ -104,17 +106,18 @@ void			syntax_checker(char **tokens);
 bool			parse(t_minihell *minihell);
 
 /* list.c */
-t_tokens		*create_lst_tokens(char **command_line);
+bool			create_lst_tokens(t_minihell *minihell);
 
 /* lst_utils.c */
 void			malloc_error(void);
 t_malloc_sizes	init_counter(void);
-void			init_node(t_tokens **node);
+void			init_node(t_tokens **node, t_malloc_sizes sizes);
 void			lst_print(t_tokens *lst_tokens);
 void			lst_add_back(t_tokens **lst_tokens, t_tokens *node);
+void			print_sizes(t_malloc_sizes sizes);
 
 /*----------------------------------Builtins-----------------------------------*/
 
-void  init_env(t_minihell *minihell, char **envp);
+void  			init_env(t_minihell *minihell, char **envp);
 
 #endif

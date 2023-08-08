@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 20:13:15 by jhesso            #+#    #+#             */
-/*   Updated: 2023/07/26 20:43:58 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/09 02:04:47 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ t_malloc_sizes	init_counter(void)
 {
 	t_malloc_sizes	counter;
 
-	counter.re_input = 0;
-	counter.re_output = 0;
+	counter.re_in = 0;
+	counter.re_out = 0;
+	counter.re_out_app = 0;
 	counter.here_doc = 0;
 	counter.options = 0;
 	return (counter);
@@ -50,16 +51,30 @@ void	lst_add_back(t_tokens **lst_tokens, t_tokens *node)
 }
 
 /*	init_node()
-*	Initialize default values for the contents of a node in our tokens list
+*	Initialize the node by setting the last element of each array as NULL
+*	effectively null terminating the arrays so we dont buffer overflow later :>
 */
-void	init_node(t_tokens **node)
+void	init_node(t_tokens **node, t_malloc_sizes sizes)
 {
-	(*node)->input = NULL;
-	(*node)->output = NULL;
-	(*node)->heredoc_delim = NULL;
-	(*node)->options = NULL;
+	(*node)->in[sizes.re_in] = NULL;
+	(*node)->out[sizes.re_out] = NULL;
+	(*node)->out_app[sizes.re_out_app] = NULL;
+	(*node)->heredoc_delim[sizes.here_doc] = NULL;
+	if (sizes.options > -1)
+		(*node)->options[sizes.options] = NULL;
+	else
+		(*node)->options[0] = NULL;
 	(*node)->command = NULL;
 	(*node)->next = NULL;
+}
+
+void	print_sizes(t_malloc_sizes sizes)
+{
+	ft_printf("re_in: %d\n", sizes.re_in);
+	ft_printf("re_out: %d\n", sizes.re_out);
+	ft_printf("re_out_app: %d\n", sizes.re_out_app);
+	ft_printf("here_doc: %d\n", sizes.here_doc);
+	ft_printf("options: %d\n", sizes.options);
 }
 
 /*	lst_print()
@@ -68,42 +83,51 @@ void	init_node(t_tokens **node)
 void	lst_print(t_tokens *lst_tokens)
 {
 	int	i;
+	int	j;
 
 	i = 0;
+	j = 0;
+	ft_printf("lst_print:\n");
 	while (lst_tokens)
 	{
-		ft_printf("node %d:\n", i);
-		ft_printf("command: %s\n", lst_tokens->command);
-		ft_printf("options:\n");
+		ft_printf("node %d:\n", j);
+		ft_printf("	command: %s\n", lst_tokens->command);
+		ft_printf("	options:\n");
 		i = 0;
 		while (lst_tokens->options[i])
 		{
-			ft_printf("%s\n", lst_tokens->options[i]);
+			ft_printf("		options[%d]: %s\n", i, lst_tokens->options[i]);
 			i++;
 		}
-		ft_printf("input:\n");
+		ft_printf("	input:\n");
 		i = 0;
-		while (lst_tokens->input[i])
+		while (lst_tokens->in[i])
 		{
-			ft_printf("%s\n", lst_tokens->input[i]);
+			ft_printf("		input[%d]: %s\n", i, lst_tokens->in[i]);
 			i++;
 		}
-		ft_printf("output:\n");
+		ft_printf("	output:\n");
 		i = 0;
-		while (lst_tokens->output[i])
+		while (lst_tokens->out[i])
 		{
-			ft_printf("%s\n", lst_tokens->output[i]);
+			ft_printf("		output[%d]: %s\n", i, lst_tokens->out[i]);
 			i++;
 		}
-		ft_printf("heredoc_delim:\n");
+		ft_printf("	output_append:\n");
+		i = 0;
+		while (lst_tokens->out_app[i])
+		{
+			ft_printf("		output_append[%d]: %s\n", i, lst_tokens->out_app[i]);
+			i++;
+		}
+		ft_printf("	heredoc_delim:\n");
 		i = 0;
 		while (lst_tokens->heredoc_delim[i])
 		{
-			ft_printf("%s\n", lst_tokens->heredoc_delim[i]);
+			ft_printf("		heredoc_delim[%d]: %s\n", i, lst_tokens->heredoc_delim[i]);
 			i++;
 		}
-		ft_printf("\n");
 		lst_tokens = lst_tokens->next;
-		i++;
+		j++;
 	}
 }

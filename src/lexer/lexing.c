@@ -17,10 +17,5 @@ void	lexing(t_minihell *command, char *command_line) //! change return type to b
 	quote_checker(command_line, command);
 	command->tokens = split_to_tokens(command_line, ' ');
 	syntax_checker(command->tokens);
-	int i = 0;
-	while (command->tokens[i] != NULL)
-	{
-		printf("Token:%s\n", command->tokens[i]);
-		i++;
-	}
+	// print_string_arr(command->tokens); //* this does the same thing as the previous while loop (inisde my libft)
 }
