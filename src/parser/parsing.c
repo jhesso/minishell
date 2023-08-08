@@ -6,15 +6,31 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 05:12:42 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/08 12:58:13 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/08 14:44:50 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	expand_variables(char *str, char **env);
+bool	expand_variables(char *str, char **env)
+{
+	(void)str;
+	(void)env;
+	return (true);
+}
 
-bool	remove_quotes(char *str);
+bool	remove_quotes(char *str)
+{
+	(void)str;
+	return (true);
+}
+
+bool	append_path(t_tokens *lst_tokens, char **env)
+{
+	(void)lst_tokens;
+	(void)env;
+	return (true);
+}
 
 /*	parse()
 *	parse the saved command line and save into a linked list
