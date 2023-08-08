@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexing.c                                           :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/17 15:46:22 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/07/06 17:53:511 by dgerguri         ###   ########.fr       */
+/*   Created: 2023/08/08 13:51:46 by dgerguri          #+#    #+#             */
+/*   Updated: 2023/08/08 13:51:46 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-void	lexing(t_minihell *command, char *command_line) //! change return type to bool if we need to return something incase of failure
+void  init_env(t_minihell *minihell, char **envp)
 {
-	quote_checker(command_line, command);
-	command->tokens = split_to_tokens(command_line, ' ');
-	syntax_checker(command->tokens);
-	int i = 0;
-	while (command->tokens[i] != NULL)
-	{
-		printf("Token:%s\n", command->tokens[i]);
-		i++;
-	}
+  int  i;
+
+  i = 0;
+  while (envp[i])
+    i++;
+  minihell->env = malloc(sizeof(char *) * i + 1);
+  // malloc protection
+  i = 0;
+  while (envp[i])
+  {
+    minihell->env[i] = ft_strdup(envp[i]);
+	// check if strdup fails
+    i++;
+  }
 }
