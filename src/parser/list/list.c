@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:41:34 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/09 18:30:51 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/09 19:38:49 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,13 +100,13 @@ static int	create_node(char **c_line, int s, t_minihell *mini)
 	{
 		ft_printf("c_line[%d] = %s\n", s, c_line[s]);
 		if (!ft_strncmp(c_line[s], "<\0", 2))
-			node->in[counter.re_in++] = parse_str(c_line[++s], mini);
+			node->in[counter.re_in++] = parse_str(c_line[++s], mini); //TODO: open the file immediately and save the fd instead of the filename
 		else if (!ft_strncmp(c_line[s], "<<\0", 3))
-			node->heredoc[counter.here_doc++] = parse_str(c_line[++s], mini);
+			node->heredoc[counter.here_doc++] = parse_str(c_line[++s], mini); //TODO: open the file immediately and save the fd instead of the filename
 		else if (!ft_strncmp(c_line[s], ">\0", 2))
-			node->out[counter.re_out++] = parse_str(c_line[++s], mini);
+			node->out[counter.re_out++] = parse_str(c_line[++s], mini); //TODO: open the file immediately and save the fd instead of the filename
 		else if (!ft_strncmp(c_line[s], ">>\0", 3))
-			node->out_app[counter.re_out_app++] = parse_str(c_line[++s], mini);
+			node->out_app[counter.re_out_app++] = parse_str(c_line[++s], mini);//TODO: open the file immediately and save the fd instead of the filename
 		else if (node->command != NULL)
 			node->opt[counter.options++] = parse_str(c_line[s], mini);
 		else
