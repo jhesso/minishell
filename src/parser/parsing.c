@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 05:12:42 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/09 01:19:37 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/09 18:14:58 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,6 @@ bool	append_path(t_tokens *lst_tokens, char **env)
 bool	parse(t_minihell *minihell)
 {
 	//TODO: move list creation here, remove quotes, expand variables, append correct path to command
-	int	i;
-
-	i = 0;
-	while (minihell->tokens[i] != NULL)
-	{
-		if (remove_quotes(minihell->tokens[i]) == false)
-			return (false);
-		if (expand_variables(minihell->tokens[i], minihell->env) == false)
-			return (false);
-		i++;
-	}
 	if (create_lst_tokens(minihell) == false)
 		return (false);
 	lst_print(minihell->lst_tokens); //! remove this (debugging purposes)

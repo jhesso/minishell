@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/09 01:59:53 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/09 18:28:05 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,11 @@ typedef struct s_minihell
 typedef struct			s_tokens
 {
 	char				*command;
-	char				**options; // options for the command
+	char				**opt; // options for the command
 	char				**in; // input redirections (filenames)
 	char				**out; // output redirections (filenames)
 	char				**out_app; // output redirections (filenames, append mode)
-	char				**heredoc_delim; // heredoc delimiter word(s)
+	char				**heredoc; // heredoc delimiter word(s)
 	struct s_tokens		*next;
 }						t_tokens;
 
@@ -115,6 +115,8 @@ void			init_node(t_tokens **node, t_malloc_sizes sizes);
 void			lst_print(t_tokens *lst_tokens);
 void			lst_add_back(t_tokens **lst_tokens, t_tokens *node);
 void			print_sizes(t_malloc_sizes sizes);
+
+char			*parse_str(char *str, t_minihell *minihell);
 
 /*----------------------------------Builtins-----------------------------------*/
 

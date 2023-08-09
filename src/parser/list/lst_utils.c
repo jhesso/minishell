@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 20:13:15 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/09 02:04:47 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/09 18:30:17 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ void	init_node(t_tokens **node, t_malloc_sizes sizes)
 	(*node)->in[sizes.re_in] = NULL;
 	(*node)->out[sizes.re_out] = NULL;
 	(*node)->out_app[sizes.re_out_app] = NULL;
-	(*node)->heredoc_delim[sizes.here_doc] = NULL;
+	(*node)->heredoc[sizes.here_doc] = NULL;
 	if (sizes.options > -1)
-		(*node)->options[sizes.options] = NULL;
+		(*node)->opt[sizes.options] = NULL;
 	else
-		(*node)->options[0] = NULL;
+		(*node)->opt[0] = NULL;
 	(*node)->command = NULL;
 	(*node)->next = NULL;
 }
@@ -94,9 +94,9 @@ void	lst_print(t_tokens *lst_tokens)
 		ft_printf("	command: %s\n", lst_tokens->command);
 		ft_printf("	options:\n");
 		i = 0;
-		while (lst_tokens->options[i])
+		while (lst_tokens->opt[i])
 		{
-			ft_printf("		options[%d]: %s\n", i, lst_tokens->options[i]);
+			ft_printf("		opt[%d]: %s\n", i, lst_tokens->opt[i]);
 			i++;
 		}
 		ft_printf("	input:\n");
@@ -120,11 +120,11 @@ void	lst_print(t_tokens *lst_tokens)
 			ft_printf("		output_append[%d]: %s\n", i, lst_tokens->out_app[i]);
 			i++;
 		}
-		ft_printf("	heredoc_delim:\n");
+		ft_printf("	heredoc:\n");
 		i = 0;
-		while (lst_tokens->heredoc_delim[i])
+		while (lst_tokens->heredoc[i])
 		{
-			ft_printf("		heredoc_delim[%d]: %s\n", i, lst_tokens->heredoc_delim[i]);
+			ft_printf("		heredoc[%d]: %s\n", i, lst_tokens->heredoc[i]);
 			i++;
 		}
 		lst_tokens = lst_tokens->next;
