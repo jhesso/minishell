@@ -6,7 +6,7 @@
 #    By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 16:12:22 by jhesso            #+#    #+#              #
-#    Updated: 2023/08/10 20:31:48 by dgerguri         ###   ########.fr        #
+#    Updated: 2023/08/10 21:44:02 by dgerguri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRC_PATH	=	src/
 OBJ_PATH	=	obj/
 SRC			=	main.c \
 				lexer/lexing.c lexer/lexing_utils.c lexer/syntax_checker.c lexer/split_cmd.c \
-				parser/parsing.c parser/list/list.c parser/list/lst_utils.c parser/expanding.c \
+				parser/parsing.c parser/list/list.c parser/list/lst_utils.c parser/expanding.c parser/removing_quotes.c \
 				builtins/env.c
 SRCS		=	$(addprefix $(SRC_PATH), $(SRC))
 OBJ			=	$(SRC:.c=.o)

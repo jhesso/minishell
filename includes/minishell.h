@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/09 18:28:05 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/10 21:44:37 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void			lst_add_back(t_tokens **lst_tokens, t_tokens *node);
 void			print_sizes(t_malloc_sizes sizes);
 
 char			*parse_str(char *str, t_minihell *minihell);
+char			*remove_quotes(char *str);
 
 /*----------------------------------Builtins-----------------------------------*/
 
