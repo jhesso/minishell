@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:28:05 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/11 16:37:55 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/11 17:57:23 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	handle_patterns(char const *s, char c, int *i, int amount)
 	{
 		if (ft_strrchr("|><", s[*i - 1]))
 			amount++;
-		i = quotes(s, i) + 1;
+		*i = quotes(s, *i) + 1;
 	}
 	return (amount);
 }
@@ -150,7 +150,7 @@ char	**tokenize_cmd(char const *s, char c)
 		if (s[i] != c)
 			ret[row] = ft_substr(s, i, get_word_len(s, c, i));
 		if (ret[row] == NULL)
-			return (free_allocated_strings(ret, row));
+			return (free_str_arr(ret, row));
 		i = i + get_word_len(s, c, i);
 	}
 	ret[row] = NULL;

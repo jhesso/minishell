@@ -6,13 +6,13 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 20:11:25 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/11 17:43:35 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/11 18:03:06 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	character_checker(char *command_line, t_minihell *command, int i)
+bool	char_checker(char *command_line, t_minihell *command, int i)
 {
 	command->double_quote = 0;
 	command->single_quote = 0;

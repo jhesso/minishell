@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 20:11:37 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/11 16:50:58 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/11 17:54:56 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,11 @@ bool	syntax_checker(char **tokens)
 	array = 0;
 	i = 0;
 	while (tokens[array] != NULL)
-	{
-
+	{ //? im guessing we want to return false if the if check fails?
 		if (tokens[array][i] && ft_strrchr("|><", tokens[array][i])
 			&& !ft_strrchr("\'\"", tokens[array][i]))
 			if ((characters_syntax_check(tokens, array)) == false)
 		array++;
 	}
+	return (true);
 }

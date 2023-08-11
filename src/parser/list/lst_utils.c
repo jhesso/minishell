@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 20:13:15 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/09 18:30:17 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/11 18:01:53 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ t_malloc_sizes	init_counter(void)
 {
 	t_malloc_sizes	counter;
 
-	counter.re_in = 0;
-	counter.re_out = 0;
-	counter.re_out_app = 0;
-	counter.here_doc = 0;
+	counter.in = 0;
+	counter.out = 0;
+	counter.out_app = 0;
+	counter.heredoc = 0;
 	counter.options = 0;
 	return (counter);
 }
@@ -56,10 +56,10 @@ void	lst_add_back(t_tokens **lst_tokens, t_tokens *node)
 */
 void	init_node(t_tokens **node, t_malloc_sizes sizes)
 {
-	(*node)->in[sizes.re_in] = NULL;
-	(*node)->out[sizes.re_out] = NULL;
-	(*node)->out_app[sizes.re_out_app] = NULL;
-	(*node)->heredoc[sizes.here_doc] = NULL;
+	(*node)->in[sizes.in] = NULL;
+	(*node)->out[sizes.out] = NULL;
+	(*node)->out_app[sizes.out_app] = NULL;
+	(*node)->heredoc[sizes.heredoc] = NULL;
 	if (sizes.options > -1)
 		(*node)->opt[sizes.options] = NULL;
 	else
@@ -70,10 +70,10 @@ void	init_node(t_tokens **node, t_malloc_sizes sizes)
 
 void	print_sizes(t_malloc_sizes sizes)
 {
-	ft_printf("re_in: %d\n", sizes.re_in);
-	ft_printf("re_out: %d\n", sizes.re_out);
-	ft_printf("re_out_app: %d\n", sizes.re_out_app);
-	ft_printf("here_doc: %d\n", sizes.here_doc);
+	ft_printf("in: %d\n", sizes.in);
+	ft_printf("out: %d\n", sizes.out);
+	ft_printf("out_app: %d\n", sizes.out_app);
+	ft_printf("heredoc: %d\n", sizes.heredoc);
 	ft_printf("options: %d\n", sizes.options);
 }
 

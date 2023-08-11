@@ -14,7 +14,7 @@
 
 bool	lexing(t_minihell *command, char *command_line)
 {
-	if (character_checker(command_line, command, 0) == false)
+	if (char_checker(command_line, command, 0) == false)
 		return (false);
 	if ((command->tokens = tokenize_cmd(command_line, ' ')) == NULL)
 		return (false);
