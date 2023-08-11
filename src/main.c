@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/11 19:21:05 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/12 01:55:16 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@
 void	minishell(t_minihell *minihell)
 {
 	char		*command_line;
+	bool		ret; // return value of our functions, if set to false, error happened
 
 	using_history();
+	ret = true;
 	while (1)
 	{
 		command_line = readline(BLUE_BOLD "minishell$ " RESET_COLOR);
@@ -31,10 +33,12 @@ void	minishell(t_minihell *minihell)
 		if (command_line && *command_line) //* check that command_line is not just an empty line
 			add_history(command_line); //* from what I understand, this adds the line to history but only for this session
 		ft_putendl_fd(command_line, STDOUT_FILENO); //! this is just for testing
-		if (lexing(minihell, command_line) == false) //! if something can fail, change return type to bool
-			;// exit (EXIT_FAILURE);
-		if (parse(minihell) == false) //* idea is to return true or false based on if there is errors parsing
-			ft_putendl_fd("parse error", STDERR_FILENO); //TODO: make this into something useful
+		ret = lexing(minihell, command_line);
+		if (!ret)
+			ft_putendl_fd("Error", STDERR_FILENO); //! this needs to call cleanup whenever its done
+		ret = parse(minihell);
+		if (!ret)
+			ft_putendl_fd("parse error", STDERR_FILENO);//! this needs to call cleanup whenever its done
 	}
 }
 
