@@ -6,24 +6,42 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:28:05 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/05 17:48:09 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/11 16:37:55 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int quotes(char const *s, int i)
+static int	handle_patterns(char const *s, char c, int *i, int amount)
 {
-	char	c;
-
-	c = s[i];
-	i += 1;
-	while (s[i] && s[i] != c)
+	if (s[*i] && s[*i] != c && !ft_strrchr("|><", s[*i])
+	&& !ft_strrchr("\'\"", s[*i]))
+	{
+		if (s[*i] && s[*i - 1] != c && !ft_strrchr("\'\"", s[*i - 1]))
+			amount++;
+		while (s[*i] && s[*i] != c && !ft_strrchr("\"\'|><", s[*i]))
+			i++;
+	}
+	if (s[*i] == c)
 		i++;
-	return (i);
+	if (s[*i] && ft_strrchr("|><", s[*i]))
+	{
+		if (s[*i - 1] != c)
+			amount++;
+		i++;
+		while (s[*i] && s[*i] == s[*i - 1])
+			i++;
+	}
+	if (s[*i] && ft_strrchr("\'\"", s[*i]))
+	{
+		if (ft_strrchr("|><", s[*i - 1]))
+			amount++;
+		i = quotes(s, i) + 1;
+	}
+	return (amount);
 }
 
-static int	get_words_with_characters(char const *s, char c, int amount)
+static int	handle_character_patterns(char const *s, char c, int amount)
 {
 	int	i;
 
@@ -44,30 +62,7 @@ static int	get_words_with_characters(char const *s, char c, int amount)
 			i++;
 	while (s[i])
 	{
-		if (s[i] && s[i] != c && !ft_strrchr("|><", s[i]) && !ft_strrchr("\'\"", s[i]))
-		{
-			if (s[i] && s[i - 1] != c && !ft_strrchr("\'\"", s[i - 1]))
-				amount++;
-			while (s[i] && s[i] != c && !ft_strrchr("\"\'|><", s[i]))
-				i++;
-		}
-		if (s[i] == c)
-			i++;
-		if (s[i] && ft_strrchr("|><", s[i]))
-		{
-			if (s[i - 1] != c)
-				amount++;
-			i++;
-			while (s[i] && s[i] == s[i - 1])
-				i++;
-		}
-		if (s[i] && ft_strrchr("\'\"", s[i]))
-		{
-			if (ft_strrchr("|><", s[i - 1]))
-				amount++;
-			i = quotes(s, i);
-			i++;
-		}
+		amount = handle_patterns(s, c, &i, amount);
 	}
 	return (amount);
 }
@@ -91,7 +86,7 @@ static int	get_amount_of_words(char const *s, char c)
 		}
 		i++;
 	}
-	amount = get_words_with_characters(s, c, amount);
+	amount = handle_character_patterns(s, c, amount);
 	return (amount);
 }
 
@@ -133,15 +128,7 @@ static	int	get_word_len(char const *s, char c, int start)
 	return (len);
 }
 
-static char	**free_allocated_strings(char **ret, int row)
-{
-	while (row >= 0)
-		free(ret[row--]);
-	free(ret);
-	return (NULL);
-}
-
-char	**split_to_tokens(char const *s, char c)
+char	**tokenize_cmd(char const *s, char c)
 {
 	char			**ret;
 	unsigned int	i;
