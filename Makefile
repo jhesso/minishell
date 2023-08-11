@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+         #
+#    By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 16:12:22 by jhesso            #+#    #+#              #
-#    Updated: 2023/08/10 21:44:02 by dgerguri         ###   ########.fr        #
+#    Updated: 2023/08/11 17:46:09 by jhesso           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,11 @@ LIBFT		=	libft.a
 LIBFT_DIR	=	libft/
 SRC_PATH	=	src/
 OBJ_PATH	=	obj/
-SRC			=	main.c \
-				lexer/lexing.c lexer/lexing_utils.c lexer/syntax_checker.c lexer/split_cmd.c \
-				parser/parsing.c parser/list/list.c parser/list/lst_utils.c parser/expanding.c parser/removing_quotes.c \
+SRC			=	main.c utils.c \
+				lexer/lexing.c lexer/lexing_utils.c lexer/syntax_checker.c \
+				lexer/split_cmd.c \
+				parser/parsing.c parser/expanding.c parser/removing_quotes.c \
+				parser/list/list.c parser/list/lst_utils.c \
 				builtins/env.c
 SRCS		=	$(addprefix $(SRC_PATH), $(SRC))
 OBJ			=	$(SRC:.c=.o)
