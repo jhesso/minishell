@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 20:13:15 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/11 19:17:59 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/12 02:17:24 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	lst_print(t_tokens *lst_tokens)
 
 	i = 0;
 	j = 0;
-	ft_printf("lst_print:\n");
+	ft_printf("\nlst_print:\n");
 	while (lst_tokens)
 	{
 		ft_printf("node %d:\n", j);
