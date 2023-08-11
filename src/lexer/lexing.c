@@ -12,15 +12,20 @@
 
 #include "minishell.h"
 
-void	lexing(t_minihell *command, char *command_line) //! change return type to bool if we need to return something incase of failure
+bool	lexing(t_minihell *command, char *command_line)
 {
-	quote_checker(command_line, command);
-	command->tokens = split_to_tokens(command_line, ' ');
-	syntax_checker(command->tokens);
-	int i = 0;
-	while (command->tokens[i] != NULL)
+	if (character_checker(command_line, command, 0) == false)
+		return (false);
+	if ((command->tokens = tokenize_cmd(command_line, ' ')) == NULL)
+		return (false);
+	//We already have a function that frees the allocated strings in case they fail!for some reason!
+	//So, we dont have to free anything in case this returns NULL!
+	// The free function will be located at the lexing_utils!
+	if (syntax_checker(command->tokens) == false)
 	{
-		printf("Token:%s\n", command->tokens[i]);
-		i++;
+		//dont forget to freee!!!
+		return (false);
 	}
+	// print_string_arr(command->tokens); //* this does the same thing as the previous while loop (inisde my libft)
+	return (true);
 }
