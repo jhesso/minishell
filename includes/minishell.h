@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/11 16:43:27 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/11 17:49:39 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# define RESET_COLOR	"\033[0m"    //reset color! Might delete it in the end, or change the location!
-# define BLUE_BOLD   	"\033[0;34m" //color! Might delete it in the end, or change the location!
+# define RESET_COLOR	"\033[0m"
+# define BLUE_BOLD   	"\033[0;34m"
 
 /******************************************************************************/
 /*								Includes  									  */
@@ -44,29 +44,33 @@ typedef struct s_tokens	t_tokens;
 
 /*	s_minihell
 *	the 'main' struct of the project
+*	double_quote and single_quote can maybe be simply moved
+*	to the function that needs them instead of being in the struct
 */
 typedef struct s_minihell
 {
 	char			**tokens;
 	char			**env;
-	int				double_quote; //? if we dont need later we can delete and create variables inside the function check_quotes!
-	int				single_quote; //? if we dont need later we can delete and create variables inside the function check_quotes!
-	struct s_tokens	*lst_tokens; //* ptr to our linked list containing the given command line
+	int				double_quote;
+	int				single_quote;
+	struct s_tokens	*lst_tokens;
 }					t_minihell;
 
 /*	s_tokens
 *	our linked list containing the given command line
 *	each 'node' of the list contains one command including all of it's
 *	options and redirections
+*	opt being the options for the command
+*	in, out, out_app and heredoc being the fds/delim word for redirections
 */
 typedef struct			s_tokens
 {
 	char				*command;
-	char				**opt; // options for the command
-	char				**in; // input redirections (filenames)
-	char				**out; // output redirections (filenames)
-	char				**out_app; // output redirections (filenames, append mode)
-	char				**heredoc; // heredoc delimiter word(s)
+	char				**opt;
+	char				**in;
+	char				**out;
+	char				**out_app;
+	char				**heredoc;
 	struct s_tokens		*next;
 }						t_tokens;
 
@@ -95,9 +99,8 @@ bool	lexing(t_minihell *command, char *command_line);
 char	**tokenize_cmd(char const *s, char c);
 
 /* lexing_utils.c */
-bool			character_checker(char *command_line, t_minihell *command, int i);
+bool			char_checker(char *command_line, t_minihell *command, int i);
 int				quotes(char const *s, int i);
-char			**free_allocated_strings(char **ret, int row); //We should move this somewhere else and this should be universal!
 
 /* syntax_checker.c */
 bool			syntax_checker(char **tokens);
@@ -124,8 +127,12 @@ char			*remove_quotes(char *str, int i, int j);
 /* file.c */
 int				open_file(char *filename, int mode);
 
-/*----------------------------------Builtins-----------------------------------*/
+/*---------------------------------Builtins-----------------------------------*/
 
 void  			init_env(t_minihell *minihell, char **envp);
+
+/*----------------------------------Utils-------------------------------------*/
+/* utils.c */
+char			**free_str_arr(char **ret, int row);
 
 #endif
