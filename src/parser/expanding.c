@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:45:20 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/11 14:49:27 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/12 02:05:17 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,9 @@ char	*insert_value(char *str, char *value, int start, int new_start)
 	char	*new_str;
 	int		value_len;
 	int		new_str_len;
-	int		i;
 
 	value_len = ft_strlen(value);
 	new_str_len = ft_strlen(str) + value_len + 1;
-	i = 0;
 	new_str = malloc(sizeof(char) * (new_str_len));
 	if (new_str == NULL)
 	{
