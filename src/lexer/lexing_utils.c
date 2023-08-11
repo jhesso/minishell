@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 20:11:25 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/11 16:31:41 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/11 17:43:35 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,4 @@ int	quotes(char const *s, int i)
 	while (s[i] && s[i] != c)
 		i++;
 	return (i);
-}
-
-char	**free_allocated_strings(char **ret, int row)
-{
-	while (row >= 0)
-		free(ret[row--]);
-	free(ret);
-	return (NULL);
 }
