@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/10 21:44:37 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/11 16:43:27 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,16 +89,18 @@ typedef struct		s_malloc_sizes
 /*----------------------------------Lexing------------------------------------*/
 
 /* lexing.c */
-void			lexing(t_minihell *command, char *command_line);
+bool	lexing(t_minihell *command, char *command_line);
 
 /* split_cmd.c */
-char			**split_to_tokens(char const *s, char c);
+char	**tokenize_cmd(char const *s, char c);
 
 /* lexing_utils.c */
-void			quote_checker(char *command_line, t_minihell *command);
+bool			character_checker(char *command_line, t_minihell *command, int i);
+int				quotes(char const *s, int i);
+char			**free_allocated_strings(char **ret, int row); //We should move this somewhere else and this should be universal!
 
 /* syntax_checker.c */
-void			syntax_checker(char **tokens);
+bool			syntax_checker(char **tokens);
 
 /*----------------------------------Parsing-----------------------------------*/
 
@@ -117,7 +119,7 @@ void			lst_add_back(t_tokens **lst_tokens, t_tokens *node);
 void			print_sizes(t_malloc_sizes sizes);
 
 char			*parse_str(char *str, t_minihell *minihell);
-char			*remove_quotes(char *str);
+char			*remove_quotes(char *str, int i, int j);
 
 /*----------------------------------Builtins-----------------------------------*/
 

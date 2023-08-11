@@ -3,27 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 05:12:42 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/09 18:14:58 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/11 13:38:17 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	expand_variables(char *str, char **env)
-{
-	(void)str;
-	(void)env;
-	return (true);
-}
+//These were before we did the expansion and removing quotes,
+//Maybe you want to still use this so not deleting!!
 
-bool	remove_quotes(char *str)
-{
-	(void)str;
-	return (true);
-}
+// bool	expand_variables(char *str, char **env)
+// {
+// 	(void)str;
+// 	(void)env;
+// 	return (true);
+// }
+
+// bool	remove_quotes(char *str)
+// {
+// 	(void)str;
+// 	return (true);
+// }
 
 bool	append_path(t_tokens *lst_tokens, char **env)
 {

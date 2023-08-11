@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:45:20 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/10 21:08:36 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/11 14:49:27 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*insert_value(char *str, char *value, int start, int new_start)
 	{
 		free(value);
 		free(str);
-		return(NULL);
+		return (NULL);
 	}
 	ft_strlcpy(new_str, str, new_str_len);
 	ft_strlcpy(new_str + start, value, new_str_len);
@@ -65,9 +65,9 @@ char	*insert_value(char *str, char *value, int start, int new_start)
 	return (new_str);
 }
 
-char *get_value(char *path, int len, char **envp, int i)
+char	*get_value(char *path, int len, char **envp, int i)
 {
-	char *value;
+	char	*value;
 
 	while (envp[i])
 	{
@@ -121,7 +121,7 @@ char	*expand_str(char *str, char **envp, int start)
 
 	if (str[start + 1] == '\0' || str[start + 1] == '\'' || str[start + 1] == '\"')
 	{
-		new_str = insert_value(str, (char*)ft_calloc(1, 1), start, start + 1);
+		new_str = insert_value(str, (char *)ft_calloc(1, 1), start, start + 1);
 		if (!new_str)
 			return (NULL);
 	}
@@ -142,9 +142,9 @@ char	*expand_str(char *str, char **envp, int start)
 	return (new_str);
 }
 
-char *expand_quotes(char *str, char **envp, int start)
+char	*expand_quotes(char *str, char **envp, int start)
 {
-	char *new_str;
+	char	*new_str;
 
 	new_str = ft_strdup(str);
 	if (!new_str)
@@ -165,12 +165,12 @@ char *expand_quotes(char *str, char **envp, int start)
 		start++;
 	}
 	free(str);
-	return(new_str);
+	return (new_str);
 }
 
-char *expand_variables(char *str, char **envp)
+char	*expand_variables(char *str, char **envp)
 {
-	int start;
+	int	start;
 
 	start = 0;
 	while (str[start])
@@ -199,12 +199,15 @@ char *expand_variables(char *str, char **envp)
 
 char	*parse_str(char *str, t_minihell *minihell)
 {
-	char *ret;
+	char	*ret;
 
-	ret	= expand_variables(str, minihell->env);
+	ret = expand_variables(str, minihell->env);
 	if (!ret)
-		return (malloc_error()); //make sure that it is freeing the char **
+	{
+		malloc_error();
+		return (NULL); //make sure that it is freeing the char ** WE CAN MAKE MALLOC RETURN NULL AND WE CAN ONLY HAVE ONE LINE
+	}
 	//free the remaining char**
-	ret = remove_quotes(ret);
-	return(ret);
+	ret = remove_quotes(ret, 0, 0);
+	return (ret);
 }

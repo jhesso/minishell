@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:42:59 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/10 21:44:13 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/11 14:45:23 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	len_without_quotes(char *str)
 {
-	int 	len;
-	int		flag;
 	char	c;
+	int		len;
+	int		flag;
 
 	len = 0;
 	flag = 0;
@@ -29,26 +29,21 @@ int	len_without_quotes(char *str)
 			while (str[len] && str[len] != c)
 				len++;
 			if (str[len] == '\0')
-				break;
+				break ;
 			flag++;
 		}
 		len++;
 	}
-	printf("%d\n", len);
 	return (len - flag);
 }
 
-char *remove_quotes(char *str)
+char	*remove_quotes(char *str, int i, int j)
 {
-	int len;
-	int i;
-	int j;
+	char	*new_str;
 	char	c;
-	char *new_str;
+	int		len;
 
 	len = len_without_quotes(str);
-	i = 0;
-	j = 0;
 	new_str = ft_calloc(sizeof(char), (len + 1));
 	if (!new_str)
 	{
