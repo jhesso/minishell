@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/09 18:28:05 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/10 16:52:03 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,10 @@ typedef struct			s_tokens
 */
 typedef struct		s_malloc_sizes
 {
-	int	re_in;
-	int	re_out;
-	int re_out_app;
-	int	here_doc;
+	int	in;
+	int	out;
+	int out_app;
+	int	heredoc;
 	int options;
 }	t_malloc_sizes;
 
@@ -117,6 +117,9 @@ void			lst_add_back(t_tokens **lst_tokens, t_tokens *node);
 void			print_sizes(t_malloc_sizes sizes);
 
 char			*parse_str(char *str, t_minihell *minihell);
+
+/* file.c */
+int				open_file(char *filename, int mode);
 
 /*----------------------------------Builtins-----------------------------------*/
 
