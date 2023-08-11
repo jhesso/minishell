@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_cmd.c                                        :+:      :+:    :+:   */
+/*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:28:05 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/11 17:57:23 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/11 18:56:22 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,22 @@
 static int	handle_patterns(char const *s, char c, int *i, int amount)
 {
 	if (s[*i] && s[*i] != c && !ft_strrchr("|><", s[*i])
-	&& !ft_strrchr("\'\"", s[*i]))
+		&& !ft_strrchr("\'\"", s[*i]))
 	{
 		if (s[*i] && s[*i - 1] != c && !ft_strrchr("\'\"", s[*i - 1]))
 			amount++;
 		while (s[*i] && s[*i] != c && !ft_strrchr("\"\'|><", s[*i]))
-			i++;
+			(*i)++;
 	}
 	if (s[*i] == c)
-		i++;
+		(*i)++;
 	if (s[*i] && ft_strrchr("|><", s[*i]))
 	{
 		if (s[*i - 1] != c)
 			amount++;
-		i++;
+		(*i)++;
 		while (s[*i] && s[*i] == s[*i - 1])
-			i++;
+			(*i)++;
 	}
 	if (s[*i] && ft_strrchr("\'\"", s[*i]))
 	{
@@ -57,17 +57,17 @@ static int	handle_character_patterns(char const *s, char c, int amount)
 		i = quotes(s, i);
 		i++;
 	}
-	else if (s[i] && !ft_strrchr("|><", s[i]) && s[i] != c && !ft_strrchr("\"\'", s[i]))
-		while (s[i] && !ft_strrchr("|><", s[i]) && s[i] != c && !ft_strrchr("\"\'", s[i]))
+	else if (s[i] && !ft_strrchr("|><", s[i]) && s[i] != c
+		&& !ft_strrchr("\"\'", s[i]))
+		while (s[i] && !ft_strrchr("|><", s[i]) && s[i] != c
+			&& !ft_strrchr("\"\'", s[i]))
 			i++;
 	while (s[i])
-	{
 		amount = handle_patterns(s, c, &i, amount);
-	}
 	return (amount);
 }
 
-static int	get_amount_of_words(char const *s, char c)
+int	get_amount_of_words(char const *s, char c)
 {
 	int	amount;
 	int	i;
@@ -90,8 +90,29 @@ static int	get_amount_of_words(char const *s, char c)
 	return (amount);
 }
 
+static int	get_word_len_continue(char const *s, int i, int start, char c)
+{
+	int	len;
 
-static	int	get_word_len(char const *s, char c, int start)
+	len = 0;
+	while (s[i] && s[i] != c && !ft_strrchr("|><", s[i]))
+	{
+		if (s[i] && ft_strrchr("\'\"", s[i]) && s[i] != c
+			&& !ft_strrchr("|><", s[i]))
+		{
+			i = quotes(s, i) + 1;
+			len = i - start;
+		}
+		while (s[i] && s[i] != c && !ft_strrchr("\'\"|><", s[i]))
+		{
+			len++;
+			i++;
+		}
+	}
+	return (len);
+}
+
+int	get_word_len(char const *s, char c, int start)
 {
 	int	len;
 	int	i;
@@ -101,21 +122,7 @@ static	int	get_word_len(char const *s, char c, int start)
 	while (s[i] == c)
 		i++;
 	if (s[i] && s[i] != c && !ft_strrchr("|><", s[i]))
-	{
-		while (s[i] && s[i] != c && !ft_strrchr("|><", s[i]))
-		{
-			if (s[i] && ft_strrchr("\'\"", s[i]) && s[i] != c && !ft_strrchr("|><", s[i]))
-			{
-				i = quotes(s, i) + 1;
-				len = i - start;
-			}
-			while (s[i] && s[i] != c && !ft_strrchr("\'\"|><", s[i]))
-			{
-				len++;
-				i++;
-			}
-		}
-	}
+		len = get_word_len_continue(s, i, start, c);
 	else if (s[i] && s[i] != c && ft_strrchr("|><", s[i++]))
 	{
 		len++;
@@ -126,33 +133,4 @@ static	int	get_word_len(char const *s, char c, int start)
 		}
 	}
 	return (len);
-}
-
-char	**tokenize_cmd(char const *s, char c)
-{
-	char			**ret;
-	unsigned int	i;
-	unsigned int	row;
-	unsigned int	word_count;
-
-	if (s == NULL)
-		return (NULL);
-	word_count = get_amount_of_words(s, c);
-	ret = malloc(sizeof(char *) * (word_count + 1));
-	if (ret == NULL)
-		return (NULL);
-	i = 0;
-	row = -1;
-	while (++row < word_count)
-	{
-		while (s[i] == c)
-			i++;
-		if (s[i] != c)
-			ret[row] = ft_substr(s, i, get_word_len(s, c, i));
-		if (ret[row] == NULL)
-			return (free_str_arr(ret, row));
-		i = i + get_word_len(s, c, i);
-	}
-	ret[row] = NULL;
-	return (ret);
 }

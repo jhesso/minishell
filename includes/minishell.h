@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/11 17:49:39 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/11 19:06:02 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,15 @@ typedef struct		s_malloc_sizes
 /* lexing.c */
 bool	lexing(t_minihell *command, char *command_line);
 
-/* split_cmd.c */
-char	**tokenize_cmd(char const *s, char c);
+/* tokenization.c */
+int				get_amount_of_words(char const *s, char c);
+int				get_word_len(char const *s, char c, int start);
 
 /* lexing_utils.c */
 bool			char_checker(char *command_line, t_minihell *command, int i);
 int				quotes(char const *s, int i);
 
-/* syntax_checker.c */
+/* syntax_checking.c */
 bool			syntax_checker(char **tokens);
 
 /*----------------------------------Parsing-----------------------------------*/
@@ -133,6 +134,6 @@ void  			init_env(t_minihell *minihell, char **envp);
 
 /*----------------------------------Utils-------------------------------------*/
 /* utils.c */
-char			**free_str_arr(char **ret, int row);
+void			*free_str_arr(char **s);
 
 #endif

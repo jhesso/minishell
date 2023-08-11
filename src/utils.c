@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 17:41:52 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/11 17:59:46 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/11 18:17:12 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,13 @@
 *	param: char **ret, int row
 *	return: NULL (always)
 */
-char	**free_str_arr(char **ret, int row)
+void	*free_str_arr(char **s)
 {
-	while (row >= 0) //? why not return starting from the first row until we reach NULL?
-		free(ret[row--]);
-	free(ret);
+	int	i;
+
+	i = 0;
+	while (s[i])
+		free(s[i++]);
+	free(s);
 	return (NULL);
 }

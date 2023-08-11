@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 20:13:15 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/11 18:01:53 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/11 19:17:59 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	malloc_error(void)
 {
 	// ft_putstr_fd(strerror(errno), 2);
-	ft_putstr_fd("MALLOC ERROR", 2);
+	ft_putendl_fd("Error: Malloc Error!", 2);
 	exit(12); //! probably not the right way to exit, but it works for now
 	//? error code 12!!!!!
 }

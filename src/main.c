@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/11 16:27:34 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/11 19:21:05 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,9 @@ void	minishell(t_minihell *minihell)
 			add_history(command_line); //* from what I understand, this adds the line to history but only for this session
 		ft_putendl_fd(command_line, STDOUT_FILENO); //! this is just for testing
 		if (lexing(minihell, command_line) == false) //! if something can fail, change return type to bool
-			;
+			;// exit (EXIT_FAILURE);
 		if (parse(minihell) == false) //* idea is to return true or false based on if there is errors parsing
 			ft_putendl_fd("parse error", STDERR_FILENO); //TODO: make this into something useful
-		free (command_line); //? not sure if this is the right place to free it
 	}
 }
 

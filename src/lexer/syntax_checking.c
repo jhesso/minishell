@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_checker.c                                   :+:      :+:    :+:   */
+/*   syntax_checking.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 20:11:37 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/11 17:54:56 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/11 19:08:52 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool syntax_error_messages(int type, char *message)
+static bool	syntax_error_messages(int type, char *message)
 {
-	ft_putstr_fd("minishell: syntax error near unexpected token '", 2);
+	ft_putstr_fd("minishell: syntax error near unexpected token '",
+		STDERR_FILENO);
 	if (type == 1)
-	{
-		ft_putstr_fd("newline'\n", 2);
-	}
+		ft_putstr_fd("newline'\n", STDERR_FILENO);
 	else if (type == 2)
 	{
-		ft_putstr_fd(message, 2);
-		ft_putstr_fd("'\n", 2);
+		ft_putstr_fd(message, STDERR_FILENO);
+		ft_putstr_fd("'\n", STDERR_FILENO);
 	}
-	// if (type == 2 || type == 1)
-	// 	error code = 258; will have to figure it out how we do this!! when we do $?
-
+	// if (type == 2 || type == 1) //! delete if we dont put more error types
+	//!	error code = 258; will have to figure it out how we do this!! when we do $?
 	return (false);
-
 }
 
 static bool	char_syntax_check_continue(char **tokens, int array)
@@ -38,12 +35,12 @@ static bool	char_syntax_check_continue(char **tokens, int array)
 	{
 		if (ft_strlen(tokens[array]) == 1 && tokens[array][0] == '<'
 			&& tokens[array + 1][0] == '>')
-			{
-				if (ft_strlen(tokens[array + 1]) == 1)
-					return (syntax_error_messages(1, NULL));
-				else
-					return (syntax_error_messages(2, tokens[array + 1] + 1));
-			}
+		{
+			if (ft_strlen(tokens[array + 1]) == 1)
+				return (syntax_error_messages(1, NULL));
+			else
+				return (syntax_error_messages(2, tokens[array + 1] + 1));
+		}
 		else
 			return (syntax_error_messages(2, tokens[array + 1]));
 	}
@@ -61,7 +58,7 @@ static bool	char_syntax_check_continue(char **tokens, int array)
 
 static bool	characters_syntax_check(char **tokens, int array)
 {
-	if (tokens[array + 1] == NULL)
+	if (!tokens[array + 1])
 	{
 		if (tokens[array][0] == '|')
 			return (syntax_error_messages(2, tokens[array]));
@@ -77,23 +74,24 @@ static bool	characters_syntax_check(char **tokens, int array)
 				return (syntax_error_messages(2, tokens[array] + 2));
 		}
 	}
-	else if (char_syntax_check_continue(tokens, array) == false)
+	else if (!char_syntax_check_continue(tokens, array))
 		return (false);
 	return (true);
 }
 
 bool	syntax_checker(char **tokens)
 {
-	int array;
-	int i;
+	int	array;
+	int	i;
 
 	array = 0;
 	i = 0;
-	while (tokens[array] != NULL)
-	{ //? im guessing we want to return false if the if check fails?
+	while (tokens[array])
+	{
 		if (tokens[array][i] && ft_strrchr("|><", tokens[array][i])
 			&& !ft_strrchr("\'\"", tokens[array][i]))
-			if ((characters_syntax_check(tokens, array)) == false)
+			if (!characters_syntax_check(tokens, array))
+				return (false);
 		array++;
 	}
 	return (true);
