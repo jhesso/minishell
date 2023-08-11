@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:41:34 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/09 19:38:49 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/10 16:39:15 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,31 +21,31 @@ static t_malloc_sizes	calculate_sizes(char **command_line, int start)
 {
 	t_malloc_sizes	sizes;
 
-	sizes.re_in = 0;
-	sizes.re_out = 0;
-	sizes.here_doc = 0;
-	sizes.re_out_app = 0;
+	sizes.in = 0;
+	sizes.out = 0;
+	sizes.heredoc = 0;
+	sizes.out_app = 0;
 	sizes.options = -1; //* start options at -1 since the first non special character is the command
 	while (command_line[start] && command_line[start][0] != '|')
 	{
 		if (!ft_strncmp(command_line[start], "<\0", 2))
 		{
-			sizes.re_in++;
+			sizes.in++;
 			start += 2;
 		}
 		else if (!ft_strncmp(command_line[start], "<<\0", 3))
 		{
-			sizes.here_doc++;
+			sizes.heredoc++;
 			start += 2;
 		}
 		else if (!ft_strncmp(command_line[start], ">\0", 2))
 		{
-			sizes.re_out++;
+			sizes.out++;
 			start += 2;
 		}
 		else if (!ft_strncmp(command_line[start], ">>\0", 3))
 		{
-			sizes.re_out_app++;
+			sizes.out_app++;
 			start += 2;
 		}
 		else
@@ -70,10 +70,10 @@ static t_tokens	*allocate_content(char **command_line, int start)
 		malloc_error(); //! add malloc protection
 	sizes = calculate_sizes(command_line, start);
 	print_sizes(sizes);
-	node->in = malloc(sizeof(char *) * (sizes.re_in + 1));
-	node->out = malloc(sizeof(char *) * (sizes.re_out + 1));
-	node->out_app = malloc(sizeof(char *) * (sizes.re_out_app + 1));
-	node->heredoc = malloc(sizeof(char *) * (sizes.here_doc + 1));
+	node->in = malloc(sizeof(char *) * (sizes.in + 1));
+	node->out = malloc(sizeof(char *) * (sizes.out + 1));
+	node->out_app = malloc(sizeof(char *) * (sizes.out_app + 1));
+	node->heredoc = malloc(sizeof(char *) * (sizes.heredoc + 1));
 	if (sizes.options > -1)
 		node->opt = malloc(sizeof(char *) * (sizes.options + 1));
 	if (node->in == NULL || node->out == NULL || node->heredoc == NULL
@@ -91,24 +91,24 @@ static t_tokens	*allocate_content(char **command_line, int start)
 static int	create_node(char **c_line, int s, t_minihell *mini)
 { // TODO: check the calculated amounts of strings and that we allocate enough memory. if thats the reason for sanitizer errror
 	t_tokens		*node;
-	t_malloc_sizes	counter; //* repurposing the struct to use as indexes instead of sizes
+	t_malloc_sizes	c; //* repurposing the struct to use as indexes instead of sizes
 
 	node = allocate_content(c_line, s);
-	counter = init_counter();
+	c = init_counter();
 	node->command = NULL;
 	while (c_line[s] && c_line[s][0] != '|')
 	{
 		ft_printf("c_line[%d] = %s\n", s, c_line[s]);
 		if (!ft_strncmp(c_line[s], "<\0", 2))
-			node->in[counter.re_in++] = parse_str(c_line[++s], mini); //TODO: open the file immediately and save the fd instead of the filename
+			node->in[c.in++] = parse_str(c_line[++s], mini); //TODO: open the file immediately and save the fd instead of the filename
 		else if (!ft_strncmp(c_line[s], "<<\0", 3))
-			node->heredoc[counter.here_doc++] = parse_str(c_line[++s], mini); //TODO: open the file immediately and save the fd instead of the filename
+			node->heredoc[c.heredoc++] = parse_str(c_line[++s], mini); //TODO: open the file immediately and save the fd instead of the filename
 		else if (!ft_strncmp(c_line[s], ">\0", 2))
-			node->out[counter.re_out++] = parse_str(c_line[++s], mini); //TODO: open the file immediately and save the fd instead of the filename
+			node->out[c.out++] = parse_str(c_line[++s], mini); //TODO: open the file immediately and save the fd instead of the filename
 		else if (!ft_strncmp(c_line[s], ">>\0", 3))
-			node->out_app[counter.re_out_app++] = parse_str(c_line[++s], mini);//TODO: open the file immediately and save the fd instead of the filename
+			node->out_app[c.out_app++] = parse_str(c_line[++s], mini);//TODO: open the file immediately and save the fd instead of the filename
 		else if (node->command != NULL)
-			node->opt[counter.options++] = parse_str(c_line[s], mini);
+			node->opt[c.options++] = parse_str(c_line[s], mini);
 		else
 			node->command = parse_str(c_line[s], mini);
 		s++;

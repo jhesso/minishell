@@ -75,10 +75,10 @@ typedef struct			s_tokens
 */
 typedef struct		s_malloc_sizes
 {
-	int	re_in;
-	int	re_out;
-	int re_out_app;
-	int	here_doc;
+	int	in;
+	int	out;
+	int out_app;
+	int	heredoc;
 	int options;
 }	t_malloc_sizes;
 
@@ -120,6 +120,9 @@ void			print_sizes(t_malloc_sizes sizes);
 
 char			*parse_str(char *str, t_minihell *minihell);
 char			*remove_quotes(char *str, int i, int j);
+
+/* file.c */
+int				open_file(char *filename, int mode);
 
 /*----------------------------------Builtins-----------------------------------*/
 
