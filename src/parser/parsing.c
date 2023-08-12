@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 05:12:42 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/11 13:38:17 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/12 03:00:39 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ bool	append_path(t_tokens *lst_tokens, char **env)
 bool	parse(t_minihell *minihell)
 {
 	//TODO: move list creation here, remove quotes, expand variables, append correct path to command
-	if (create_lst_tokens(minihell) == false)
+	if (!create_lst_tokens(minihell))
 		return (false);
 	lst_print(minihell->lst_tokens); //! remove this (debugging purposes)
-	if (append_path(minihell->lst_tokens, minihell->env) == false) //TODO: I might be able to simply rip this out from my pipex
+	if (!append_path(minihell->lst_tokens, minihell->env)) //TODO: I might be able to simply rip this out from my pipex
 		return (false);
 	return (true);
 }

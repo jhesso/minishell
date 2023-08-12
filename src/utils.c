@@ -6,11 +6,42 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 17:41:52 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/11 18:17:12 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/12 03:30:33 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*	free_list()
+*	frees the lst_tokens linked list and all of its contents
+*/
+static void	free_list(t_tokens *lst_tokens)
+{
+	t_tokens	*tmp;
+
+	while (lst_tokens)
+	{
+		tmp = lst_tokens;
+		lst_tokens = lst_tokens->next;
+		free(tmp->command);
+		free_str_arr(tmp->opt);
+		free_str_arr(tmp->in);
+		free_str_arr(tmp->out);
+		free_str_arr(tmp->out_app);
+		free_str_arr(tmp->heredoc);
+		free(tmp);
+	}
+}
+
+/*	cleanup()
+*	frees all the allocated memory in preparation
+*	for the next command line
+*	note, does not free env as we need it until the end
+*/
+void	cleanup(t_minihell *minihell)
+{
+	free_list(minihell->lst_tokens);
+}
 
 /*	free_str_arr()
 *	frees a 2d array of strings (char **)
@@ -24,6 +55,7 @@ void	*free_str_arr(char **s)
 	i = 0;
 	while (s[i])
 		free(s[i++]);
-	free(s);
+	if (s)
+		free(s);
 	return (NULL);
 }

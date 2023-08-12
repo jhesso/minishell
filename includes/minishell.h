@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/11 19:06:02 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/12 02:48:47 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ void  			init_env(t_minihell *minihell, char **envp);
 
 /*----------------------------------Utils-------------------------------------*/
 /* utils.c */
+void			cleanup(t_minihell *minihell);
 void			*free_str_arr(char **s);
 
 #endif

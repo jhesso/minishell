@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 15:46:22 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/11 19:09:51 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/12 03:58:15 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,20 @@ static char	**tokenize_cmd(char const *s, char c)
 	return (ret);
 }
 
-bool	lexing(t_minihell *command, char *command_line)
+bool	lexing(t_minihell *minihell, char *command_line)
 {
-	if (!char_checker(command_line, command, 0))
+	if (!char_checker(command_line, minihell, 0))
 		return (false);
-	command->tokens = tokenize_cmd(command_line, ' ');
-	if (!command->tokens)
+	minihell->tokens = tokenize_cmd(command_line, ' ');
+	if (!minihell->tokens)
 	{
 		free(command_line);
 		return (false);
 	}
 	free(command_line);
-	if (!syntax_checker(command->tokens))
+	if (!syntax_checker(minihell->tokens))
 	{
-		free_str_arr(command->tokens);
+		free_str_arr(minihell->tokens);
 		return (false);
 	}
 	return (true);

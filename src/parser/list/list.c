@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:41:34 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/12 02:34:47 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/12 03:30:50 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ bool	create_lst_tokens(t_minihell *minihell)
 { //! no malloc protection yet
 	int			i;
 
+	minihell->lst_tokens = NULL;
 	i = create_node(minihell->tokens, 0, minihell);
 	if (minihell->tokens[i] && minihell->tokens[i][0] == '|')
 		i++;
@@ -143,5 +144,6 @@ bool	create_lst_tokens(t_minihell *minihell)
 			i++; //? the whole if else can be replaced with i = create_node(minihell->tokens, i, mini);?
 		ft_printf("minihell->tokens[%d] = %s\n", i, minihell->tokens[i]);
 	}
+	free (minihell->tokens);
 	return (true);
 }
