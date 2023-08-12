@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/12 02:46:25 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/12 14:47:01 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ void	minishell(t_minihell *minihell)
 		ft_putendl_fd(command_line, STDOUT_FILENO); //! this is just for testing
 		ret = lexing(minihell, command_line);
 		if (ret)
+		{
 			ret = parse(minihell);
-		if (!ret)//? might not even need this check as we'll call cleanup anyways in the end, as long as we dont call other functions if something has failed
-			ft_putendl_fd("Error!", STDERR_FILENO);//! this needs to call cleanup whenever its done
-		cleanup(minihell);
+			cleanup(minihell);
+		}
 	}
 }
 
