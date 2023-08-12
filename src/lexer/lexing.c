@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 15:46:22 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/12 03:58:15 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/12 14:40:52 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ static char	**tokenize_cmd(char const *s, char c)
 	unsigned int	row;
 	unsigned int	word_count;
 
-	if (s == NULL)
+	if (!s)
 		return (NULL);
 	word_count = get_amount_of_words(s, c);
 	ret = malloc(sizeof(char *) * (word_count + 1));
-	if (ret == NULL)
+	if (!ret)
 		return (NULL);
 	i = 0;
 	row = -1;
@@ -33,7 +33,7 @@ static char	**tokenize_cmd(char const *s, char c)
 			i++;
 		if (s[i] != c)
 			ret[row] = ft_substr(s, i, get_word_len(s, c, i));
-		if (ret[row] == NULL)
+		if (!ret[row])
 			return (free_str_arr(ret));
 		i = i + get_word_len(s, c, i);
 	}
