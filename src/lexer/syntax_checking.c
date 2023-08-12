@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_checking.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 20:11:37 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/11 19:08:52 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/12 13:58:39 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static bool	char_syntax_check_continue(char **tokens, int array)
 			else
 				return (syntax_error_messages(2, tokens[array + 1] + 1));
 		}
-		else
+		else if (!tokens[array + 2])
 			return (syntax_error_messages(2, tokens[array + 1]));
 	}
 	else if (!ft_strrchr("\"\'", tokens[array][0])
