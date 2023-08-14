@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:45:20 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/12 02:05:17 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/14 14:12:50 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,10 +201,7 @@ char	*parse_str(char *str, t_minihell *minihell)
 
 	ret = expand_variables(str, minihell->env);
 	if (!ret)
-	{
 		malloc_error();
-		return (NULL); //make sure that it is freeing the char ** WE CAN MAKE MALLOC RETURN NULL AND WE CAN ONLY HAVE ONE LINE
-	}
 	//free the remaining char**
 	ret = remove_quotes(ret, 0, 0);
 	return (ret);
