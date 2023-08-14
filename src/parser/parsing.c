@@ -3,37 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 05:12:42 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/12 03:00:39 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/14 14:24:14 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//These were before we did the expansion and removing quotes,
-//Maybe you want to still use this so not deleting!!
-
-// bool	expand_variables(char *str, char **env)
+// bool	append_path(t_tokens *lst_tokens, char **env)
 // {
-// 	(void)str;
+// 	(void)lst_tokens;
 // 	(void)env;
 // 	return (true);
 // }
-
-// bool	remove_quotes(char *str)
-// {
-// 	(void)str;
-// 	return (true);
-// }
-
-bool	append_path(t_tokens *lst_tokens, char **env)
-{
-	(void)lst_tokens;
-	(void)env;
-	return (true);
-}
 
 /*	parse()
 *	parse the saved command line and save into a linked list
@@ -45,7 +29,7 @@ bool	parse(t_minihell *minihell)
 	if (!create_lst_tokens(minihell))
 		return (false);
 	lst_print(minihell->lst_tokens); //! remove this (debugging purposes)
-	if (!append_path(minihell->lst_tokens, minihell->env)) //TODO: I might be able to simply rip this out from my pipex
-		return (false);
+	// if (!append_path(minihell->lst_tokens, minihell->env)) //TODO: I might be able to simply rip this out from my pipex
+	// 	return (false);
 	return (true);
 }
