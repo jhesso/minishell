@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/15 19:02:01 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/15 19:53:48 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,9 @@ int				open_file(char *filename, int mode);
 void  			init_env(t_minihell *minihell, char **envp);
 
 /*----------------------------------Utils-------------------------------------*/
+
+bool	execute(t_minihell *minihell); //!format
+
 /* utils.c */
 void			cleanup(t_minihell *minihell);
 void			*free_str_arr(char **s);

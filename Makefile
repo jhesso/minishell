@@ -6,7 +6,7 @@
 #    By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 16:12:22 by jhesso            #+#    #+#              #
-#    Updated: 2023/08/11 19:05:38 by jhesso           ###   ########.fr        #
+#    Updated: 2023/08/15 19:53:12 by jhesso           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRC			=	main.c utils.c \
 				lexer/tokenization.c \
 				parser/parsing.c parser/expanding.c parser/removing_quotes.c \
 				parser/list/list.c parser/list/lst_utils.c \
+				execution/execute.c \
 				builtins/env.c
 SRCS		=	$(addprefix $(SRC_PATH), $(SRC))
 OBJ			=	$(SRC:.c=.o)
