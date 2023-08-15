@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:45:20 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/14 14:12:50 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/15 18:52:59 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,21 @@ int	get_end_index(char *str, int i, int type)
 {
 	if (type == 1)
 	{
-		i++;
-		while (str[i] && str[i] != '\'' && str[i] != '\"' && str[i] != '$')
+		while (str[i] && str[i] != '\'' && str[i] != '\"'
+			&& str[i] != '$' && str[i] != ' ')
 			i++;
 		return (i);
 	}
-	if (type == 2)
+	else if (type == 2)
 	{
 		i++;
 		while (str[i] && str[i] != '\'')
 			i++;
 		if (str[i])
-		i++;
+			i++;
 		return (i);
 	}
-	if (type == 3)
+	else if (type == 3)
 	{
 		while (str[i] && str[i] != '\"')
 			i++;
@@ -66,6 +66,7 @@ char	*insert_value(char *str, char *value, int start, int new_start)
 char	*get_value(char *path, int len, char **envp, int i)
 {
 	char	*value;
+	printf("path:%s\n", path);
 
 	while (envp[i])
 	{
@@ -111,28 +112,30 @@ char	*expand(char *str, char **envp, int start, int end)
 	return (value);
 }
 
-char	*expand_str(char *str, char **envp, int start)
+char	*expand_str(char *str, char **envp, int s)
 {
 	char	*new_str;
 	char	*value;
 	int		end;
 
-	if (str[start + 1] == '\0' || str[start + 1] == '\'' || str[start + 1] == '\"')
+	if (str[s + 1] == '\0' || str[s + 1] == '\'' || str[s + 1] == '\"')
 	{
-		new_str = insert_value(str, (char *)ft_calloc(1, 1), start, start + 1);
+		new_str = insert_value(str, (char *)ft_calloc(1, 1), s, s + 1);
 		if (!new_str)
 			return (NULL);
 	}
+	else if (str[s + 1] == '?')
+		new_str = insert_value(str, ft_itoa(error_code), s, s + 2);
 	else
 	{
-		end = get_end_index(str, start, 1);
-		value = expand(str, envp, start, end);
+		end = get_end_index(str, s + 1, 1);
+		value = expand(str, envp, s, end);
 		if (!value)
 		{
 			free(str);
 			return (NULL);
 		}
-		new_str = insert_value(str, value, start, end);
+		new_str = insert_value(str, value, s, end);
 		if (!new_str)
 			return (NULL);
 	}
@@ -158,7 +161,6 @@ char	*expand_quotes(char *str, char **envp, int start)
 				free(str);
 				return (NULL);
 			}
-			break ;
 		}
 		start++;
 	}

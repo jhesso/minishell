@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 20:11:37 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/14 14:21:01 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/15 16:14:25 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ static bool	syntax_error_messages(int type, char *message)
 		ft_putstr_fd(message, STDERR_FILENO);
 		ft_putstr_fd("'\n", STDERR_FILENO);
 	}
-	// if (type == 2 || type == 1) //! delete if we dont put more error types
-	//!	error code = 258; will have to figure it out how we do this!! when we do $?
+	error_code = 258;
 	return (false);
 }
 

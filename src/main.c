@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/12 14:47:01 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/15 17:53:02 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	minishell(t_minihell *minihell)
 		}
 	}
 }
+int	error_code = 0;
 
 int	main(int ac, char **av, char **envp)
 {
