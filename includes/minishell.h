@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/16 16:29:28 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/16 18:23:43 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <signal.h>
 # include <limits.h>
 # include <fcntl.h>
+# include <string.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -101,7 +102,7 @@ typedef struct		s_malloc_sizes
 /*----------------------------------Lexing------------------------------------*/
 
 /* lexing.c */
-bool	lexing(t_minihell *command, char *command_line);
+bool			lexing(t_minihell *command, char *command_line);
 
 /* tokenization.c */
 int				get_amount_of_words(char const *s, char c);
@@ -141,7 +142,10 @@ char			*remove_quotes(char *str, int i, int j);
 bool			execute(t_minihell *minihell);
 
 /* file.c */
-int				open_file(char *filename, int mode);
+void			open_files(t_tokens *lst_tokens);
+
+/* file_utils.c */
+void			allocate_fds(t_tokens *node);
 
 /*---------------------------------Builtins-----------------------------------*/
 
@@ -149,9 +153,9 @@ void  			init_env(t_minihell *minihell, char **envp);
 
 /*----------------------------------Utils-------------------------------------*/
 
-
 /* utils.c */
 void			cleanup(t_minihell *minihell);
 void			*free_str_arr(char **s);
 int				count_strings(char **array);
+
 #endif
