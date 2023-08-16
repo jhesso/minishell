@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/15 17:53:02 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/16 18:36:23 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	minishell(t_minihell *minihell)
 		if (ret)
 		{
 			ret = parse(minihell);
+			if (parse(minihell))
+				execute(minihell);
 			cleanup(minihell);
 		}
 	}
