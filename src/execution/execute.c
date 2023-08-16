@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/16 18:37:50 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/16 19:03:13 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ char *check_valid_path(char *command, char **path)
 		if (!cmd_path)
 			malloc_error();
 		if (access(cmd_path, F_OK | X_OK) == 0)
+		{
+			free(cmd);
 			return (cmd_path);
+		}
 		free(cmd_path);
 		i++;
 	}
@@ -124,7 +127,7 @@ void	create_argv(t_minihell *minihell)
 bool	execute(t_minihell *minihell)
 {
 	create_argv(minihell);
-	// open_files(minihell);
+	open_files(minihell->lst_tokens);
 	// check_builtin(minihell);
 	append_commands(minihell); // dardan has this basically done
 	return (true);
