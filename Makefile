@@ -6,7 +6,7 @@
 #    By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 16:12:22 by jhesso            #+#    #+#              #
-#    Updated: 2023/08/17 20:20:59 by jhesso           ###   ########.fr        #
+#    Updated: 2023/08/19 15:11:22 by jhesso           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ LIBFT		=	libft.a
 LIBFT_DIR	=	libft/
 SRC_PATH	=	src/
 OBJ_PATH	=	obj/
-SRC			=	main.c utils.c \
+SRC			=	main.c utils.c cleanup.c \
 				lexer/lexing.c lexer/lexing_utils.c lexer/syntax_checking.c \
 				lexer/tokenization.c \
 				parser/parsing.c parser/expanding.c parser/removing_quotes.c \

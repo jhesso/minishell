@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:41:34 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/18 18:24:57 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/19 15:13:28 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,27 @@ static t_malloc_sizes	calculate_sizes(char **command_line, int start)
 	}
 	return (sizes);
 }
+
+/*	calculate_list_size()
+!	this is just a test function, REMOVE!!!
+*/
+// static int	calculate_list_size(t_tokens *node)
+// {
+// 	int	size;
+
+// 	size = 0;
+// 	size += sizeof(node->command);
+// 	size += sizeof(node->opt);
+// 	size += sizeof(node->in);
+// 	size += sizeof(node->out);
+// 	size += sizeof(node->out_app);
+// 	size += sizeof(node->heredoc);
+// 	size += sizeof(node->argv);
+// 	size += sizeof(node->fd_in);
+// 	size += sizeof(node->fd_out);
+// 	size += sizeof(node->next);
+// 	return (size);
+// }
 
 /*	allocate_content()
 *	Allocate memory for the contents of a node in our tokens list
