@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 17:41:52 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/16 16:29:04 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/16 18:01:56 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static void	free_list(t_tokens *lst_tokens)
 		free_str_arr(tmp->out);
 		free_str_arr(tmp->out_app);
 		free_str_arr(tmp->heredoc);
+		free(tmp->argv[0]);
+		free(tmp->argv);
 		free(tmp);
 	}
 }

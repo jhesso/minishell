@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/16 15:47:58 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/16 18:37:50 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,10 @@ char	**get_path(char **env)
 		{
 			tmp = ft_strdup(env[i]);
 			if (!tmp)
-				return (NULL);
+				malloc_error();
 			path = ft_split(tmp + 5, ':');
 			if (!path)
-			{
-				free(tmp);
-				return(NULL);
-			}
+				malloc_error();
 			free(tmp);
 			break ;
 		}
@@ -42,7 +39,6 @@ char	**get_path(char **env)
 
 char *check_valid_path(char *command, char **path)
 {
-	// printf("command: %s\n", command);
 	int     i;
 	char    *cmd_path;
 	char	*cmd;
@@ -61,6 +57,7 @@ char *check_valid_path(char *command, char **path)
 		free(cmd_path);
 		i++;
 	}
+	free(cmd);
 	return (NULL);
 }
 
@@ -68,34 +65,65 @@ void append_commands(t_minihell *minihell)
 {
 	char	**path;
 	char	*cmd;
-	char	*cmd_path;
 
 	path = get_path(minihell->env);
 	if (!path)
     	malloc_error();
 	while (minihell->lst_tokens != NULL)
 	{
-		cmd = minihell->lst_tokens->command;
+		cmd = ft_strdup(minihell->lst_tokens->command);
+		free(minihell->lst_tokens->command);
 		if (ft_strchr(cmd, '/'))
 		{
 			if (access(cmd, F_OK | X_OK) != 0)
+			{
+				minihell->lst_tokens->command = NULL;
 				printf("bash: %s: No such file or directory\n", cmd);
+			}
 		}
 		else
 		{
-			cmd_path = check_valid_path(cmd, path);
-			if (!cmd_path)
+			minihell->lst_tokens->command = check_valid_path(cmd, path);
+			if (!minihell->lst_tokens->command)
 				printf("bash: %s: command not found\n", cmd);
-			free(cmd_path);
 		}
+		free(cmd);
     	minihell->lst_tokens = minihell->lst_tokens->next;
 	}
 	free_str_arr(path);
 }
 
+void	create_argv(t_minihell *minihell)
+{
+	t_tokens	*temp;
+	int			options;
+	int			i;
+
+	temp = minihell->lst_tokens;
+	while (minihell->lst_tokens != NULL)
+	{
+		options = count_strings(minihell->lst_tokens->opt);
+		minihell->lst_tokens->argv = malloc(sizeof(char *) * (options + 2));
+		if (!minihell->lst_tokens->argv)
+			malloc_error();
+		minihell->lst_tokens->argv[0] = ft_strdup(minihell->lst_tokens->command);
+		if (!minihell->lst_tokens->argv[0])
+			malloc_error();
+		i = 0;
+		while (minihell->lst_tokens->opt[i])
+		{
+			minihell->lst_tokens->argv[i + 1] = minihell->lst_tokens->opt[i];
+			i++;
+		}
+		minihell->lst_tokens->argv[i + 1] = NULL;
+    	minihell->lst_tokens = minihell->lst_tokens->next;
+	}
+	minihell->lst_tokens = temp;
+}
+
 bool	execute(t_minihell *minihell)
 {
-	(void)minihell;
+	create_argv(minihell);
 	// open_files(minihell);
 	// check_builtin(minihell);
 	append_commands(minihell); // dardan has this basically done

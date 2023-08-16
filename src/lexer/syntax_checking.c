@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 20:11:37 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/15 16:14:25 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/16 16:52:27 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static bool	char_syntax_check_continue(char **tokens, int array)
 {
 	if (!ft_strrchr("\"\'", tokens[array + 1][0])
 		&& ft_strrchr("|<>", tokens[array + 1][0]))
-	{printf("comes\n");
+	{
 		if (ft_strlen(tokens[array]) == 1 && tokens[array][0] == '<'
 			&& tokens[array + 1][0] == '>')
 		{
