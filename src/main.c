@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/16 18:36:23 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/16 18:54:00 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	minishell(t_minihell *minihell)
 		if (ret)
 		{
 			ret = parse(minihell);
-			if (parse(minihell))
+			if (ret)
 				execute(minihell);
 			cleanup(minihell);
 		}
