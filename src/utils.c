@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 17:41:52 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/16 18:01:56 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/16 23:03:26 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static void	free_list(t_tokens *lst_tokens)
 		free_str_arr(tmp->heredoc);
 		free(tmp->argv[0]);
 		free(tmp->argv);
+		free(tmp->fd_in);
+		free(tmp->fd_out);
 		free(tmp);
 	}
 }
