@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/16 19:03:13 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/16 23:38:13 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,18 @@ void append_commands(t_minihell *minihell)
 	while (minihell->lst_tokens != NULL)
 	{
 		cmd = ft_strdup(minihell->lst_tokens->command);
-		free(minihell->lst_tokens->command);
 		if (ft_strchr(cmd, '/'))
 		{
 			if (access(cmd, F_OK | X_OK) != 0)
 			{
+				free(minihell->lst_tokens->command);
 				minihell->lst_tokens->command = NULL;
 				printf("bash: %s: No such file or directory\n", cmd);
 			}
 		}
 		else
 		{
+			free(minihell->lst_tokens->command);
 			minihell->lst_tokens->command = check_valid_path(cmd, path);
 			if (!minihell->lst_tokens->command)
 				printf("bash: %s: command not found\n", cmd);
@@ -126,9 +127,12 @@ void	create_argv(t_minihell *minihell)
 
 bool	execute(t_minihell *minihell)
 {
+	// system("leaks minishell");
 	create_argv(minihell);
+// system("leaks minishell");
 	open_files(minihell->lst_tokens);
 	// check_builtin(minihell);
 	append_commands(minihell); // dardan has this basically done
+	system("leaks minishell");
 	return (true);
 }
