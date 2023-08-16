@@ -6,7 +6,7 @@
 #    By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 16:12:22 by jhesso            #+#    #+#              #
-#    Updated: 2023/08/15 19:53:12 by jhesso           ###   ########.fr        #
+#    Updated: 2023/08/16 11:48:16 by jhesso           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,10 +43,10 @@ $(LIBFT):
 $(OBJ_PATH):
 	@mkdir $(OBJ_PATH)
 	@mkdir $(OBJ_PATH)/lexer
-	@mkdir $(OBJ_PATH)/lexer/list
 	@mkdir $(OBJ_PATH)/parser
 	@mkdir $(OBJ_PATH)/parser/list
 	@mkdir $(OBJ_PATH)/builtins
+	@mkdir $(OBJ_PATH)/execution
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@cc $(CFLAGS) -c $< -o $@ $(INCS)
