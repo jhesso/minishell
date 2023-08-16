@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/16 13:04:17 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/16 16:29:28 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,5 +153,5 @@ void  			init_env(t_minihell *minihell, char **envp);
 /* utils.c */
 void			cleanup(t_minihell *minihell);
 void			*free_str_arr(char **s);
-
+int				count_strings(char **array);
 #endif
