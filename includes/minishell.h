@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/15 19:53:48 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/16 13:04:17 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ typedef struct s_minihell
 *	options and redirections
 *	opt being the options for the command
 *	in, out, out_app and heredoc being the fds/delim word for redirections
+*	argv being the command and it's options, this is what is given to execve
+*	fd_in and fd_out being the file descriptors for redirections
+*	note that fd_in, fd_out and argv are allocated later on in the program!
 */
 typedef struct			s_tokens
 {
@@ -73,6 +76,9 @@ typedef struct			s_tokens
 	char				**out;
 	char				**out_app;
 	char				**heredoc;
+	char				**argv;
+	int					*fd_in;
+	int					*fd_out;
 	struct s_tokens		*next;
 }						t_tokens;
 
@@ -129,6 +135,11 @@ char			*parse_str(char *str, t_minihell *minihell);
 /* removing_quotes.c */
 char			*remove_quotes(char *str, int i, int j);
 
+/*---------------------------------Execution----------------------------------*/
+
+/* execute.c */
+bool			execute(t_minihell *minihell);
+
 /* file.c */
 int				open_file(char *filename, int mode);
 
@@ -138,7 +149,6 @@ void  			init_env(t_minihell *minihell, char **envp);
 
 /*----------------------------------Utils-------------------------------------*/
 
-bool	execute(t_minihell *minihell); //!format
 
 /* utils.c */
 void			cleanup(t_minihell *minihell);
