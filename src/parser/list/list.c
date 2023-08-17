@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:41:34 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/15 19:06:34 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/17 15:16:01 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static t_tokens	*allocate_content(char **command_line, int start)
 	if (node == NULL)
 		malloc_error(); //! add malloc protection
 	sizes = calculate_sizes(command_line, start);
-	print_sizes(sizes);
+	// print_sizes(sizes);
 	node->in = malloc(sizeof(char *) * (sizes.in + 1));
 	node->out = malloc(sizeof(char *) * (sizes.out + 1));
 	node->out_app = malloc(sizeof(char *) * (sizes.out_app + 1));
@@ -100,7 +100,7 @@ static int	create_node(char **c_line, int s, t_minihell *mini)
 	node->command = NULL; //? I'm thinking we need to allocate memory for this
 	while (c_line[s] && c_line[s][0] != '|')
 	{
-		ft_printf("c_line[%d] = %s\n", s, c_line[s]);
+		// ft_printf("c_line[%d] = %s\n", s, c_line[s]);
 		if (!ft_strncmp(c_line[s], "<\0", 2))
 			node->in[c.in++] = parse_str(c_line[++s], mini);
 		else if (!ft_strncmp(c_line[s], "<<\0", 3))
@@ -138,7 +138,7 @@ bool	create_lst_tokens(t_minihell *minihell)
 	}
 	// ft_printf("i = %d\n", i);
 	// ft_printf("starting while loop inside create_lst_tokens\n");
-	ft_printf("minihell->tokens[%d] = %s\n", i, minihell->tokens[i]);
+	// ft_printf("minihell->tokens[%d] = %s\n", i, minihell->tokens[i]);
 	while(minihell->tokens[i])
 	{
 		if (minihell->tokens[i][0] != '|')
@@ -148,7 +148,7 @@ bool	create_lst_tokens(t_minihell *minihell)
 			free (minihell->tokens[i]);
 			i++; //? the whole if else can be replaced with i = create_node(minihell->tokens, i, mini);?
 		}
-		ft_printf("minihell->tokens[%d] = %s\n", i, minihell->tokens[i]);
+		// ft_printf("minihell->tokens[%d] = %s\n", i, minihell->tokens[i]);
 	}
 	free (minihell->tokens);
 	return (true);

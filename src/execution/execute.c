@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/16 23:38:13 by dardangergu      ###   ########.fr       */
+/*   Updated: 2023/08/17 15:29:19 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,12 @@ char *check_valid_path(char *command, char **path)
 
 void append_commands(t_minihell *minihell)
 {
-	char	**path;
-	char	*cmd;
+	char		**path;
+	char		*cmd;
+	t_tokens	*tmp;
 
+	tmp = minihell->lst_tokens;
 	path = get_path(minihell->env);
-	if (!path)
-    	malloc_error();
 	while (minihell->lst_tokens != NULL)
 	{
 		cmd = ft_strdup(minihell->lst_tokens->command);
@@ -84,7 +84,7 @@ void append_commands(t_minihell *minihell)
 				printf("bash: %s: No such file or directory\n", cmd);
 			}
 		}
-		else
+		else// if (!is_builtin) //will have to create a function!!
 		{
 			free(minihell->lst_tokens->command);
 			minihell->lst_tokens->command = check_valid_path(cmd, path);
@@ -95,6 +95,7 @@ void append_commands(t_minihell *minihell)
     	minihell->lst_tokens = minihell->lst_tokens->next;
 	}
 	free_str_arr(path);
+	minihell->lst_tokens = tmp;
 }
 
 void	create_argv(t_minihell *minihell)
@@ -127,12 +128,8 @@ void	create_argv(t_minihell *minihell)
 
 bool	execute(t_minihell *minihell)
 {
-	// system("leaks minishell");
 	create_argv(minihell);
-// system("leaks minishell");
 	open_files(minihell->lst_tokens);
-	// check_builtin(minihell);
-	append_commands(minihell); // dardan has this basically done
-	system("leaks minishell");
+	append_commands(minihell);
 	return (true);
 }
