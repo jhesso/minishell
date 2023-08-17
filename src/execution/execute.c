@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/17 19:30:37 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/17 20:06:47 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,8 +153,9 @@ void	create_argv(t_minihell *minihell)
 bool	execute(t_minihell *minihell)
 {
 	// print_string_arr(minihell->tokens);
+	lst_print(minihell->lst_tokens);
 	create_argv(minihell);
-	open_files(minihell);
+	// open_files(minihell);
 	append_commands(minihell);
 	return (true);
 }
