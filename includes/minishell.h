@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/17 19:07:34 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/17 20:20:02 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ typedef struct			s_tokens
 	char				**out_app;
 	char				**heredoc;
 	char				**argv;
-	int					*fd_in;
-	int					*fd_out;
+	int					fd_in;
+	int					fd_out;
 	struct s_tokens		*next;
 }						t_tokens;
 
