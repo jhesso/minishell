@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:41:34 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/15 19:06:34 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/17 14:29:20 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,5 @@ bool	create_lst_tokens(t_minihell *minihell)
 		}
 		ft_printf("minihell->tokens[%d] = %s\n", i, minihell->tokens[i]);
 	}
-	free (minihell->tokens);
 	return (true);
 }
