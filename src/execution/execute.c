@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/17 15:29:19 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/17 19:06:45 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,9 @@ void	create_argv(t_minihell *minihell)
 
 bool	execute(t_minihell *minihell)
 {
+	// print_string_arr(minihell->tokens);
 	create_argv(minihell);
-	open_files(minihell->lst_tokens);
+	open_files(minihell);
 	append_commands(minihell);
 	return (true);
 }

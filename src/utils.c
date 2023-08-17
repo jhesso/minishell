@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 17:41:52 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/17 14:37:48 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/17 18:55:07 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static void	free_list(t_tokens *lst_tokens)
 void	cleanup(t_minihell *minihell)
 {
 	free_list(minihell->lst_tokens);
+	free_str_arr(minihell->tokens);
 }
 
 /*	free_str_arr()

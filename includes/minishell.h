@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/16 18:23:43 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/17 19:07:34 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ char			*remove_quotes(char *str, int i, int j);
 bool			execute(t_minihell *minihell);
 
 /* file.c */
-void			open_files(t_tokens *lst_tokens);
+void			open_files(t_minihell *minihell);
 
 /* file_utils.c */
 void			allocate_fds(t_tokens *node);

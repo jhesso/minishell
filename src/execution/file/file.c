@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/16 18:34:31 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/17 19:08:41 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,31 +80,31 @@ static int	open_file(char *filename, int mode)
 *	3. create heredoc if needed
 *	4. return true if success
 */
-void	open_files(t_tokens *lst_tokens)
+void	open_files(t_minihell *minihell)
 {
-	t_tokens	*tmp;
-	int			i;
-	int			j;
+	// t_tokens	*tmp;
+	// int			i;
+	// int			j;
 
-	tmp = lst_tokens;
-	while (lst_tokens)
-	{
-		allocate_fds(lst_tokens);
-		i = 0;
-		j = 0;
-		while (lst_tokens->in[i])
-			lst_tokens->fd_in[j] = open_file(lst_tokens->in[i++], 0);
-		i = 0;
-		while (lst_tokens->heredoc[i])
-			lst_tokens->fd_in[j++] = open_file(lst_tokens->heredoc[i++], 1);
-		i = 0;
-		j = 0;
-		while (lst_tokens->out[i])
-			lst_tokens->fd_out[j++] = open_file(lst_tokens->out[i++], 2);
-		i = 0;
-		while (lst_tokens->out_app[i])
-			lst_tokens->fd_out[j++] = open_file(lst_tokens->out_app[i++], 3);
-		lst_tokens = lst_tokens->next;
-	}
-	lst_tokens = tmp;
+	// tmp = lst_tokens;
+	// while (lst_tokens)
+	// {
+	// 	allocate_fds(lst_tokens);
+	// 	i = 0;
+	// 	j = 0;
+	// 	while (lst_tokens->in[i])
+	// 		lst_tokens->fd_in[j] = open_file(lst_tokens->in[i++], 0);
+	// 	i = 0;
+	// 	while (lst_tokens->heredoc[i])
+	// 		lst_tokens->fd_in[j++] = open_file(lst_tokens->heredoc[i++], 1);
+	// 	i = 0;
+	// 	j = 0;
+	// 	while (lst_tokens->out[i])
+	// 		lst_tokens->fd_out[j++] = open_file(lst_tokens->out[i++], 2);
+	// 	i = 0;
+	// 	while (lst_tokens->out_app[i])
+	// 		lst_tokens->fd_out[j++] = open_file(lst_tokens->out_app[i++], 3);
+	// 	lst_tokens = lst_tokens->next;
+	// }
+	// lst_tokens = tmp;
 }

@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/16 18:54:00 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/17 19:04:05 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	minishell(t_minihell *minihell)
 				execute(minihell);
 			cleanup(minihell);
 		}
+		// system("leaks minishell"); //! this is just for testing
 	}
 }
 int	error_code = 0;
