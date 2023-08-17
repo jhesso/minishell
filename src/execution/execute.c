@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/17 19:06:45 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/17 19:30:37 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,31 @@ char *check_valid_path(char *command, char **path)
 	return (NULL);
 }
 
-void append_commands(t_minihell *minihell)
+int	check_builtin(char *cmd)
+{
+	int	i;
+
+	i = 0;
+	if (!ft_strncmp(cmd, "echo\0", 5))
+		i = 1;
+	else if (!ft_strncmp(cmd, "cd\0", 3))
+		i = 2;
+	else if (!ft_strncmp(cmd, "pwd\0", 4))
+		i = 3;
+	else if (!ft_strncmp(cmd, "export\0", 7))
+		i = 4;
+	else if (!ft_strncmp(cmd, "unset\0", 6))
+		i = 5;
+	else if (!ft_strncmp(cmd, "env\0", 4))
+		i = 6;
+	else if (!ft_strncmp(cmd, "exit\0", 5))
+		i = 7;
+	else
+		i = 0;
+	return (i);
+}
+
+void	append_commands(t_minihell *minihell)
 {
 	char		**path;
 	char		*cmd;
@@ -84,7 +108,7 @@ void append_commands(t_minihell *minihell)
 				printf("bash: %s: No such file or directory\n", cmd);
 			}
 		}
-		else// if (!is_builtin) //will have to create a function!!
+		else if (!check_builtin(cmd))
 		{
 			free(minihell->lst_tokens->command);
 			minihell->lst_tokens->command = check_valid_path(cmd, path);
