@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 20:11:37 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/16 16:52:27 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/18 17:15:39 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static bool	char_syntax_check_continue(char **tokens, int array)
 			else
 				return (syntax_error_messages(2, tokens[array + 1] + 1));
 		}
-		else if (!tokens[array + 2] || ft_strrchr("|<>", tokens[array + 1][0]))
+		else if (!tokens[array + 2] || ft_strrchr("|", tokens[array + 1][0]))
 			return (syntax_error_messages(2, tokens[array + 1]));
 	}
 	else if (!ft_strrchr("\"\'", tokens[array][0])
