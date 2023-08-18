@@ -6,7 +6,7 @@
 #    By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 16:12:22 by jhesso            #+#    #+#              #
-#    Updated: 2023/08/16 18:20:11 by jhesso           ###   ########.fr        #
+#    Updated: 2023/08/17 20:20:59 by jhesso           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,8 @@ SRC			=	main.c utils.c \
 				parser/parsing.c parser/expanding.c parser/removing_quotes.c \
 				parser/list/list.c parser/list/lst_utils.c \
 				execution/execute.c \
-				execution/file/file.c execution/file/file_utils.c \
-				builtins/env.c
+				builtins/env.c \
+				execution/file/file.c #execution/file/file_utils.c
 SRCS		=	$(addprefix $(SRC_PATH), $(SRC))
 OBJ			=	$(SRC:.c=.o)
 OBJS		=	$(addprefix $(OBJ_PATH), $(OBJ))

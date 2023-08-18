@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/16 18:34:31 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/17 20:35:54 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,31 +80,59 @@ static int	open_file(char *filename, int mode)
 *	3. create heredoc if needed
 *	4. return true if success
 */
-void	open_files(t_tokens *lst_tokens)
+void	open_files(t_minihell *minihell)
 {
-	t_tokens	*tmp;
 	int			i;
-	int			j;
+	t_tokens	*tmp;
+	bool		flag;
 
-	tmp = lst_tokens;
-	while (lst_tokens)
+	tmp = minihell->lst_tokens;
+	while (minihell->lst_tokens)
 	{
-		allocate_fds(lst_tokens);
 		i = 0;
-		j = 0;
-		while (lst_tokens->in[i])
-			lst_tokens->fd_in[j] = open_file(lst_tokens->in[i++], 0);
-		i = 0;
-		while (lst_tokens->heredoc[i])
-			lst_tokens->fd_in[j++] = open_file(lst_tokens->heredoc[i++], 1);
-		i = 0;
-		j = 0;
-		while (lst_tokens->out[i])
-			lst_tokens->fd_out[j++] = open_file(lst_tokens->out[i++], 2);
-		i = 0;
-		while (lst_tokens->out_app[i])
-			lst_tokens->fd_out[j++] = open_file(lst_tokens->out_app[i++], 3);
-		lst_tokens = lst_tokens->next;
+		minihell->lst_tokens->fd_in = 0;
+		minihell->lst_tokens->fd_out = 0;
+		flag = false;
+		while (minihell->tokens[i])
+		{
+			if (minihell->tokens[i][0] == '|')
+				break ;
+			if (!ft_strncmp(minihell->tokens[i], "<\0", 2))
+			{
+				if (minihell->lst_tokens->fd_in > 0)
+					close(minihell->lst_tokens->fd_in);
+				minihell->lst_tokens->fd_in = open_file(minihell->tokens[++i], 0);
+				if (minihell->lst_tokens->fd_in == -1)
+					break ;
+			}
+			else if (!ft_strncmp(minihell->tokens[i], "<<\0", 3))
+			{
+				if (minihell->lst_tokens->fd_in > 0)
+					close(minihell->lst_tokens->fd_in);
+				minihell->lst_tokens->fd_in = open_file(minihell->tokens[++i], 1);
+			}
+			else if (!ft_strncmp(minihell->tokens[i], ">\0", 2))
+			{
+				if (minihell->lst_tokens->fd_out > 0)
+					close(minihell->lst_tokens->fd_out);
+				flag = true;
+				minihell->lst_tokens->fd_out = open_file(minihell->tokens[++i], 2);
+			}
+			else if (!ft_strncmp(minihell->tokens[i], ">>\0", 3) && flag == false)
+			{
+				if (minihell->lst_tokens->fd_out > 0)
+					close(minihell->lst_tokens->fd_out);
+				minihell->lst_tokens->fd_out = open_file(minihell->tokens[++i], 3);
+			}
+			else if (!ft_strncmp(minihell->tokens[i], ">>\0", 3) && flag == true)
+			{
+				if (minihell->lst_tokens->fd_out > 0)
+					close(minihell->lst_tokens->fd_out);
+				minihell->lst_tokens->fd_out = open_file(minihell->tokens[++i], 2);
+			}
+			i++;
+		}
+		minihell->lst_tokens = minihell->lst_tokens->next;
 	}
-	lst_tokens = tmp;
+	minihell->lst_tokens = tmp;
 }

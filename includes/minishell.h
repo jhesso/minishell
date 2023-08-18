@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/16 18:23:43 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/17 20:20:02 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ typedef struct			s_tokens
 	char				**out_app;
 	char				**heredoc;
 	char				**argv;
-	int					*fd_in;
-	int					*fd_out;
+	int					fd_in;
+	int					fd_out;
 	struct s_tokens		*next;
 }						t_tokens;
 
@@ -142,7 +142,7 @@ char			*remove_quotes(char *str, int i, int j);
 bool			execute(t_minihell *minihell);
 
 /* file.c */
-void			open_files(t_tokens *lst_tokens);
+void			open_files(t_minihell *minihell);
 
 /* file_utils.c */
 void			allocate_fds(t_tokens *node);

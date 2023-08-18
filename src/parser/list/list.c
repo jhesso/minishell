@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:41:34 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/17 15:36:20 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/17 18:58:10 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_malloc_sizes	calculate_sizes(char **command_line, int start)
 	sizes.out = 0;
 	sizes.heredoc = 0;
 	sizes.out_app = 0;
-	sizes.options = -1; //* start options at -1 since the first non special character is the command
+	sizes.options = -1;
 	while (command_line[start] && command_line[start][0] != '|')
 	{
 		if (!ft_strncmp(command_line[start], "<\0", 2))
@@ -67,9 +67,8 @@ static t_tokens	*allocate_content(char **command_line, int start)
 
 	node = malloc(sizeof(t_tokens));
 	if (node == NULL)
-		malloc_error(); //! add malloc protection
+		malloc_error();
 	sizes = calculate_sizes(command_line, start);
-	// print_sizes(sizes);
 	node->in = malloc(sizeof(char *) * (sizes.in + 1));
 	node->out = malloc(sizeof(char *) * (sizes.out + 1));
 	node->out_app = malloc(sizeof(char *) * (sizes.out_app + 1));
@@ -80,7 +79,7 @@ static t_tokens	*allocate_content(char **command_line, int start)
 		node->opt = malloc(sizeof(char *));
 	if (node->in == NULL || node->out == NULL || node->heredoc == NULL
 		|| (sizes.options > -1 && node->opt == NULL) || node->out_app == NULL)
-		malloc_error(); //! add malloc protection
+		malloc_error();
 	init_node(&node, sizes);
 	return (node);
 }
@@ -93,18 +92,17 @@ static t_tokens	*allocate_content(char **command_line, int start)
 static int	create_node(char **c_line, int s, t_minihell *mini)
 {
 	t_tokens		*node;
-	t_malloc_sizes	c; //* repurposing the struct to use as indexes instead of sizes
+	t_malloc_sizes	c;
 
 	node = allocate_content(c_line, s);
 	c = init_counter();
-	node->command = NULL; //? I'm thinking we need to allocate memory for this
+	node->command = NULL;
 	while (c_line[s] && c_line[s][0] != '|')
 	{
-		// ft_printf("c_line[%d] = %s\n", s, c_line[s]);
 		if (!ft_strncmp(c_line[s], "<\0", 2))
 			node->in[c.in++] = parse_str(c_line[++s], mini);
 		else if (!ft_strncmp(c_line[s], "<<\0", 3))
-			node->heredoc[c.heredoc++] = remove_quotes(c_line[++s], 0, 0); //parse_str(c_line[++s], mini);
+			node->heredoc[c.heredoc++] = remove_quotes(c_line[++s], 0, 0);
 		else if (!ft_strncmp(c_line[s], ">\0", 2))
 			node->out[c.out++] = parse_str(c_line[++s], mini);
 		else if (!ft_strncmp(c_line[s], ">>\0", 3))
@@ -126,29 +124,22 @@ static int	create_node(char **c_line, int s, t_minihell *mini)
 *	return the finished lst_token list
 */
 bool	create_lst_tokens(t_minihell *minihell)
-{ //! no malloc protection yet
+{
 	int			i;
 
 	minihell->lst_tokens = NULL;
 	i = create_node(minihell->tokens, 0, minihell);
 	if (minihell->tokens[i] && minihell->tokens[i][0] == '|')
 	{
-		free (minihell->tokens[i]);
+		// free (minihell->tokens[i]);
 		i++;
 	}
-	// ft_printf("i = %d\n", i);
-	// ft_printf("starting while loop inside create_lst_tokens\n");
-	// ft_printf("minihell->tokens[%d] = %s\n", i, minihell->tokens[i]);
 	while(minihell->tokens[i])
 	{
 		if (minihell->tokens[i][0] != '|')
 			i = create_node(minihell->tokens, i, minihell);
-		else
-		{
-			free (minihell->tokens[i]);
-			i++; //? the whole if else can be replaced with i = create_node(minihell->tokens, i, mini);?
-		}
-		// ft_printf("minihell->tokens[%d] = %s\n", i, minihell->tokens[i]);
+		// else
+		// 	free (minihell->tokens[i++]);
 	}
 	return (true);
 }

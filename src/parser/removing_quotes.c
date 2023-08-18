@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:42:59 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/15 19:01:12 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/17 18:54:24 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,6 @@ char	*remove_quotes(char *str, int i, int j)
 		}
 		new_str[i++] = str[j++];
 	}
-	free(str);
+	// free(str);
 	return (new_str);
 }
