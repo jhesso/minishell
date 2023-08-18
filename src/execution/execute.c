@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/17 20:18:46 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/18 17:41:37 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,24 +98,29 @@ void	append_commands(t_minihell *minihell)
 	path = get_path(minihell->env);
 	while (minihell->lst_tokens != NULL)
 	{
-		cmd = ft_strdup(minihell->lst_tokens->command);
-		if (ft_strchr(cmd, '/'))
+		if (!minihell->lst_tokens->command)
+			cmd = NULL;
+		else
 		{
-			if (access(cmd, F_OK | X_OK) != 0)
+			cmd = ft_strdup(minihell->lst_tokens->command);
+			if (ft_strchr(cmd, '/'))
+			{
+				if (access(cmd, F_OK | X_OK) != 0)
+				{
+					free(minihell->lst_tokens->command);
+					minihell->lst_tokens->command = NULL;
+					printf("minishell: %s: No such file or directory\n", cmd);
+				}
+			}
+			else if (!check_builtin(cmd))
 			{
 				free(minihell->lst_tokens->command);
-				minihell->lst_tokens->command = NULL;
-				printf("bash: %s: No such file or directory\n", cmd);
+				minihell->lst_tokens->command = check_valid_path(cmd, path);
+				if (!minihell->lst_tokens->command)
+					printf("minishell: %s: command not found\n", cmd);
 			}
+			free(cmd);
 		}
-		else if (!check_builtin(cmd))
-		{
-			free(minihell->lst_tokens->command);
-			minihell->lst_tokens->command = check_valid_path(cmd, path);
-			if (!minihell->lst_tokens->command)
-				printf("bash: %s: command not found\n", cmd);
-		}
-		free(cmd);
     	minihell->lst_tokens = minihell->lst_tokens->next;
 	}
 	free_str_arr(path);
@@ -135,9 +140,14 @@ void	create_argv(t_minihell *minihell)
 		minihell->lst_tokens->argv = malloc(sizeof(char *) * (options + 2));
 		if (!minihell->lst_tokens->argv)
 			malloc_error();
-		minihell->lst_tokens->argv[0] = ft_strdup(minihell->lst_tokens->command);
-		if (!minihell->lst_tokens->argv[0])
-			malloc_error();
+		if (!minihell->lst_tokens->command)
+			minihell->lst_tokens->argv[0] = NULL;
+		else
+		{
+			minihell->lst_tokens->argv[0] = ft_strdup(minihell->lst_tokens->command);
+			if (!minihell->lst_tokens->argv[0])
+				malloc_error();
+		}
 		i = 0;
 		while (minihell->lst_tokens->opt[i])
 		{
