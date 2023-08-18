@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:41:34 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/17 18:58:10 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/18 18:24:57 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,8 @@ bool	create_lst_tokens(t_minihell *minihell)
 	{
 		if (minihell->tokens[i][0] != '|')
 			i = create_node(minihell->tokens, i, minihell);
-		// else
+		else
+			i++;
 		// 	free (minihell->tokens[i++]);
 	}
 	return (true);
