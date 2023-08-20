@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/17 20:20:02 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/20 15:27:44 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,12 @@ char			*remove_quotes(char *str, int i, int j);
 /* execute.c */
 bool			execute(t_minihell *minihell);
 
+/* path.c */
+void			append_command_path(t_minihell *minihell);
+
+/* argv.c */
+void	create_argv(t_minihell *minihell);
+
 /* file.c */
 void			open_files(t_minihell *minihell);
 
@@ -150,6 +156,9 @@ void			allocate_fds(t_tokens *node);
 /*---------------------------------Builtins-----------------------------------*/
 
 void  			init_env(t_minihell *minihell, char **envp);
+
+/* builtin_utils.c */
+int				check_builtin(char *cmd);
 
 /*----------------------------------Utils-------------------------------------*/
 
