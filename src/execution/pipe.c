@@ -1,24 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute.c                                          :+:      :+:    :+:   */
+/*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/20 16:02:34 by jhesso           ###   ########.fr       */
+/*   Created: 2023/08/20 15:59:01 by jhesso            #+#    #+#             */
+/*   Updated: 2023/08/20 17:31:13 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	execute(t_minihell *minihell)
+static void	open_pipe(t_tokens *tmp)
 {
-	// print_string_arr(minihell->tokens);
-	lst_print(minihell->lst_tokens);
-	create_argv(minihell);
-	open_files(minihell);
-	append_command_path(minihell);
-	open_pipes(minihell->lst_tokens);
-	return (true);
+	int	fd[2];
+
+	if (pipe(fd) == -1)
+	{
+		ft_putstr_fd(strerror(errno), 2);
+		error_code = errno;
+	}
+	tmp->fd_out = fd[1];
+	tmp->next->fd_in = fd[0];
+}
+
+void	open_pipes(t_tokens *lst_tokens)
+{
+	t_tokens	*tmp;
+
+	tmp = lst_tokens;
+	while (tmp)
+	{
+		if (tmp->next != NULL && tmp->fd_out <= 0)
+			open_pipe(tmp);
+		tmp = tmp->next;
+	}
 }

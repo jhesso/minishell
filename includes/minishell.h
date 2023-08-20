@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/20 15:27:44 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/20 16:01:51 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ typedef struct			s_tokens
 	char				**argv;
 	int					fd_in;
 	int					fd_out;
+	bool				pipe; //! I might not even need this
+	int					pipe_fd[2];
 	struct s_tokens		*next;
 }						t_tokens;
 
@@ -145,7 +147,7 @@ bool			execute(t_minihell *minihell);
 void			append_command_path(t_minihell *minihell);
 
 /* argv.c */
-void	create_argv(t_minihell *minihell);
+void			create_argv(t_minihell *minihell);
 
 /* file.c */
 void			open_files(t_minihell *minihell);
