@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/21 12:29:55 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/21 14:11:55 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,9 @@ void			open_pipes(t_tokens *lst_tokens);
 /*---------------------------------Builtins-----------------------------------*/
 
 void  			init_env(t_minihell *minihell, char **envp);
+
+void			env_builtin(t_minihell *minihell);
+void			pwd_builtin(t_minihell *minihell);
 
 /* builtin_utils.c */
 int				check_builtin(char *cmd);
