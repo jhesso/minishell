@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 13:51:46 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/15 17:51:22 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/21 14:02:18 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,26 @@
 void	env_builtin(t_minihell *minihell)
 {
 	int	i;
+	int	argv_size;
 
 	i = 0;
-	while (minihell->env[i])
+	argv_size = count_strings(minihell->lst_tokens->argv);
+	if (argv_size == 1)
 	{
-		printf("%s\n", minihell->env[i]);
-		i++;
+
+		while (minihell->env[i])
+		{
+			printf("%s\n", minihell->env[i]);
+			i++;
+		}
+		error_code = 0;
 	}
+	else
+	{
+		printf("env: %s: No such file or directory\n", minihell->lst_tokens->argv[1]);
+		error_code = 127;
+	}
+
 }
 
 void	init_env(t_minihell *minihell, char **envp)
