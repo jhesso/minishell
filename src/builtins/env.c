@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 13:51:46 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/21 14:02:18 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/21 16:25:29 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	env_builtin(t_minihell *minihell)
 	argv_size = count_strings(minihell->lst_tokens->argv);
 	if (argv_size == 1)
 	{
-
 		while (minihell->env[i])
 		{
 			printf("%s\n", minihell->env[i]);
