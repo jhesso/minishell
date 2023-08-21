@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:45:20 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/15 19:07:09 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/21 16:32:12 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	get_end_index(char *str, int i, int type)
 	if (type == 1)
 	{
 		while (str[i] && str[i] != '\'' && str[i] != '\"'
-			&& str[i] != '$' && str[i] != ' ')
+			&& str[i] != '$' && str[i] != ' ' && str[i] != '=')
 			i++;
 		return (i);
 	}
