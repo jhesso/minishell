@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/20 16:01:51 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/21 12:29:55 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,9 @@ void			open_files(t_minihell *minihell);
 
 /* file_utils.c */
 void			allocate_fds(t_tokens *node);
+
+/* pipe */
+void			open_pipes(t_tokens *lst_tokens);
 
 /*---------------------------------Builtins-----------------------------------*/
 
