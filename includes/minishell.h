@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/22 17:58:11 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/22 23:46:04 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_tokens	t_tokens;
 typedef struct s_minihell
 {
 	char			**tokens;
+	char			**tokens_bck;
 	char			**env;
 	int				double_quote;
 	int				single_quote;
@@ -169,6 +170,12 @@ void			export_builtin(t_minihell *minihell);
 
 /* builtin_utils.c */
 int				check_builtin(char *cmd);
+
+/*----------------------------------Signals-----------------------------------*/
+
+/* signals.c */
+void			signals_interactive(void);
+void			signals_noninteractive(void);
 
 /*----------------------------------Utils-------------------------------------*/
 

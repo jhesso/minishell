@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 15:46:22 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/15 18:07:37 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/22 23:48:20 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,6 @@ bool	lexing(t_minihell *minihell, char *command_line)
 		free_str_arr(minihell->tokens);
 		return (false);
 	}
+	minihell->tokens_bck = copy_str_arr(minihell->tokens);
 	return (true);
 }

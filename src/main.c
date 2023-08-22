@@ -6,13 +6,11 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/17 19:04:05 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/22 23:30:24 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//TODO:	create a "clean exit" function for when we need to exit for whatever reason like a malloc fail
 
 /*	minishell()
 *	The main loop of minishell
@@ -27,7 +25,14 @@ void	minishell(t_minihell *minihell)
 	ret = true;
 	while (1)
 	{
+		signals_interactive();
 		command_line = readline(BLUE_BOLD "minishell$ " RESET_COLOR);
+		if (command_line == NULL)
+		{
+			printf("exit\n");
+			return ;
+		}
+		signals_noninteractive();
 		if (!ft_strncmp(command_line, "exit", 4)) //! this needs to be changed in the end, it is just temporary
 			exit(EXIT_SUCCESS);
 		if (command_line && *command_line) //* check that command_line is not just an empty line
@@ -58,5 +63,6 @@ int	main(int ac, char **av, char **envp)
 	//! seems that clear_history() is not allowed in the subject but checking the
 	//! readline/history.h there is no function called rl_clear_history which is allowed in the subject
 	clear_history(); // this needs to be moved to our exit routine once we have one
+	free_str_arr(minihell.env);
 	return (0);
 }
