@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/22 23:46:04 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/23 00:13:22 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ typedef struct s_tokens	t_tokens;
 typedef struct s_minihell
 {
 	char			**tokens;
-	char			**tokens_bck;
 	char			**env;
 	int				double_quote;
 	int				single_quote;
@@ -153,9 +152,6 @@ void			create_argv(t_minihell *minihell);
 /* file.c */
 void			open_files(t_minihell *minihell);
 
-/* file_utils.c */
-void			allocate_fds(t_tokens *node);
-
 /* pipe */
 void			open_pipes(t_tokens *lst_tokens);
 
@@ -179,9 +175,11 @@ void			signals_noninteractive(void);
 
 /*----------------------------------Utils-------------------------------------*/
 
-/* utils.c */
+/* cleanup.c */
 void			cleanup(t_minihell *minihell);
 void			*free_str_arr(char **s);
+
+/* utils.c */
 int				count_strings(char **array);
 
 #endif
