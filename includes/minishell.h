@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/22 17:58:11 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/23 00:13:22 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,9 +152,6 @@ void			create_argv(t_minihell *minihell);
 /* file.c */
 void			open_files(t_minihell *minihell);
 
-/* file_utils.c */
-void			allocate_fds(t_tokens *node);
-
 /* pipe */
 void			open_pipes(t_tokens *lst_tokens);
 
@@ -170,11 +167,19 @@ void			export_builtin(t_minihell *minihell);
 /* builtin_utils.c */
 int				check_builtin(char *cmd);
 
+/*----------------------------------Signals-----------------------------------*/
+
+/* signals.c */
+void			signals_interactive(void);
+void			signals_noninteractive(void);
+
 /*----------------------------------Utils-------------------------------------*/
 
-/* utils.c */
+/* cleanup.c */
 void			cleanup(t_minihell *minihell);
 void			*free_str_arr(char **s);
+
+/* utils.c */
 int				count_strings(char **array);
 
 #endif

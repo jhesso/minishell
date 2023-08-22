@@ -25,7 +25,8 @@ SRC			=	main.c utils.c cleanup.c \
 				execution/execute.c execution/path.c execution/argv.c \
 				execution/pipe.c \
 				builtins/env.c builtins/builtin_utils.c \
-				execution/file/file.c #execution/file/file_utils.c
+				execution/file/file.c \
+				signals/signals.c
 SRCS		=	$(addprefix $(SRC_PATH), $(SRC))
 OBJ			=	$(SRC:.c=.o)
 OBJS		=	$(addprefix $(OBJ_PATH), $(OBJ))
@@ -50,6 +51,7 @@ $(OBJ_PATH):
 	@mkdir $(OBJ_PATH)/builtins
 	@mkdir $(OBJ_PATH)/execution
 	@mkdir $(OBJ_PATH)/execution/file
+	@mkdir $(OBJ_PATH)/signals
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@cc $(CFLAGS) -c $< -o $@ $(INCS)
