@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/23 17:59:32 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/23 18:12:14 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ bool	execute(t_minihell *minihell)
 			child(minihell->lst_tokens, minihell);
 		else
 			parent(minihell->lst_tokens, minihell, i);
+		if (minihell->pids[i] == 0)
+			exit(error_code);
 		i++;
 		minihell->lst_tokens = minihell->lst_tokens->next;
 	}
