@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/23 00:13:22 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/23 04:49:24 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,10 @@ typedef struct s_minihell
 	char			**env;
 	int				double_quote;
 	int				single_quote;
+	int				pipe_fds[2];
+	int				old_fds[2];
+	pid_t			*pids;
+	int				nb_cmds;
 	struct s_tokens	*lst_tokens;
 }					t_minihell;
 
@@ -80,8 +84,6 @@ typedef struct			s_tokens
 	char				**argv;
 	int					fd_in;
 	int					fd_out;
-	bool				pipe; //! I might not even need this
-	int					pipe_fd[2];
 	struct s_tokens		*next;
 }						t_tokens;
 
@@ -143,6 +145,9 @@ char			*remove_quotes(char *str, int i, int j);
 /* execute.c */
 bool			execute(t_minihell *minihell);
 
+/* prepare_execution.c */
+void			prepare_execution(t_minihell *minihell);
+
 /* path.c */
 void			append_command_path(t_minihell *minihell);
 
@@ -156,6 +161,9 @@ void			open_files(t_minihell *minihell);
 void			open_pipes(t_tokens *lst_tokens);
 
 /*---------------------------------Builtins-----------------------------------*/
+
+/* builtin.c */
+void			execute_builtin(t_minihell *minihell, int builtin);
 
 void  			init_env(t_minihell *minihell, char **envp);
 

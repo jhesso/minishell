@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 23:22:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/20 15:32:39 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/23 03:55:37 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,5 @@ void	cleanup(t_minihell *minihell)
 {
 	free_list(minihell->lst_tokens);
 	free_str_arr(minihell->tokens);
-}
-
-/*	free_str_arr()
-*	frees a 2d array of strings (char **)
-*	param: char **ret, int row
-*	return: NULL (always)
-*/
-void	*free_str_arr(char **s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-		free(s[i++]);
-	if (s)
-		free(s);
-	return (NULL);
+	free(minihell->pids);
 }

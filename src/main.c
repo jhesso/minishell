@@ -6,11 +6,17 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/22 23:30:24 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/23 04:19:23 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	handle_eof(void)
+{
+	ft_putendl_fd("exit", STDOUT_FILENO);
+	exit(EXIT_SUCCESS);
+}
 
 /*	minishell()
 *	The main loop of minishell
@@ -28,16 +34,13 @@ void	minishell(t_minihell *minihell)
 		signals_interactive();
 		command_line = readline(BLUE_BOLD "minishell$ " RESET_COLOR);
 		if (command_line == NULL)
-		{
-			printf("exit\n");
-			return ;
-		}
+			handle_eof();
 		signals_noninteractive();
 		if (!ft_strncmp(command_line, "exit", 4)) //! this needs to be changed in the end, it is just temporary
 			exit(EXIT_SUCCESS);
 		if (command_line && *command_line) //* check that command_line is not just an empty line
 			add_history(command_line); //* from what I understand, this adds the line to history but only for this session
-		ft_putendl_fd(command_line, STDOUT_FILENO); //! this is just for testing
+		// ft_putendl_fd(command_line, STDOUT_FILENO); //! this is just for testing
 		ret = lexing(minihell, command_line);
 		if (ret)
 		{
@@ -63,6 +66,5 @@ int	main(int ac, char **av, char **envp)
 	//! seems that clear_history() is not allowed in the subject but checking the
 	//! readline/history.h there is no function called rl_clear_history which is allowed in the subject
 	clear_history(); // this needs to be moved to our exit routine once we have one
-	free_str_arr(minihell.env);
 	return (0);
 }

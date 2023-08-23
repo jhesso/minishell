@@ -6,14 +6,14 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:19:14 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/20 15:19:32 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/23 04:45:56 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	check_builtin(char *cmd)
-{
+{ //? why not just return 1, 2, 3, etc..?
 	int	i;
 
 	i = 0;
