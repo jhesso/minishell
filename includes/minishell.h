@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/23 04:49:24 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/23 05:05:59 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,8 +168,8 @@ void			execute_builtin(t_minihell *minihell, int builtin);
 void  			init_env(t_minihell *minihell, char **envp);
 
 void			env_builtin(t_minihell *minihell);
-void			pwd_builtin(t_minihell *minihell);
-void			echo_builtin(t_minihell *minihell);
+void			pwd_builtin(void);
+void			echo_builtin(t_tokens *cmd);
 void			export_builtin(t_minihell *minihell);
 
 /* builtin_utils.c */
