@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 17:17:54 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/22 18:11:39 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/23 05:05:13 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int		already_exists(char **env, char *arg)
 	}
 	return (1);
 }
-void	modify_variable(t_minihell *minihell, cahr *arg)
+void	modify_variable(t_minihell *minihell, char *arg)
 {
 	int		i;
 	int		len;
