@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/23 04:49:41 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/23 16:26:18 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static void	child(t_tokens *cmd, t_minihell *mini)
 {
 	int	builtin;
 
+	if (!cmd->command)
+		return ;
 	redirect_io(cmd, mini->pipe_fds, mini->old_fds);
 	builtin = check_builtin(cmd->command);
 	if (builtin > 0)
