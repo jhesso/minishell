@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+         #
+#    By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 16:12:22 by jhesso            #+#    #+#              #
-#    Updated: 2023/08/23 04:56:20 by jhesso           ###   ########.fr        #
+#    Updated: 2023/08/23 17:22:43 by dgerguri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ $(OBJ_PATH):
 	@mkdir $(OBJ_PATH)/signals
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
-	@cc $(CFLAGS) -c $< -o $@ $(INCS)
+	@cc $(CFLAGS) -I ~/.brew/opt/readline/include -c $< -o $@ $(INCS)
 
 $(NAME): $(OBJS)
 	@echo "$(BLUE)Compiling $(NAME)$(RESET)"
