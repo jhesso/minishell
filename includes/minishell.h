@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/23 15:11:09 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/23 21:22:32 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ typedef struct s_minihell
 	int				double_quote;
 	int				single_quote;
 	int				pipe_fds[2];
-	int				old_fds[2];
 	pid_t			*pids;
 	int				nb_cmds;
 	struct s_tokens	*lst_tokens;

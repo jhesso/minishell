@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/23 04:19:23 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/23 21:22:58 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,26 @@ void	minishell(t_minihell *minihell)
 }
 int	error_code = 0;
 
+static void	init_minihell(t_minihell *minihell)
+{
+	minihell->tokens = NULL;
+	minihell->env = NULL;
+	minihell->double_quote = 0;
+	minihell->single_quote = 0;
+	minihell->pipe_fds[0] = 0;
+	minihell->pipe_fds[1] = 0;
+	minihell->pids = NULL;
+	minihell->nb_cmds = 0;
+	minihell->lst_tokens = NULL;
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
 	t_minihell	minihell;
 
+	init_minihell(&minihell);
 	init_env(&minihell, envp);
 	minishell(&minihell);
 	//exit shell
