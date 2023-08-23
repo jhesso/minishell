@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:19:38 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/23 05:26:08 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/23 05:35:32 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static void print_line(char **argv, int start)
 //! and this was resulting in unknown address error
 //! also theres no reason to send the minihell struct here
 //! as we only use the cmd (and also needs to be the current cmd in execution)
-//! printing is not working but I think thats a problem with piping/duping
+//! printing is not working but I think thats because you're only
+//! printing if there is -n specified. Also for some reason cmd->opt == env?!?!
 void	echo_builtin(t_tokens *cmd)
 {
 	int	i;
