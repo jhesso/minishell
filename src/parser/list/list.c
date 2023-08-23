@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:41:34 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/19 15:13:28 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/23 21:35:31 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,34 +110,61 @@ static t_tokens	*allocate_content(char **command_line, int start)
 *	and save all the information for that node
 *	Returns the index of the new pipe we found
 */
-static int	create_node(char **c_line, int s, t_minihell *mini)
+// static int	create_node(char **c_line, int s, t_minihell *mini)
+// {
+// 	t_tokens		*node;
+// 	t_malloc_sizes	c;
+
+// 	node = allocate_content(c_line, s);
+// 	c = init_counter();
+// 	node->command = NULL;
+// 	while (c_line[s] && c_line[s][0] != '|')
+// 	{
+// 		if (!ft_strncmp(c_line[s], "<\0", 2))
+// 			node->in[c.in++] = parse_str(c_line[++s], mini);
+// 		else if (!ft_strncmp(c_line[s], "<<\0", 3))
+// 			node->heredoc[c.heredoc++] = remove_quotes(c_line[++s], 0, 0);
+// 		else if (!ft_strncmp(c_line[s], ">\0", 2))
+// 			node->out[c.out++] = parse_str(c_line[++s], mini);
+// 		else if (!ft_strncmp(c_line[s], ">>\0", 3))
+// 			node->out_app[c.out_app++] = parse_str(c_line[++s], mini);
+// 		else if (node->command != NULL)
+// 			node->opt[c.options++] = parse_str(c_line[s], mini);
+// 		else
+// 			node->command = parse_str(c_line[s], mini);
+// 		s++;
+// 	}
+// 	lst_add_back(&mini->lst_tokens, node);
+// 	return (s);
+// }
+
+static int  create_node(char **c_line, int s, t_minihell *mini)
 {
-	t_tokens		*node;
-	t_malloc_sizes	c;
+    t_tokens        *node;
+    t_malloc_sizes  c;
 
-	node = allocate_content(c_line, s);
-	c = init_counter();
-	node->command = NULL;
-	while (c_line[s] && c_line[s][0] != '|')
-	{
-		if (!ft_strncmp(c_line[s], "<\0", 2))
-			node->in[c.in++] = parse_str(c_line[++s], mini);
-		else if (!ft_strncmp(c_line[s], "<<\0", 3))
-			node->heredoc[c.heredoc++] = remove_quotes(c_line[++s], 0, 0);
-		else if (!ft_strncmp(c_line[s], ">\0", 2))
-			node->out[c.out++] = parse_str(c_line[++s], mini);
-		else if (!ft_strncmp(c_line[s], ">>\0", 3))
-			node->out_app[c.out_app++] = parse_str(c_line[++s], mini);
-		else if (node->command != NULL)
-			node->opt[c.options++] = parse_str(c_line[s], mini);
-		else
-			node->command = parse_str(c_line[s], mini);
-		s++;
-	}
-	lst_add_back(&mini->lst_tokens, node);
-	return (s);
+    node = allocate_content(c_line, s);
+    c = init_counter();
+    node->command = NULL;
+    while (c_line[s] && c_line[s][0] != '|')
+    {
+        if (!ft_strncmp(c_line[s], "<\0", 2))
+            node->in[c.in++] = parse_str(++s, mini);
+        else if (!ft_strncmp(c_line[s], "<<\0", 3))
+            node->heredoc[c.heredoc++] = remove_quotes(c_line[++s], 0, 0);
+        else if (!ft_strncmp(c_line[s], ">\0", 2))
+            node->out[c.out++] = parse_str(++s, mini);
+        else if (!ft_strncmp(c_line[s], ">>\0", 3))
+            node->out_app[c.out_app++] = parse_str(++s, mini);
+        else if (node->command != NULL)
+            node->opt[c.options++] = parse_str(s, mini);
+        else
+            node->command = parse_str(s, mini);
+        s++;
+    }
+    lst_add_back(&mini->lst_tokens, node);
+    return (s);
 }
-
 /*
 *	loop through the command_line char**
 *	each time we hit a '|', create a new node containing everything after that pipe

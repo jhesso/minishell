@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:45:20 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/22 23:45:34 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/23 21:44:17 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ char	*insert_value(char *str, char *value, int start, int new_start)
 char	*get_value(char *path, int len, char **envp, int i)
 {
 	char	*value;
-	printf("path:%s\n", path);
 
 	while (envp[i])
 	{
@@ -194,17 +193,35 @@ char	*expand_variables(char *str, char **envp)
 		else
 			start++;
 	}
+	// printf("STR: %s\n", str);
 	return (str);
 }
 
-char	*parse_str(char *str, t_minihell *minihell)
-{
-	char	*ret;
+// char	*parse_str(char *str, t_minihell *minihell)
+// {
+// 	char	*ret;
 
-	ret = expand_variables(str, minihell->env);
-	if (!ret)
-		malloc_error();
-	//free the remaining char**
-	ret = remove_quotes(ret, 0, 0);
-	return (ret);
+// 	ret = expand_variables(str, minihell->env);
+// 	if (!ret)
+// 		malloc_error();
+// 	//free the remaining char**
+// 	ret = remove_quotes(ret, 0, 0);
+// 	return (ret);
+// }
+
+char    *parse_str(int c, t_minihell *minihell)
+{
+    // char *ret;
+
+    minihell->tokens[c] = expand_variables(minihell->tokens[c], minihell->env);
+    if (!minihell->tokens[c])
+        malloc_error();
+    // int i = 0;
+    // while (minihell->tokens[i])
+    // {
+    //  printf("Token: %s\n", minihell->tokens[i]);
+    //  i++;
+    // }
+    minihell->tokens[c] = remove_quotes(minihell->tokens[c], 0, 0);
+    return (ft_strdup(minihell->tokens[c]));
 }
