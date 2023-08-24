@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:41:34 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/23 21:35:31 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/24 23:36:40 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,27 +57,6 @@ static t_malloc_sizes	calculate_sizes(char **command_line, int start)
 	return (sizes);
 }
 
-/*	calculate_list_size()
-!	this is just a test function, REMOVE!!!
-*/
-// static int	calculate_list_size(t_tokens *node)
-// {
-// 	int	size;
-
-// 	size = 0;
-// 	size += sizeof(node->command);
-// 	size += sizeof(node->opt);
-// 	size += sizeof(node->in);
-// 	size += sizeof(node->out);
-// 	size += sizeof(node->out_app);
-// 	size += sizeof(node->heredoc);
-// 	size += sizeof(node->argv);
-// 	size += sizeof(node->fd_in);
-// 	size += sizeof(node->fd_out);
-// 	size += sizeof(node->next);
-// 	return (size);
-// }
-
 /*	allocate_content()
 *	Allocate memory for the contents of a node in our tokens list
 */
@@ -110,34 +89,6 @@ static t_tokens	*allocate_content(char **command_line, int start)
 *	and save all the information for that node
 *	Returns the index of the new pipe we found
 */
-// static int	create_node(char **c_line, int s, t_minihell *mini)
-// {
-// 	t_tokens		*node;
-// 	t_malloc_sizes	c;
-
-// 	node = allocate_content(c_line, s);
-// 	c = init_counter();
-// 	node->command = NULL;
-// 	while (c_line[s] && c_line[s][0] != '|')
-// 	{
-// 		if (!ft_strncmp(c_line[s], "<\0", 2))
-// 			node->in[c.in++] = parse_str(c_line[++s], mini);
-// 		else if (!ft_strncmp(c_line[s], "<<\0", 3))
-// 			node->heredoc[c.heredoc++] = remove_quotes(c_line[++s], 0, 0);
-// 		else if (!ft_strncmp(c_line[s], ">\0", 2))
-// 			node->out[c.out++] = parse_str(c_line[++s], mini);
-// 		else if (!ft_strncmp(c_line[s], ">>\0", 3))
-// 			node->out_app[c.out_app++] = parse_str(c_line[++s], mini);
-// 		else if (node->command != NULL)
-// 			node->opt[c.options++] = parse_str(c_line[s], mini);
-// 		else
-// 			node->command = parse_str(c_line[s], mini);
-// 		s++;
-// 	}
-// 	lst_add_back(&mini->lst_tokens, node);
-// 	return (s);
-// }
-
 static int  create_node(char **c_line, int s, t_minihell *mini)
 {
     t_tokens        *node;

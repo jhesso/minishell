@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:45:20 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/24 23:09:19 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/24 23:39:52 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,27 +22,27 @@
 */
 int	get_end_index(char *str, int i, int type)
 {
-	if (type == 1) //* for "normal" variables
+	if (type == 1)
 	{
 		while (str[i] && str[i] != '\'' && str[i] != '\"'
-			&& str[i] != '$' && str[i] != ' ' && str[i] != '=') //* skip the string until we find a character that ends the variable
+			&& str[i] != '$' && str[i] != ' ' && str[i] != '=')
 			i++;
 		return (i);
 	}
-	else if (type == 2) //* if the string is in single quotes
+	else if (type == 2)
 	{
 		i++;
-		while (str[i] && str[i] != '\'') //* skip the string until we find the closing quote (or '\0')
+		while (str[i] && str[i] != '\'')
 			i++;
-		if (str[i]) //* if we found the closing quote, skip it
+		if (str[i])
 			i++;
 		return (i);
 	}
-	else if (type == 3) //* if the string is in double quotes
+	else if (type == 3)
 	{
-		while (str[i] && str[i] != '\"') //* skip the string until we find the closing quote (or '\0')
+		while (str[i] && str[i] != '\"')
 			i++;
-		if (str[i]) //* if we found the closing quote, skip it
+		if (str[i])
 			i++;
 		return (i);
 	}
@@ -64,8 +64,8 @@ char	*insert_value(char *str, char *value, int start, int new_start)
 	int		value_len;
 	int		new_str_len;
 
-	value_len = ft_strlen(value); //* get the length of the value (in case of $"", it will be 0)
-	new_str_len = ft_strlen(str) + value_len + 1; //* calculate the length of the new string (original string + value + '\0')
+	value_len = ft_strlen(value);
+	new_str_len = ft_strlen(str) + value_len + 1;
 	new_str = malloc(sizeof(char) * (new_str_len));
 	if (new_str == NULL)
 	{
@@ -73,10 +73,10 @@ char	*insert_value(char *str, char *value, int start, int new_start)
 		free(str);
 		return (NULL);
 	}
-	ft_strlcpy(new_str, str, new_str_len); //* copy the original string to the new string
-	ft_strlcpy(new_str + start, value, new_str_len); //* replace the variable with its value
-	ft_strlcpy(new_str + start + value_len, str + new_start, new_str_len); //* copy the rest of the string
-	free(value); //* free the value since we are returning the new string
+	ft_strlcpy(new_str, str, new_str_len);
+	ft_strlcpy(new_str + start, value, new_str_len);
+	ft_strlcpy(new_str + start + value_len, str + new_start, new_str_len);
+	free(value);
 	return (new_str);
 }
 
@@ -93,23 +93,23 @@ char	*get_value(char *path, int len, char **envp, int i)
 {
 	char	*value;
 
-	while (envp[i]) //* loop through the environment variables
+	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], &path[1], len - 1) == 0) //? why $path[1]?
 		{
-			value = ft_substr(envp[i], len - 1, ft_strlen(envp[i])); //* create a substring of the value
+			value = ft_substr(envp[i], len - 1, ft_strlen(envp[i]));
 			if (!value)
 			{
 				free(path);
 				return (NULL);
 			}
-			free(path); //* free the path since we are returning the value
+			free(path);
 			return (value);
 		}
 		i++;
 	}
-	value = ft_calloc(1, 1); //* if the variable doesn't exist, return an empty string
-	free(path); //* free the path since we are returning the value
+	value = ft_calloc(1, 1);
+	free(path);
 	return (value);
 }
 
@@ -124,9 +124,9 @@ char	*get_value(char *path, int len, char **envp, int i)
 */
 char	*expand(char *str, char **envp, int start, int end)
 {
-	char	*sub_path; //* substring of the variable ($USER for example)
-	char	*value; //* value of the variable
-	char	*path; //* variable with '=' at the end ($USER= for example) | I'd call this var_name or smth | freed in get_value()
+	char	*sub_path;
+	char	*value;
+	char	*path;
 	int		len;
 
 	sub_path = ft_substr(str, start, end - start);
@@ -138,9 +138,9 @@ char	*expand(char *str, char **envp, int start, int end)
 		free(sub_path);
 		return (NULL);
 	}
-	free(sub_path); //* free the substring since we dont need it anymore
+	free(sub_path);
 	len = ft_strlen(path);
-	value = get_value(path, len, envp, 0); //* get the value of the variable
+	value = get_value(path, len, envp, 0);
 	if (!value)
 		return (NULL);
 	return (value);
@@ -157,27 +157,27 @@ char	*expand(char *str, char **envp, int start, int end)
 char	*expand_str(char *str, char **envp, int s)
 {
 	char	*new_str;
-	char	*value; //* value of the variable | freed in insert_value()
+	char	*value;
 	int		end;
 
-	if (str[s + 1] == '\0' || str[s + 1] == '\'' || str[s + 1] == '\"') //* if str ends with a $ or the next character is a quote
+	if (str[s + 1] == '\0' || str[s + 1] == '\'' || str[s + 1] == '\"')
 	{
-		new_str = insert_value(str, (char *)ft_calloc(1, 1), s, s + 1); //* insert an empty string
+		new_str = insert_value(str, (char *)ft_calloc(1, 1), s, s + 1);
 		if (!new_str)
 			return (NULL);
 	}
-	else if (str[s + 1] == '?') //* if the next character is '?' (error code)
-		new_str = insert_value(str, ft_itoa(error_code), s, s + 2); //* convert error_code to string and insert it
+	else if (str[s + 1] == '?')
+		new_str = insert_value(str, ft_itoa(error_code), s, s + 2);
 	else
 	{
-		end = get_end_index(str, s + 1, 1); //* get the index of the character after the variable
-		value = expand(str, envp, s, end); //* expand the variable
+		end = get_end_index(str, s + 1, 1);
+		value = expand(str, envp, s, end);
 		if (!value)
 		{
 			free(str);
 			return (NULL);
 		}
-		new_str = insert_value(str, value, s, end); //* insert the value of the variable
+		new_str = insert_value(str, value, s, end);
 		if (!new_str)
 			return (NULL);
 	}
@@ -197,24 +197,24 @@ char	*expand_quotes(char *str, char **envp, int start)
 {
 	char	*new_str;
 
-	new_str = ft_strdup(str); //* duplicate the string
+	new_str = ft_strdup(str);
 	if (!new_str)
 		return (NULL);
-	start++; //* skip the first quote
+	start++;
 	while (new_str[start] && new_str[start] != '\"')
 	{
-		if (new_str[start] == '$') //* look for the '$' character
+		if (new_str[start] == '$')
 		{
-			new_str = expand_str(new_str, envp, start); //* expand the string from the '$' character
+			new_str = expand_str(new_str, envp, start);
 			if (!new_str)
 			{
 				free(str);
 				return (NULL);
 			}
-		} //? couldn't we break here since the string is expanded? is this incase the quotes contain multiple variables?
+		}
 		start++;
 	}
-	free(str); //* free the original string since we are returning the expanded string and replacing the original with that
+	free(str);
 	return (new_str);
 }
 
@@ -227,31 +227,31 @@ char	*expand_quotes(char *str, char **envp, int start)
 */
 char	*expand_variables(char *str, char **envp)
 {
-	int	start; //* keep track of the index we are at
+	int	start;
 
 	start = 0;
 	while (str[start])
 	{
-		if (str[start] == '$') //* if we find an unquoted $, expand it
+		if (str[start] == '$')
 		{
 			str = expand_str(str, envp, start);
 			if (!str)
 				return (NULL);
 		}
-		else if (str[start] == '\"') //* if the string is in double quotes
+		else if (str[start] == '\"')
 		{
-			start++; //* skip the first quote
-			str = expand_quotes(str, envp, start - 1); //* expand the string | Why the fuck do we increment start just to send start - 1 here?!
+			start++;
+			str = expand_quotes(str, envp, start - 1);
 			if (!str)
 				return (NULL);
-			start = get_end_index(str, start, 3); //* skip the expanded string
+			start = get_end_index(str, start, 3);
 		}
-		else if (str[start] == '\'') //* if the string is in single quotes
-			start = get_end_index(str, start, 2); //* skip the string
+		else if (str[start] == '\'')
+			start = get_end_index(str, start, 2);
 		else
 			start++;
 	}
-	return (str); //* return the expanded string (or the original if no variables present (or they are in single quotes))
+	return (str);
 }
 
 /*	parse_str()
@@ -264,9 +264,9 @@ char	*expand_variables(char *str, char **envp)
 char    *parse_str(int c, t_minihell *minihell)
 {
 	if (!ft_strncmp(minihell->tokens[c - 1], "<<\0", 3))
-    	minihell->tokens[c] = expand_variables(minihell->tokens[c], minihell->env); //* expand variables
-    if (!minihell->tokens[c]) //* check for malloc errors
+    	minihell->tokens[c] = expand_variables(minihell->tokens[c], minihell->env);
+    if (!minihell->tokens[c])
         malloc_error();
-    minihell->tokens[c] = remove_quotes(minihell->tokens[c], 0, 0); //* remove quotes
-    return (ft_strdup(minihell->tokens[c])); //* return a duplicate of the parsed string (so we can free it in the list and in the tokens** array)
+    minihell->tokens[c] = remove_quotes(minihell->tokens[c], 0, 0);
+    return (ft_strdup(minihell->tokens[c]));
 }

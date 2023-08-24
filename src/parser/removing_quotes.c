@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   removing_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:42:59 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/24 19:35:14 by dardangergu      ###   ########.fr       */
+/*   Updated: 2023/08/24 23:43:00 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*	len_without_quotes()
+*	Calculates the length of the string without quotes
+*	Return value: int (length of the string without quotes)
+*	Parameters:
+*		(char *) str: string to be calculated
+*/
 static int	len_without_quotes(char *str)
 {
 	char	c;
