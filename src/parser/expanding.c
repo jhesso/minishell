@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:45:20 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/24 05:27:59 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/24 23:09:19 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,7 +263,8 @@ char	*expand_variables(char *str, char **envp)
 */
 char    *parse_str(int c, t_minihell *minihell)
 {
-    minihell->tokens[c] = expand_variables(minihell->tokens[c], minihell->env); //* expand variables
+	if (!ft_strncmp(minihell->tokens[c - 1], "<<\0", 3))
+    	minihell->tokens[c] = expand_variables(minihell->tokens[c], minihell->env); //* expand variables
     if (!minihell->tokens[c]) //* check for malloc errors
         malloc_error();
     minihell->tokens[c] = remove_quotes(minihell->tokens[c], 0, 0); //* remove quotes
