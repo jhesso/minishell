@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   removing_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:42:59 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/24 05:35:51 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/24 19:35:14 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,6 @@ char	*remove_quotes(char *str, int i, int j)
 		}
 		new_str[i++] = str[j++];
 	}
-	free(str); //! this was commented out, causing a memory leak
+	free(str);
 	return (new_str);
 }
