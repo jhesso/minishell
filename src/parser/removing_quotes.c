@@ -37,6 +37,14 @@ static int	len_without_quotes(char *str)
 	return (len - flag);
 }
 
+/*	remove_quotes()
+*	Removes quotes from string
+*	Return value: char * (modified string)
+*	Parameters:
+*		(char *) str: string to be modified
+*		(int) i: index of new string
+*		(int) j: index of old string
+*/
 char	*remove_quotes(char *str, int i, int j)
 {
 	char	*new_str;

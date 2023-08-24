@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/19 15:12:54 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/24 23:03:49 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	get_heredoc(char *delim)
 	char	*line;
 
 	tmp_fd = open(".heredoc.tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	printf("delim: %s\n", delim);
 	if (tmp_fd == -1)
 	{
 		ft_putstr_fd("minishell: ", 2);
