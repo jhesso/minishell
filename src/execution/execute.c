@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/25 00:03:38 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/25 00:13:06 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,31 +18,31 @@
 */
 static void	redirect_io(t_tokens *cmd, int *pipe_fds, int not_first_cmd, int pipe_read)
 {
-	if (cmd->fd_in > 0) //* if input is redirected to a file
+	if (cmd->fd_in > 0)
 	{
 		dup2(cmd->fd_in, STDIN_FILENO);
 		close(pipe_read);
 	}
-	else if (not_first_cmd) //* if not first command, redirect input to pipe
+	else if (not_first_cmd)
 	{
 		dup2(pipe_read, STDIN_FILENO);
 		if (cmd->fd_in != 0)
 			close(cmd->fd_in);
 	}
-	if (cmd->fd_out > 0) //* if output is redirected to a file
+	if (cmd->fd_out > 0)
 	{
 		dup2(cmd->fd_out, STDOUT_FILENO);
 		close(pipe_fds[1]);
 	}
-	else if (cmd->next) //* if not last command, redirect output to pipe
+	else if (cmd->next)
 	{
 		dup2(pipe_fds[1], STDOUT_FILENO);
 		if (cmd->fd_out != 0)
 			close(cmd->fd_out);
 	}
-	if (!cmd->next) //* if last command, close write end of pipe
+	if (!cmd->next)
 		close(pipe_fds[1]);
-	if (!not_first_cmd) //* if first command, close read end of pipe
+	if (!not_first_cmd)
 		close(pipe_read);
 }
 
@@ -54,15 +54,15 @@ static void	child(t_tokens *cmd, t_minihell *mini, int not_first_cmd, int pipe_r
 {
 	int	builtin;
 
-	if (!cmd->command) //* if command is NULL, exit (this is for when a command was false)
+	if (!cmd->command)
 		return ;
-	redirect_io(cmd, mini->pipe_fds, not_first_cmd, pipe_read); //* redirect input and output to their proper places
-	builtin = check_builtin(cmd->command); //* check if command is a builtin
+	redirect_io(cmd, mini->pipe_fds, not_first_cmd, pipe_read);
+	builtin = check_builtin(cmd->command);
 	if (builtin > 0)
-		execute_builtin(mini, builtin); //* execute builtin
-	else if (execve(cmd->command, cmd->argv, mini->env) == -1) //* execute command
+		execute_builtin(mini, builtin);
+	else if (execve(cmd->command, cmd->argv, mini->env) == -1)
 	{
-		perror(strerror(errno)); //* if execve fails, print error and save error code
+		perror(strerror(errno));
 		error_code = errno;
 	}
 }
@@ -80,7 +80,7 @@ static void	parent(t_minihell *mini)
 	while(i < mini->nb_cmds) //? should this be nb_cmds - 1 ?
 		waitpid(mini->pids[i++], &status, 0);
 	if (WIFEXITED(status))
-		error_code = WEXITSTATUS(status); //* save exit status of last command
+		error_code = WEXITSTATUS(status);
 }
 
 /*	execute()
@@ -94,39 +94,37 @@ bool	execute(t_minihell *minihell)
 	int			i;
 	int			pipe_read = 0;
 
-	// print_string_arr(minihell->tokens);
-	// lst_print(minihell->lst_tokens);
 	prepare_execution(minihell);
 	head = minihell->lst_tokens;
 	i = 0;
 	while (minihell->lst_tokens)
 	{
-		if (pipe(minihell->pipe_fds) == -1) //* create pipe
+		if (pipe(minihell->pipe_fds) == -1)
 		{
 			perror(strerror(errno));
 			error_code = errno;
 			break ;
 		}
-		minihell->pids[i] = fork(); //* create child process
-		if (minihell->pids[i] == -1) //* if fork fails
+		minihell->pids[i] = fork();
+		if (minihell->pids[i] == -1)
 		{
 			perror(strerror(errno));
 			error_code = errno;
 			break ;
 		}
-		else if (minihell->pids[i] == 0) //* child process
+		else if (minihell->pids[i] == 0)
 			child(minihell->lst_tokens, minihell, i, pipe_read);
 		else
-			close(minihell->pipe_fds[1]); //* parent process can close the write end of the pipe
-		if (minihell->pids[i] == 0) //* if child process reaches here, exit (mainly for false commands) but also if execve fails
+			close(minihell->pipe_fds[1]);
+		if (minihell->pids[i] == 0)
 			exit(error_code);
-		pipe_read = minihell->pipe_fds[0]; //* save the read end of the pipe for the next command
+		pipe_read = minihell->pipe_fds[0];
 		if (i)
-			close(minihell->pipe_fds[0]); //* if not first command, close the read end of the pipe
+			close(minihell->pipe_fds[0]);
 		i++;
 		minihell->lst_tokens = minihell->lst_tokens->next;
 	}
-	parent(minihell); //* parent process waits for all child processes to finish
+	parent(minihell);
 	unlink(".heredoc.tmp");
 	minihell->lst_tokens = head;
 	return (true);
