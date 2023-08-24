@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/24 03:43:01 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/25 00:03:38 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ bool	execute(t_minihell *minihell)
 		minihell->lst_tokens = minihell->lst_tokens->next;
 	}
 	parent(minihell); //* parent process waits for all child processes to finish
-	//TODO: unlink heredoc
+	unlink(".heredoc.tmp");
 	minihell->lst_tokens = head;
 	return (true);
 }

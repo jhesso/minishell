@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:41:34 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/24 23:36:40 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/24 23:58:57 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static int  create_node(char **c_line, int s, t_minihell *mini)
         if (!ft_strncmp(c_line[s], "<\0", 2))
             node->in[c.in++] = parse_str(++s, mini);
         else if (!ft_strncmp(c_line[s], "<<\0", 3))
-            node->heredoc[c.heredoc++] = remove_quotes(c_line[++s], 0, 0);
+            node->heredoc[c.heredoc++] = parse_str(++s, mini);
         else if (!ft_strncmp(c_line[s], ">\0", 2))
             node->out[c.out++] = parse_str(++s, mini);
         else if (!ft_strncmp(c_line[s], ">>\0", 3))

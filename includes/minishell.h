@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/23 21:35:55 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/25 00:01:16 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ bool			syntax_checker(char **tokens);
 
 /* parsing.c */
 bool			parse(t_minihell *minihell);
+char    		*parse_str(int c, t_minihell *minihell);
 
 /* list.c */
 bool			create_lst_tokens(t_minihell *minihell);
@@ -134,8 +135,8 @@ void			lst_print(t_tokens *lst_tokens);
 void			lst_add_back(t_tokens **lst_tokens, t_tokens *node);
 void			print_sizes(t_malloc_sizes sizes);
 
-// char			*parse_str(char *str, t_minihell *minihell);
-char    *parse_str(int c, t_minihell *minihell);
+/* expanding.c */
+char			*expand_variables(char *str, char **envp);
 
 /* removing_quotes.c */
 char			*remove_quotes(char *str, int i, int j);

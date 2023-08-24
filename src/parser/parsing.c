@@ -3,21 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 05:12:42 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/17 15:16:33 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/25 00:06:33 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// bool	append_path(t_tokens *lst_tokens, char **env)
-// {
-// 	(void)lst_tokens;
-// 	(void)env;
-// 	return (true);
-// }
+/*	parse_str()
+*	expand environment variables and remove extra quotes
+*	Return value: char * (modified string)
+*	Parameters:
+*		int c: index of the string we are modifying
+*		t_minihell *minihell: our minihell struct containing the strings to be modified
+*/
+char    *parse_str(int c, t_minihell *minihell)
+{
+	if (c == 0)
+    	minihell->tokens[c] = expand_variables(minihell->tokens[c], minihell->env);
+	else if (!ft_strncmp(minihell->tokens[c - 1], "<<\0", 3))
+    if (!minihell->tokens[c])
+        malloc_error();
+    minihell->tokens[c] = remove_quotes(minihell->tokens[c], 0, 0);
+    return (ft_strdup(minihell->tokens[c]));
+}
 
 /*	parse()
 *	parse the saved command line and save into a linked list
@@ -25,11 +36,7 @@
 */
 bool	parse(t_minihell *minihell)
 {
-	//TODO: move list creation here, remove quotes, expand variables, append correct path to command
 	if (!create_lst_tokens(minihell))
 		return (false);
-	// lst_print(minihell->lst_tokens); //! remove this (debugging purposes)
-	// if (!append_path(minihell->lst_tokens, minihell->env)) //TODO: I might be able to simply rip this out from my pipex
-	// 	return (false);
 	return (true);
 }

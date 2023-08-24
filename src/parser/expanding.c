@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:45:20 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/24 23:39:52 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/24 23:57:30 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,21 +252,4 @@ char	*expand_variables(char *str, char **envp)
 			start++;
 	}
 	return (str);
-}
-
-/*	parse_str()
-*	expand environment variables and remove extra quotes
-*	Return value: char * (modified string)
-*	Parameters:
-*		int c: index of the string we are modifying
-*		t_minihell *minihell: our minihell struct containing the strings to be modified
-*/
-char    *parse_str(int c, t_minihell *minihell)
-{
-	if (!ft_strncmp(minihell->tokens[c - 1], "<<\0", 3))
-    	minihell->tokens[c] = expand_variables(minihell->tokens[c], minihell->env);
-    if (!minihell->tokens[c])
-        malloc_error();
-    minihell->tokens[c] = remove_quotes(minihell->tokens[c], 0, 0);
-    return (ft_strdup(minihell->tokens[c]));
 }
