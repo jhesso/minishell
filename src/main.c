@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/23 21:25:21 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/24 01:56:03 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,6 @@ int	main(int ac, char **av, char **envp)
 	//exit shell
 	//! seems that clear_history() is not allowed in the subject but checking the
 	//! readline/history.h there is no function called rl_clear_history which is allowed in the subject
-	clear_history(); // this needs to be moved to our exit routine once we have one
+	rl_clear_history(); // this needs to be moved to our exit routine once we have one
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:42:59 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/17 18:54:24 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/24 05:35:51 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,14 @@ static int	len_without_quotes(char *str)
 	return (len - flag);
 }
 
+/*	remove_quotes()
+*	Removes quotes from string
+*	Return value: char * (modified string)
+*	Parameters:
+*		(char *) str: string to be modified
+*		(int) i: index of new string
+*		(int) j: index of old string
+*/
 char	*remove_quotes(char *str, int i, int j)
 {
 	char	*new_str;
@@ -62,6 +70,6 @@ char	*remove_quotes(char *str, int i, int j)
 		}
 		new_str[i++] = str[j++];
 	}
-	// free(str);
+	free(str); //! this was commented out, causing a memory leak
 	return (new_str);
 }
