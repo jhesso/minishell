@@ -1,8 +1,13 @@
 #! /bin/bash
 
-while TRUE
+while true
 do
-	echo "Checking for memory leaks ....."
-	leaks minishell
+	if pgrep "minishell" > /dev/null;
+	then
+		clear
+		leaks minishell
+	else
+		echo "waiting for minishell to start..."
+	fi
 	sleep 3
 done
