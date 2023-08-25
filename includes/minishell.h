@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/25 19:02:17 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/25 20:56:00 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ void			pwd_builtin(void);
 void			echo_builtin(t_minihell *minihell);
 void			export_builtin(t_minihell *minihell);
 void			unset_builtin(t_minihell *minihell);
+void			exit_builtin(t_minihell *minihell);
 
 /* builtin_utils.c */
 int				check_builtin(char *cmd);

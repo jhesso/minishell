@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 04:47:46 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/25 16:26:48 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/25 20:56:06 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	execute_builtin(t_minihell *minihell, int builtin)
 		unset_builtin(minihell);
 	else if (builtin == 6)
 		env_builtin(minihell);
-	// else if (builtin == 7)
-	// 	exit_builtin(minihell);
+	else if (builtin == 7)
+		exit_builtin(minihell);
 	exit(0);
 }
