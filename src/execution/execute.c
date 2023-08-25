@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/25 00:13:06 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/25 04:44:47 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,26 @@ static void	redirect_io(t_tokens *cmd, int *pipe_fds, int not_first_cmd, int pip
 {
 	if (cmd->fd_in > 0)
 	{
+		printf("duping STDIN_FILENO to fd_in\n");
 		dup2(cmd->fd_in, STDIN_FILENO);
 		close(pipe_read);
 	}
 	else if (not_first_cmd)
 	{
+		printf("duping STDIN_FILENO to pipe_read\n");
 		dup2(pipe_read, STDIN_FILENO);
 		if (cmd->fd_in != 0)
 			close(cmd->fd_in);
 	}
 	if (cmd->fd_out > 0)
 	{
+		printf("duping STDOUT_FILENO to fd_out\n");
 		dup2(cmd->fd_out, STDOUT_FILENO);
 		close(pipe_fds[1]);
 	}
 	else if (cmd->next)
 	{
+		printf("duping STDOUT_FILENO to pipe_fds[1]\n");
 		dup2(pipe_fds[1], STDOUT_FILENO);
 		if (cmd->fd_out != 0)
 			close(cmd->fd_out);
@@ -83,6 +87,15 @@ static void	parent(t_minihell *mini)
 		error_code = WEXITSTATUS(status);
 }
 
+static void	print_fds(t_tokens *lst_tokens)
+{
+	while (lst_tokens)
+	{
+		printf("fd_in: %d, fd_out: %d\n", lst_tokens->fd_in, lst_tokens->fd_out);
+		lst_tokens = lst_tokens->next;
+	}
+}
+
 /*	execute()
 *	Execute the command line
 *	error_code is set to the exit status of the last command
@@ -95,6 +108,7 @@ bool	execute(t_minihell *minihell)
 	int			pipe_read = 0;
 
 	prepare_execution(minihell);
+	print_fds(minihell->lst_tokens);
 	head = minihell->lst_tokens;
 	i = 0;
 	while (minihell->lst_tokens)
@@ -121,6 +135,8 @@ bool	execute(t_minihell *minihell)
 		pipe_read = minihell->pipe_fds[0];
 		if (i)
 			close(minihell->pipe_fds[0]);
+		// if (minihell->pids[i] != 0) //* with this, we dont have fd leaks but piping doesnt work
+		// 	close(pipe_read);
 		i++;
 		minihell->lst_tokens = minihell->lst_tokens->next;
 	}
