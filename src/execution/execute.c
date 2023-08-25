@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/25 19:10:06 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/25 21:07:51 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	redirect_io(t_tokens *cmd, int **pipe_fds, int not_first_cmd, int pi
 	}
 	if (!cmd->next)
 		close(pipe_fds[not_first_cmd][1]);
-	if (!not_first_cmd)
+	if (!not_first_cmd && !check_builtin(cmd->command))
 		close(pipe_read);
 }
 
@@ -69,15 +69,10 @@ static void	redirect_io(t_tokens *cmd, int **pipe_fds, int not_first_cmd, int pi
 */
 static void	child(t_tokens *cmd, t_minihell *mini, int not_first_cmd, int pipe_read)
 {
-	int	builtin;
-
-	if (!cmd->command)
-		return ;
+	if (!cmd->command || check_builtin(cmd->command))
+		exit(0) ;
 	redirect_io(cmd, mini->pipe_fds, not_first_cmd, pipe_read);
-	builtin = check_builtin(cmd->command);
-	if (builtin > 0)
-		execute_builtin(mini, builtin);
-	else if (execve(cmd->command, cmd->argv, mini->env) == -1)
+	if (execve(cmd->command, cmd->argv, mini->env) == -1)
 	{
 		perror(strerror(errno));
 		error_code = errno;
@@ -101,14 +96,14 @@ static void	parent(t_minihell *mini)
 	close_pipes(mini);
 }
 
-static void	print_fds(t_tokens *lst_tokens)
-{
-	while (lst_tokens)
-	{
-		printf("fd_in: %d, fd_out: %d\n", lst_tokens->fd_in, lst_tokens->fd_out);
-		lst_tokens = lst_tokens->next;
-	}
-}
+// static void	print_fds(t_tokens *lst_tokens)
+// {
+// 	while (lst_tokens)
+// 	{
+// 		printf("fd_in: %d, fd_out: %d\n", lst_tokens->fd_in, lst_tokens->fd_out);
+// 		lst_tokens = lst_tokens->next;
+// 	}
+// }
 
 /*	execute()
 *	Execute the command line
@@ -123,7 +118,7 @@ bool	execute(t_minihell *minihell)
 	int			status;
 
 	prepare_execution(minihell);
-	print_fds(minihell->lst_tokens);
+	// print_fds(minihell->lst_tokens);
 	head = minihell->lst_tokens;
 	i = 0;
 	while (minihell->lst_tokens)
@@ -134,6 +129,11 @@ bool	execute(t_minihell *minihell)
 			perror(strerror(errno));
 			error_code = errno;
 			break ;
+		}
+		if (check_builtin(minihell->lst_tokens->command))
+		{
+			redirect_io(minihell->lst_tokens, minihell->pipe_fds, i, pipe_read);
+			execute_builtin(minihell, check_builtin(minihell->lst_tokens->command));
 		}
 		minihell->pids[i] = fork();
 		if (minihell->pids[i] == -1)
@@ -146,8 +146,6 @@ bool	execute(t_minihell *minihell)
 			child(minihell->lst_tokens, minihell, i, pipe_read);
 		else
 			close(minihell->pipe_fds[i][1]);
-		if (minihell->pids[i] == 0)
-			exit(error_code);
 		pipe_read = minihell->pipe_fds[i][0];
 		if (i)
 			close(minihell->pipe_fds[i][0]);
