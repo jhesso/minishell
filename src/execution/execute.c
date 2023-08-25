@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/25 04:44:47 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/25 04:59:42 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ bool	execute(t_minihell *minihell)
 		minihell->lst_tokens = minihell->lst_tokens->next;
 	}
 	parent(minihell);
+	close(pipe_read); // this does not work as I thought it would :()
 	unlink(".heredoc.tmp");
 	minihell->lst_tokens = head;
 	return (true);
