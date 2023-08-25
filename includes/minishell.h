@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/25 00:01:16 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/25 04:33:16 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,8 +158,11 @@ void			create_argv(t_minihell *minihell);
 /* file.c */
 void			open_files(t_minihell *minihell);
 
+/* file_utils.c */
+void			close_files(t_minihell *minihell);
+
 /* pipe */
-void			open_pipes(t_tokens *lst_tokens);
+// void			open_pipes(t_tokens *lst_tokens);
 
 /*---------------------------------Builtins-----------------------------------*/
 

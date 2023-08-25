@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+         #
+#    By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 16:12:22 by jhesso            #+#    #+#              #
-#    Updated: 2023/08/23 17:22:43 by dgerguri         ###   ########.fr        #
+#    Updated: 2023/08/25 04:39:19 by jhesso           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRC			=	main.c utils.c cleanup.c \
 				parser/list/list.c parser/list/lst_utils.c \
 				execution/execute.c execution/path.c execution/argv.c \
 				execution/prepare_execution.c \
-				execution/file/file.c \
+				execution/file/file.c execution/file/file_utils.c \
 				builtins/builtin.c builtins/builtin_utils.c builtins/env.c \
 				builtins/echo.c builtins/export.c builtins/pwd.c \
 				signals/signals.c

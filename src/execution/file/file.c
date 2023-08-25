@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/24 23:56:28 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/25 03:55:38 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ static int	open_file(char *filename, int mode)
 		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
 		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	ft_printf("fd: %d\n", fd);
 	if (fd == -1)
 	{
 		printf("minishell: %s: %s\n", filename, strerror(errno));

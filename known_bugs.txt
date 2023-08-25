@@ -1,0 +1,3 @@
+known bugs in minishell:
+
+1. fd leaks when running builtin commands
