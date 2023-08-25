@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:19:14 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/23 04:45:56 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/25 16:47:21 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,14 @@ int	check_builtin(char *cmd)
 	else
 		i = 0;
 	return (i);
+}
+
+int	invalid_variable(char *arg, int type)
+{
+		if (type = 1)
+			printf("minishell: export: `%s': not a valid identifier\n", arg);
+		if (type = 2)
+			printf("minishell: unset: `%s': not a valid identifier\n", arg);
+		// error_code = 1;
+		return (1);//error_code);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+         #
+#    By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 16:12:22 by jhesso            #+#    #+#              #
-#    Updated: 2023/08/25 04:39:19 by jhesso           ###   ########.fr        #
+#    Updated: 2023/08/25 16:25:48 by dgerguri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRC			=	main.c utils.c cleanup.c \
 				execution/prepare_execution.c \
 				execution/file/file.c execution/file/file_utils.c \
 				builtins/builtin.c builtins/builtin_utils.c builtins/env.c \
-				builtins/echo.c builtins/export.c builtins/pwd.c \
+				builtins/echo.c builtins/export.c builtins/pwd.c builtins/unset.c \
 				signals/signals.c
 SRCS		=	$(addprefix $(SRC_PATH), $(SRC))
 OBJ			=	$(SRC:.c=.o)

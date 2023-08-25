@@ -6,18 +6,11 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 17:17:54 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/25 14:52:47 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/25 16:47:37 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	invalid_variable(char *arg)
-{
-		printf("minishell: export: `%s': not a valid identifier\n", arg);
-		// error_code = 1;
-		return (1);//error_code);
-}
 
 static int	check_validity(char *arg)
 {
@@ -27,13 +20,13 @@ static int	check_validity(char *arg)
 	i = 0;
 	flag = 0;
 	if (arg[i] == '=' || arg[i] == '+')
-		return (invalid_variable(arg));
+		return (invalid_variable(arg, 1));
 	while (arg[i])
 	{
 		if (ft_isalpha(arg[i]))
 			i++;
 		else if (ft_isdigit(arg[i]) && !flag)
-			return (invalid_variable(arg));
+			return (invalid_variable(arg, 1));
 		else if (ft_isdigit(arg[i]) && flag)
 			i++;
 		else if (arg[i] == '_')
@@ -41,12 +34,10 @@ static int	check_validity(char *arg)
 			flag = 1;
 			i++;
 		}
-		else if (arg[i] == '+' && arg[i + 1] != '=')
-			return (invalid_variable(arg));
-		else if ((arg[i] == '+' && arg[i + 1] == '=') || arg[i] == '=')
+		else if (arg[i] == '=')
 			break;
 		else
-			return (invalid_variable(arg));
+			return (invalid_variable(arg, 1));
 	}
 	return (0);
 }
@@ -113,6 +104,12 @@ char	**export_variable(char **env, char *arg)
 	new_env[i++] = ft_strdup(arg);
 	new_env[i] = NULL;
 	free(env);
+	int a = 0;
+	while (new_env[a])
+	{
+		printf("%s\n", new_env[a]);
+		a++;
+	}
 	return (new_env);
 }
 
