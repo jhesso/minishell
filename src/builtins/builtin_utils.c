@@ -6,33 +6,35 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:19:14 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/25 17:14:18 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/25 21:41:15 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	check_builtin(char *cmd)
-{ //? why not just return 1, 2, 3, etc..?
+{
 	int	i;
 
 	i = 0;
+	if (!cmd)
+		return (0);
 	if (!ft_strncmp(cmd, "echo\0", 5))
-		i = 1;
+		return (1);
 	else if (!ft_strncmp(cmd, "cd\0", 3))
-		i = 2;
+		return (2);
 	else if (!ft_strncmp(cmd, "pwd\0", 4))
-		i = 3;
+		return (3);
 	else if (!ft_strncmp(cmd, "export\0", 7))
-		i = 4;
+		return (4);
 	else if (!ft_strncmp(cmd, "unset\0", 6))
-		i = 5;
+		return (5);
 	else if (!ft_strncmp(cmd, "env\0", 4))
-		i = 6;
+		return (6);
 	else if (!ft_strncmp(cmd, "exit\0", 5))
-		i = 7;
+		return (7);
 	else
-		i = 0;
+		return(0);
 	return (i);
 }
 

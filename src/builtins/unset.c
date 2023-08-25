@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:11:25 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/25 16:43:48 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/25 21:38:16 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,22 +79,17 @@ char	**remove_variable(char **env, int remove_env)
 	j = 0;
 	while (env[i])
 	{
-		if (i == remove_env)
-			i++;
-		new_env[j] = ft_strdup(env[i]);
-		if (!new_env[i])
-			malloc_error();
+		if (env[i] && i != remove_env)
+		{
+			new_env[j] = ft_strdup(env[i]);
+			if (!new_env[j])
+				malloc_error();
+			j++;
+		}
 		i++;
-		j++;
 	}
 	new_env[j] = NULL;
 	free_str_arr(env);
-	// int a = 0;
-	// while (new_env[a])
-	// {
-	// 	printf("%s\n", new_env[a]);
-	// 	a++;
-	// }
 	return (new_env);
 }
 

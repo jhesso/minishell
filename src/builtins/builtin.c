@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 04:47:46 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/25 21:16:21 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/25 21:39:27 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ void	execute_builtin(t_minihell *minihell, int builtin)
 		unset_builtin(minihell);
 	else if (builtin == 6)
 		env_builtin(minihell);
-	// else if (builtin == 7)
-	// 	exit_builtin(minihell);
+	else if (builtin == 7)
+		exit_builtin(minihell);
 }

@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 17:17:54 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/25 16:47:37 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/25 21:19:33 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,6 @@ char	**export_variable(char **env, char *arg)
 	new_env[i++] = ft_strdup(arg);
 	new_env[i] = NULL;
 	free(env);
-	int a = 0;
-	while (new_env[a])
-	{
-		printf("%s\n", new_env[a]);
-		a++;
-	}
 	return (new_env);
 }
 
