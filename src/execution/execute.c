@@ -6,17 +6,30 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/25 04:59:42 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/25 19:10:06 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	close_pipes(t_minihell *mini)
+{
+	int	i;
+
+	i = 0;
+	while (i < mini->nb_cmds)
+	{
+		close(mini->pipe_fds[i][0]);
+		close(mini->pipe_fds[i][1]);
+		i++;
+	}
+}
+
 /*	redirect_io()
 *	Redirects input and output to either specified files or to a pipe
 *	Close unused file descriptors
 */
-static void	redirect_io(t_tokens *cmd, int *pipe_fds, int not_first_cmd, int pipe_read)
+static void	redirect_io(t_tokens *cmd, int **pipe_fds, int not_first_cmd, int pipe_read)
 {
 	if (cmd->fd_in > 0)
 	{
@@ -35,17 +48,17 @@ static void	redirect_io(t_tokens *cmd, int *pipe_fds, int not_first_cmd, int pip
 	{
 		printf("duping STDOUT_FILENO to fd_out\n");
 		dup2(cmd->fd_out, STDOUT_FILENO);
-		close(pipe_fds[1]);
+		close(pipe_fds[not_first_cmd][1]);
 	}
 	else if (cmd->next)
 	{
 		printf("duping STDOUT_FILENO to pipe_fds[1]\n");
-		dup2(pipe_fds[1], STDOUT_FILENO);
+		dup2(pipe_fds[not_first_cmd][1], STDOUT_FILENO);
 		if (cmd->fd_out != 0)
 			close(cmd->fd_out);
 	}
 	if (!cmd->next)
-		close(pipe_fds[1]);
+		close(pipe_fds[not_first_cmd][1]);
 	if (!not_first_cmd)
 		close(pipe_read);
 }
@@ -85,6 +98,7 @@ static void	parent(t_minihell *mini)
 		waitpid(mini->pids[i++], &status, 0);
 	if (WIFEXITED(status))
 		error_code = WEXITSTATUS(status);
+	close_pipes(mini);
 }
 
 static void	print_fds(t_tokens *lst_tokens)
@@ -106,6 +120,7 @@ bool	execute(t_minihell *minihell)
 	t_tokens	*head;
 	int			i;
 	int			pipe_read = 0;
+	int			status;
 
 	prepare_execution(minihell);
 	print_fds(minihell->lst_tokens);
@@ -113,7 +128,8 @@ bool	execute(t_minihell *minihell)
 	i = 0;
 	while (minihell->lst_tokens)
 	{
-		if (pipe(minihell->pipe_fds) == -1)
+		status = pipe(minihell->pipe_fds[i]);
+		if (status == -1)
 		{
 			perror(strerror(errno));
 			error_code = errno;
@@ -129,19 +145,17 @@ bool	execute(t_minihell *minihell)
 		else if (minihell->pids[i] == 0)
 			child(minihell->lst_tokens, minihell, i, pipe_read);
 		else
-			close(minihell->pipe_fds[1]);
+			close(minihell->pipe_fds[i][1]);
 		if (minihell->pids[i] == 0)
 			exit(error_code);
-		pipe_read = minihell->pipe_fds[0];
+		pipe_read = minihell->pipe_fds[i][0];
 		if (i)
-			close(minihell->pipe_fds[0]);
-		// if (minihell->pids[i] != 0) //* with this, we dont have fd leaks but piping doesnt work
-		// 	close(pipe_read);
+			close(minihell->pipe_fds[i][0]);
 		i++;
 		minihell->lst_tokens = minihell->lst_tokens->next;
 	}
 	parent(minihell);
-	close(pipe_read); // this does not work as I thought it would :()
+	close(pipe_read);
 	unlink(".heredoc.tmp");
 	minihell->lst_tokens = head;
 	return (true);

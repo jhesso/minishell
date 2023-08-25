@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 23:22:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/23 03:55:37 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/25 19:11:27 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,16 @@ static void	free_list(t_tokens *lst_tokens)
 */
 void	cleanup(t_minihell *minihell)
 {
+	int	i;
+
 	free_list(minihell->lst_tokens);
 	free_str_arr(minihell->tokens);
 	free(minihell->pids);
+	i = 0;
+	while (i < minihell->nb_cmds)
+	{
+		free(minihell->pipe_fds[i]);
+		i++;
+	}
+	free(minihell->pipe_fds);
 }

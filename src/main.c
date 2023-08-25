@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/24 01:56:03 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/25 19:06:58 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,7 @@ static void	init_minihell(t_minihell *minihell)
 	minihell->env = NULL;
 	minihell->double_quote = 0;
 	minihell->single_quote = 0;
-	minihell->pipe_fds[0] = 0;
-	minihell->pipe_fds[1] = 0;
+	minihell->pipe_fds = NULL;
 	minihell->pids = NULL;
 	minihell->nb_cmds = 0;
 	// minihell->lst_tokens = NULL;
