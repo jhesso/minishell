@@ -15,21 +15,20 @@ do
         lsof -p $PID
 		NB_FILES=$(lsof -p $PID | wc -l)
 		echo "amount of files: $NB_FILES"
-		if [ "$OLD_NB" != "$NB_FILES" ];
+		if [ -n "$OLD_NB" ] && [ "$OLD_NB" -lt "$NB_FILES" ];
 		then
-			if [ $COUNT != 0 ];
+			if [ $COUNT -ne 0 ];
 			then
 				echo "${RED}potential fd leaks!${RESET}"
 				if [ "$HOSTNAME" = "jhesso-arch" ];
 				then
 					dunstify --urgency=critical "Potential FD leaks!" "potential fd leaks!"
-					sleep 3
 				fi
 			fi
-			OLD_NB=$NB_FILES
 		fi
+		OLD_NB=$NB_FILES
 		((COUNT++))
-		sleep 5
+		sleep 3
     else
 		echo "waiting for minishell to start..."
         sleep 3
