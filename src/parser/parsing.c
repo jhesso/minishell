@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 05:12:42 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/25 17:57:09 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/25 18:06:54 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,11 @@
 */
 char    *parse_str(int c, t_minihell *minihell)
 {
-	if (c == 0 || !ft_strncmp(minihell->tokens[c - 1], "<<\0", 3))
-    	minihell->tokens[c] = expand_variables(minihell->tokens[c], minihell->env);
+	if (c == 0 || ft_strncmp(minihell->tokens[c - 1], "<<\0", 3))
+	{
+		minihell->tokens[c] = expand_variables(minihell->tokens[c], minihell->env);
+		printf("parse_str: \"%s\"\n", minihell->tokens[c]);
+	}
     if (!minihell->tokens[c])
         malloc_error();
     minihell->tokens[c] = remove_quotes(minihell->tokens[c], 0, 0);
