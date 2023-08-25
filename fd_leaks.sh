@@ -20,6 +20,11 @@ do
 			if [ $COUNT != 0 ];
 			then
 				echo "${RED}potential fd leaks!${RESET}"
+				if [ "$HOSTNAME" = "jhesso-arch" ];
+				then
+					dunstify --urgency=critical "Potential FD leaks!" "potential fd leaks!"
+					sleep 3
+				fi
 			fi
 			OLD_NB=$NB_FILES
 		fi
