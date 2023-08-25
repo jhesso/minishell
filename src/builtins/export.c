@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 17:17:54 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/23 05:05:13 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/25 14:52:47 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	invalid_variable(char *arg)
 {
-		printf("bash: export: `%s': not a valid identifier\n", arg);
+		printf("minishell: export: `%s': not a valid identifier\n", arg);
 		// error_code = 1;
 		return (1);//error_code);
 }
