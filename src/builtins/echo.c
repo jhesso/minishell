@@ -6,13 +6,13 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:19:38 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/23 15:37:55 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/25 20:50:20 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void print_line(t_minihell *minihell, int start)
+static void print_line(t_minihell *minihell, int start, int flag)
  {
 	if (minihell->lst_tokens->argv[start])
 	{
@@ -25,38 +25,39 @@ static void print_line(t_minihell *minihell, int start)
  		printf("%s", minihell->lst_tokens->argv[start]);
  		start++;
  	}
+	if (!flag)
+		printf("\n");
  }
 
  void	echo_builtin(t_minihell *minihell)
  {
  	int	i;
+	int	j;
  	int	flag;
  	int	argv_size;
 
- 	i = 0;
+	j = 1;
  	flag = 0;
  	argv_size = count_strings(minihell->lst_tokens->argv);
  	if (argv_size == 1)
  		printf("\n");
- 	else if (!ft_strncmp(minihell->lst_tokens->argv[1], "-n", 2))
- 	{
- 		i++;
- 		while (minihell->lst_tokens->argv[1][i] == 'n')
- 			i++;
- 		if (minihell->lst_tokens->argv[1][i])
- 			flag = 1;
- 		if (flag)
- 		{
- 			print_line(minihell, 1);
- 			printf("\n");
- 		}
- 		else
- 			print_line(minihell, 2);
- 	}
-	else
+	else if (argv_size > 1)
 	{
-		print_line(minihell, 1);
- 		printf("\n");
+		while (!ft_strncmp(minihell->lst_tokens->argv[j], "-n", 2))
+		{
+			i = 1;
+			while (minihell->lst_tokens->argv[j][i] == 'n')
+				i++;
+			if (j == 1 && !minihell->lst_tokens->argv[j][i])
+				flag = 1;
+			else if (minihell->lst_tokens->argv[j][i] != '\0')
+				break;
+			j++;
+		}
+		if (!flag)
+			print_line(minihell, 1, flag);
+		else
+			print_line(minihell, j, flag);
 	}
  	error_code = 0;
  }
