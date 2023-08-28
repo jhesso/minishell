@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/25 19:06:58 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/28 19:03:51 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ void	minishell(t_minihell *minihell)
 		if (command_line == NULL)
 			handle_eof();
 		signals_noninteractive();
-		if (!ft_strncmp(command_line, "exit", 4)) //! this needs to be changed in the end, it is just temporary
-			exit(EXIT_SUCCESS);
 		if (command_line && *command_line) //* check that command_line is not just an empty line
 			add_history(command_line); //* from what I understand, this adds the line to history but only for this session
 		// ft_putendl_fd(command_line, STDOUT_FILENO); //! this is just for testing
