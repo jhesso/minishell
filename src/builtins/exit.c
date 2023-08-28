@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 20:55:01 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/28 19:02:56 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/28 19:06:11 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ static int	arg_is_digit(char *arg)
 	return(0);
 }
 
+void exit_minishell(t_minihell *minihell)
+{
+	if (minihell->nb_cmds == 1)
+		exit(error_code);
+}
+
 void	exit_builtin(t_minihell *minihell)
 {
 	bool				error;
@@ -49,20 +55,21 @@ void	exit_builtin(t_minihell *minihell)
 	exit_number = 0;
 	if (argv_size >= 2)
 	{
-		printf("exit\n");
+		if (minihell->nb_cmds == 1)
+			printf("exit\n");
 		number = ft_atoi(minihell->lst_tokens->argv[1]);
 		overflows(number, minihell->lst_tokens->argv[1], &error);
 	}
 	if (argv_size == 2 && error && !arg_is_digit(minihell->lst_tokens->argv[1]))
 	{
 		error_code = number % 256;
-		exit(error_code);
+		exit_minishell(minihell);
 	}
 	else if (argv_size >= 2 && (!error || arg_is_digit(minihell->lst_tokens->argv[1])))
 	{
 		printf("minishell: exit: %s: numeric argument required\n", minihell->lst_tokens->argv[1]);
 		error_code = 255;
-		exit(error_code);
+		exit_minishell(minihell);
 	}
 	else if (argv_size >= 2)
 	{
