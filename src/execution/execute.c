@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/25 21:07:51 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/28 13:41:31 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void	redirect_io(t_tokens *cmd, int **pipe_fds, int not_first_cmd, int pi
 static void	child(t_tokens *cmd, t_minihell *mini, int not_first_cmd, int pipe_read)
 {
 	if (!cmd->command || check_builtin(cmd->command))
-		exit(0) ;
+		exit(error_code) ;
 	redirect_io(cmd, mini->pipe_fds, not_first_cmd, pipe_read);
 	if (execve(cmd->command, cmd->argv, mini->env) == -1)
 	{
