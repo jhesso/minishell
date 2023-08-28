@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:19:14 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/25 21:41:15 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/28 14:26:19 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,6 @@ int	invalid_variable(char *arg, int type)
 			printf("minishell: export: `%s': not a valid identifier\n", arg);
 		if (type == 2)
 			printf("minishell: unset: `%s': not a valid identifier\n", arg);
-		// error_code = 1;
+		error_code = 1;
 		return (1);//error_code);
 }
