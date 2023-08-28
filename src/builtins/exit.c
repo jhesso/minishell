@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 20:55:01 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/25 21:45:17 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/28 13:40:16 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,11 @@ void	exit_builtin(t_minihell *minihell)
 	if (argv_size == 2 && !arg_is_digit(minihell->lst_tokens->argv[1]))
 	{
 		exit_number = ft_atoi(minihell->lst_tokens->argv[1]);
+		printf("exit\n");
 		if (exit_number > 255)
-			exit (exit_number - 256);
-		printf("IT IS A NUMBER\n");
+			exit(exit_number - 256);
+		exit(255);
+		// printf("IT IS A NUMBER\n");
 	}
 	else
 	{

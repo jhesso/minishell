@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:23:18 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/20 15:24:45 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/28 13:30:54 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	append_command_path(t_minihell *minihell)
 					free(minihell->lst_tokens->command);
 					minihell->lst_tokens->command = NULL;
 					printf("minishell: %s: No such file or directory\n", cmd);
+					error_code = 127;
 				}
 			}
 			else if (!check_builtin(cmd))
@@ -94,6 +95,7 @@ void	append_command_path(t_minihell *minihell)
 				minihell->lst_tokens->command = check_valid_path(cmd, path);
 				if (!minihell->lst_tokens->command)
 					printf("minishell: %s: command not found\n", cmd);
+				error_code = 127;
 			}
 			free(cmd);
 		}
