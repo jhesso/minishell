@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:45:20 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/29 20:45:14 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/30 00:04:37 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,14 +127,18 @@ char	*expand_str(char *str, char **envp, int s)
 	char	*value;
 	int		end;
 
-	if (str[s + 1] == '\0' || str[s + 1] == '\'' || str[s + 1] == '\"')
+	if (str[s + 1] == '\'' || str[s + 1] == '\"')
 	{
 		new_str = insert_value(str, (char *)ft_calloc(1, 1), s, s + 1);
 		if (!new_str)
 			return (NULL);
 	}
-	else if (str[s + 1] == '?')
-		new_str = insert_value(str, ft_itoa(error_code), s, s + 2);
+	else if (!str[s + 1])
+	{
+		new_str = ft_strdup("$");
+		if (!new_str)
+			malloc_error();
+	}
 	else
 	{
 		end = get_end_index(str, s + 1, 1);
@@ -199,7 +203,7 @@ char	*expand_variables(char *str, char **envp)
 	start = 0;
 	while (str[start])
 	{
-		if (str[start] == '$')
+		if (str[start] == '$' && str[start + 1])
 		{
 			str = expand_str(str, envp, start);
 			if (!str)

@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/28 19:03:51 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/29 23:54:24 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void	minishell(t_minihell *minihell)
 	ret = true;
 	while (1)
 	{
-		signals_interactive();
+		// signals_interactive();
 		command_line = readline(BLUE_BOLD "minishell$ " RESET_COLOR);
 		if (command_line == NULL)
 			handle_eof();
-		signals_noninteractive();
+		// signals_noninteractive();
 		if (command_line && *command_line) //* check that command_line is not just an empty line
 			add_history(command_line); //* from what I understand, this adds the line to history but only for this session
 		// ft_putendl_fd(command_line, STDOUT_FILENO); //! this is just for testing
