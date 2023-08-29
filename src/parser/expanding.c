@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:45:20 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/30 00:13:43 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/30 00:28:26 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,8 @@ char	*expand_str(char *str, char **envp, int s)
 		if (!new_str)
 			malloc_error();
 	}
+	else if (str[s + 1] == '?')
+		new_str = insert_value(str, ft_itoa(error_code), s, s + 2);
 	else
 	{
 		end = get_end_index(str, s + 1, 1);
