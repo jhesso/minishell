@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:11:25 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/30 02:09:59 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/30 02:12:38 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	check_validity(char *arg)
 	return (0);
 }
 
-static int	already_exists(char **env, char *arg)
+static int	identifier_exists(char **env, char *arg)
 {
 	int	i;
 	int	env_len;
@@ -110,7 +110,7 @@ void	unset_builtin(t_minihell *minihell)
 				invalid_variable(minihell->lst_tokens->argv[i], 2);
 			else
 			{
-				remove_env = already_exists(minihell->env, minihell->lst_tokens->argv[i]);
+				remove_env = identifier_exists(minihell->env, minihell->lst_tokens->argv[i]);
 				if (remove_env)
 					minihell->env = remove_variable(minihell->env, remove_env - 1);
 			}
