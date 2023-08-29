@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:11:25 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/25 21:38:16 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/30 02:09:59 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	check_validity(char *arg)
 
 	i = 0;
 	flag = 0;
-	if (arg[i] == '=' || arg[i] == '+')
+	if (!arg[i] || arg[i] == '=' || arg[i] == '+')
 		return (invalid_variable(arg, 2));
 	while (arg[i])
 	{
@@ -35,18 +35,18 @@ static int	check_validity(char *arg)
 			i++;
 		}
 		else if (arg[i] == '=')
-			break;
+			break ;
 		else
 			return (invalid_variable(arg, 2));
 	}
 	return (0);
 }
 
-static int		already_exists(char **env, char *arg)
+static int	already_exists(char **env, char *arg)
 {
 	int	i;
-	int env_len;
-	static int arg_len;
+	int	env_len;
+	int	arg_len;
 
 	i = 0;
 	arg_len = ft_strlen(arg);
@@ -64,7 +64,8 @@ static int		already_exists(char **env, char *arg)
 	}
 	return (0);
 }
-char	**remove_variable(char **env, int remove_env)
+
+static char	**remove_variable(char **env, int remove_env)
 {
 	int		amount;
 	int		i;

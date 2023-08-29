@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/29 23:42:12 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/30 01:43:10 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,8 +174,8 @@ void  			init_env(t_minihell *minihell, char **envp);
 void			echo_builtin(t_minihell *minihell, int j, int flag, int i);
 void			pwd_builtin(void);
 void			env_builtin(t_minihell *minihell);
-void			export_builtin(t_minihell *minihell);
 void			unset_builtin(t_minihell *minihell);
+void			export_builtin(t_minihell *minihell);
 void			exit_builtin(t_minihell *minihell);
 void			cd_builtin(t_minihell *minihell);
 
