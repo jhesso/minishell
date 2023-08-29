@@ -5,3 +5,5 @@ known bugs in minishell:
 	- this is most likely a problem with piping or somethign
 3. echo hello | pwd | ls -la | wc -w
 	- number of words printed is 0 (should not be like this)
+4. STDIN is fucked somehow and thats why running ./minishell exits the minishell immediately
+	propably the same reason cat doesn't want to work too well
