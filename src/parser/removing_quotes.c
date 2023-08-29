@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:42:59 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/29 23:16:33 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/30 01:25:42 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*remove_quotes(char *str, int i, int j, int len)
 		free(str);
 		return (NULL);
 	}
-	while (str[j] && j < len + 1)
+	while (str[j] && (size_t)j <= ft_strlen(str))
 	{
 		if (str[j] == '\'' || str[j] == '\"')
 		{
@@ -75,6 +75,8 @@ char	*remove_quotes(char *str, int i, int j, int len)
 		}
 		else
 			new_str[i++] = str[j++];
+		if (str[j] == c)
+			j++;
 	}
 	free(str);
 	return (new_str);
