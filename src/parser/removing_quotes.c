@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:42:59 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/30 01:25:42 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/30 01:37:56 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	*remove_quotes(char *str, int i, int j, int len)
 		}
 		else
 			new_str[i++] = str[j++];
-		if (str[j] == c)
+		if (str[j] && str[j] == c)
 			j++;
 	}
 	free(str);
