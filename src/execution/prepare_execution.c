@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 03:25:41 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/25 19:05:44 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/29 17:36:56 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ static void	init_pids(t_minihell *minihell)
 	minihell->pids = malloc(sizeof(pid_t) * minihell->nb_cmds);
 	if (!minihell->pids)
 		malloc_error();
+	i = 0;
+	while (i < minihell->nb_cmds)
+		minihell->pids[i++] = -2;
 	minihell->lst_tokens = tmp;
 }
 

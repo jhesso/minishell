@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/28 13:41:31 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/29 17:46:15 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,14 @@ static void	redirect_io(t_tokens *cmd, int **pipe_fds, int not_first_cmd, int pi
 */
 static void	child(t_tokens *cmd, t_minihell *mini, int not_first_cmd, int pipe_read)
 {
-	if (!cmd->command || check_builtin(cmd->command))
+	if (!cmd->command)
 		exit(error_code) ;
 	redirect_io(cmd, mini->pipe_fds, not_first_cmd, pipe_read);
+	if (check_builtin(cmd->command))
+	{
+		execute_builtin(mini, check_builtin(cmd->command));
+		exit(error_code);
+	}
 	if (execve(cmd->command, cmd->argv, mini->env) == -1)
 	{
 		perror(strerror(errno));
@@ -90,7 +95,11 @@ static void	parent(t_minihell *mini)
 
 	i = 0;
 	while(i < mini->nb_cmds) //? should this be nb_cmds - 1 ?
-		waitpid(mini->pids[i++], &status, 0);
+	{
+		if (mini->pids[i] != -2)
+			waitpid(mini->pids[i], &status, 0);
+		i++;
+	}
 	if (WIFEXITED(status))
 		error_code = WEXITSTATUS(status);
 	close_pipes(mini);
@@ -130,12 +139,13 @@ bool	execute(t_minihell *minihell)
 			error_code = errno;
 			break ;
 		}
-		if (check_builtin(minihell->lst_tokens->command))
+		if (check_builtin(minihell->lst_tokens->command) && minihell->nb_cmds == 1)
 		{
 			redirect_io(minihell->lst_tokens, minihell->pipe_fds, i, pipe_read);
 			execute_builtin(minihell, check_builtin(minihell->lst_tokens->command));
 		}
-		minihell->pids[i] = fork();
+		else
+			minihell->pids[i] = fork();
 		if (minihell->pids[i] == -1)
 		{
 			perror(strerror(errno));
