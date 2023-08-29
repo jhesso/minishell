@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:45:20 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/30 00:04:37 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/30 00:13:43 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ char	*expand_quotes(char *str, char **envp, int start)
 	start++;
 	while (new_str[start] && new_str[start] != '\"')
 	{
-		if (new_str[start] == '$')
+		if (new_str[start] == '$' && new_str[start + 1] != ' ')
 		{
 			new_str = expand_str(new_str, envp, start);
 			if (!new_str)
