@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 05:12:42 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/29 18:21:53 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/29 23:16:22 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char    *parse_str(int c, t_minihell *minihell)
 		minihell->tokens[c] = expand_variables(minihell->tokens[c], minihell->env);
     if (!minihell->tokens[c])
         malloc_error();
-    minihell->tokens[c] = remove_quotes(minihell->tokens[c], 0, 0);
+    minihell->tokens[c] = remove_quotes(minihell->tokens[c], 0, 0, 0);
     return (ft_strdup(minihell->tokens[c]));
 }
 

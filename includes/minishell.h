@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/29 22:32:22 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/29 23:17:37 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void			print_sizes(t_malloc_sizes sizes);
 char			*expand_variables(char *str, char **envp);
 
 /* removing_quotes.c */
-char			*remove_quotes(char *str, int i, int j);
+char			*remove_quotes(char *str, int i, int j, int len);
 
 /*---------------------------------Execution----------------------------------*/
 

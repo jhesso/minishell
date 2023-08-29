@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:42:59 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/29 18:21:48 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/29 23:16:33 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,10 @@ static int	len_without_quotes(char *str)
 *		(int) i: index of new string
 *		(int) j: index of old string
 */
-char	*remove_quotes(char *str, int i, int j)
+char	*remove_quotes(char *str, int i, int j, int len)
 {
 	char	*new_str;
 	char	c;
-	int		len;
 
 	len = len_without_quotes(str);
 	new_str = ft_calloc(sizeof(char), (len + 1));
@@ -64,17 +63,18 @@ char	*remove_quotes(char *str, int i, int j)
 		free(str);
 		return (NULL);
 	}
-	while (str[j] && j < len)
+	while (str[j] && j < len + 1)
 	{
 		if (str[j] == '\'' || str[j] == '\"')
 		{
 			c = str[j++];
 			while (str[j] && str[j] != c)
 				new_str[i++] = str[j++];
-			if (str[j] || j == len)
+			if (!str[j] || j == len + 1)
 				break ;
 		}
-		new_str[i++] = str[j++];
+		else
+			new_str[i++] = str[j++];
 	}
 	free(str);
 	return (new_str);
