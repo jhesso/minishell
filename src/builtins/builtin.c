@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 04:47:46 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/29 20:41:20 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/29 22:31:51 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	execute_builtin(t_minihell *minihell, int builtin)
 {
 	if (builtin == 1)
-		echo_builtin(minihell);
+		echo_builtin(minihell, 1, 0);
 	else if (builtin == 2)
 		cd_builtin(minihell);
 	else if (builtin == 3)

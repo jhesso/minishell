@@ -6,41 +6,37 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:19:38 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/25 20:50:20 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/29 22:32:34 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void print_line(t_minihell *minihell, int start, int flag)
- {
+static void	print_line(t_minihell *minihell, int start, int flag)
+{
 	if (minihell->lst_tokens->argv[start])
 	{
- 		printf("%s", minihell->lst_tokens->argv[start]);
- 		start++;
+		printf("%s", minihell->lst_tokens->argv[start]);
+		start++;
 	}
- 	while (minihell->lst_tokens->argv[start])
- 	{
- 		printf(" ");
- 		printf("%s", minihell->lst_tokens->argv[start]);
- 		start++;
- 	}
+	while (minihell->lst_tokens->argv[start])
+	{
+		printf(" ");
+		printf("%s", minihell->lst_tokens->argv[start]);
+		start++;
+	}
 	if (!flag)
 		printf("\n");
- }
+}
 
- void	echo_builtin(t_minihell *minihell)
- {
- 	int	i;
-	int	j;
- 	int	flag;
- 	int	argv_size;
+void	echo_builtin(t_minihell *minihell, int j, int flag)
+{
+	int	i;
+	int	argv_size;
 
-	j = 1;
- 	flag = 0;
- 	argv_size = count_strings(minihell->lst_tokens->argv);
- 	if (argv_size == 1)
- 		printf("\n");
+	argv_size = count_strings(minihell->lst_tokens->argv);
+	if (argv_size == 1)
+		printf("\n");
 	else if (argv_size > 1)
 	{
 		while (!ft_strncmp(minihell->lst_tokens->argv[j], "-n", 2))
@@ -51,7 +47,7 @@ static void print_line(t_minihell *minihell, int start, int flag)
 			if (j == 1 && !minihell->lst_tokens->argv[j][i])
 				flag = 1;
 			else if (minihell->lst_tokens->argv[j][i] != '\0')
-				break;
+				break ;
 			j++;
 		}
 		if (!flag)
@@ -59,5 +55,5 @@ static void print_line(t_minihell *minihell, int start, int flag)
 		else
 			print_line(minihell, j, flag);
 	}
- 	error_code = 0;
- }
+	error_code = 0;
+}
