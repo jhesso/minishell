@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:23:18 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/28 13:30:54 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/29 18:21:40 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ static char *check_valid_path(char *command, char **path)
 	char	*cmd;
 
 	i = 0;
+	if (!command[0])
+		return (NULL);
 	cmd = ft_strjoin("/", command);
 	if (!cmd)
 		malloc_error();
