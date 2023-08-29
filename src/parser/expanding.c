@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:45:20 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/24 23:57:30 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/29 20:45:14 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,39 +80,6 @@ char	*insert_value(char *str, char *value, int start, int new_start)
 	return (new_str);
 }
 
-/*	get_value()
-*	get the value of the variable
-*	Return value: char * (value of the variable)
-*	Parameters:
-*		char *path: variable with '=' at the end ($USER= for example)
-*		int len: length of the variable
-*		char **envp: environment variables
-*		int i: index of the environment variable
-*/
-char	*get_value(char *path, int len, char **envp, int i)
-{
-	char	*value;
-
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], &path[1], len - 1) == 0) //? why $path[1]?
-		{
-			value = ft_substr(envp[i], len - 1, ft_strlen(envp[i]));
-			if (!value)
-			{
-				free(path);
-				return (NULL);
-			}
-			free(path);
-			return (value);
-		}
-		i++;
-	}
-	value = ft_calloc(1, 1);
-	free(path);
-	return (value);
-}
-
 /*	expand()
 *	expand the variable
 *	Return value: char * (value of the variable)
@@ -140,7 +107,7 @@ char	*expand(char *str, char **envp, int start, int end)
 	}
 	free(sub_path);
 	len = ft_strlen(path);
-	value = get_value(path, len, envp, 0);
+	value = get_value(path, len, envp);
 	if (!value)
 		return (NULL);
 	return (value);

@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/25 20:56:00 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/29 20:39:10 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ void			echo_builtin(t_minihell *minihell);
 void			export_builtin(t_minihell *minihell);
 void			unset_builtin(t_minihell *minihell);
 void			exit_builtin(t_minihell *minihell);
+void			cd_builtin(t_minihell *minihell);
 
 /* builtin_utils.c */
 int				check_builtin(char *cmd);
@@ -192,9 +193,11 @@ void			signals_noninteractive(void);
 
 /* cleanup.c */
 void			cleanup(t_minihell *minihell);
-void			*free_str_arr(char **s);
 
 /* utils.c */
+void			*free_str_arr(char **s);
 int				count_strings(char **array);
+
+char			*get_value(char *path, int len, char **envp);
 
 #endif
