@@ -1,9 +1,7 @@
 known bugs in minishell:
 
-1. fd leaks when running builtin commands
-2. we actually get fd leaks with every command
-	- I can fix it for other than builtins but that
-		breaks piping =.=
-3. signals not working properly when in heredoc
-4. cat does not work when no file specified
+1. signals not working properly when in heredoc
+2. cat does not work when no file specified
 	- this is most likely a problem with piping or somethign
+3. echo hello | pwd | ls -la | wc -w
+	- number of words printed is 0 (should not be like this)
