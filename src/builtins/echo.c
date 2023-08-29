@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:19:38 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/29 22:32:34 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/29 23:42:20 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,8 @@ static void	print_line(t_minihell *minihell, int start, int flag)
 		printf("\n");
 }
 
-void	echo_builtin(t_minihell *minihell, int j, int flag)
+void	echo_builtin(t_minihell *minihell, int j, int flag, int i)
 {
-	int	i;
 	int	argv_size;
 
 	argv_size = count_strings(minihell->lst_tokens->argv);
@@ -48,7 +47,8 @@ void	echo_builtin(t_minihell *minihell, int j, int flag)
 				flag = 1;
 			else if (minihell->lst_tokens->argv[j][i] != '\0')
 				break ;
-			j++;
+			if (!minihell->lst_tokens->argv[++j])
+				break ;
 		}
 		if (!flag)
 			print_line(minihell, 1, flag);
