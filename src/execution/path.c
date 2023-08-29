@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:23:18 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/29 18:21:40 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/29 19:50:39 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static char *check_valid_path(char *command, char **path)
 	char	*cmd;
 
 	i = 0;
-	if (!command[0])
+	if (!command[0] || !path)
 		return (NULL);
 	cmd = ft_strjoin("/", command);
 	if (!cmd)
@@ -64,6 +64,15 @@ static char *check_valid_path(char *command, char **path)
 	}
 	free(cmd);
 	return (NULL);
+}
+
+int    cmd_is_dir(char *cmd)
+{
+    struct stat    cmd_stat;
+
+    ft_memset(&cmd_stat, 0, sizeof(cmd_stat));
+  	stat(cmd, &cmd_stat);
+    return (S_ISDIR(cmd_stat.st_mode));
 }
 
 void	append_command_path(t_minihell *minihell)
@@ -90,6 +99,13 @@ void	append_command_path(t_minihell *minihell)
 					printf("minishell: %s: No such file or directory\n", cmd);
 					error_code = 127;
 				}
+				else if (cmd_is_dir(minihell->lst_tokens->command))
+				{
+					free(minihell->lst_tokens->command);
+					minihell->lst_tokens->command = NULL;
+					printf("minishell: %s: is a directory\n", cmd);
+					error_code = 126;
+				}
 			}
 			else if (!check_builtin(cmd))
 			{
@@ -103,6 +119,7 @@ void	append_command_path(t_minihell *minihell)
 		}
     	minihell->lst_tokens = minihell->lst_tokens->next;
 	}
-	free_str_arr(path);
+	if (path)
+		free_str_arr(path);
 	minihell->lst_tokens = tmp;
 }

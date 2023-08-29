@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 20:55:01 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/28 19:06:11 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/29 18:42:20 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ static int	arg_is_digit(char *arg)
 	return(0);
 }
 
-void exit_minishell(t_minihell *minihell)
-{
-	if (minihell->nb_cmds == 1)
-		exit(error_code);
-}
+// void exit_minishell(t_minihell *minihell)
+// {
+// 	if (minihell->nb_cmds == 1)
+// 		exit(error_code);
+// }
 
 void	exit_builtin(t_minihell *minihell)
 {
@@ -63,13 +63,15 @@ void	exit_builtin(t_minihell *minihell)
 	if (argv_size == 2 && error && !arg_is_digit(minihell->lst_tokens->argv[1]))
 	{
 		error_code = number % 256;
-		exit_minishell(minihell);
+		// exit_minishell(minihell);
+		exit(error_code);
 	}
 	else if (argv_size >= 2 && (!error || arg_is_digit(minihell->lst_tokens->argv[1])))
 	{
 		printf("minishell: exit: %s: numeric argument required\n", minihell->lst_tokens->argv[1]);
 		error_code = 255;
-		exit_minishell(minihell);
+		// exit_minishell(minihell);
+		exit(error_code);
 	}
 	else if (argv_size >= 2)
 	{
