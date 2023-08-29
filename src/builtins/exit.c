@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 20:55:01 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/30 02:25:38 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/30 02:35:51 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,11 @@ static void	exit_checks(t_minihell *minihell, int argv_size, int number, bool *e
 		printf("minishell: exit: too many arguments\n");
 		error_code = 1;
 	}
-	else if (minihell->nb_cmds == 1)
-		exit(0);
+	else
+	{
+		error_code = 0;
+		exit(error_code);
+	}
 }
 
 void	exit_builtin(t_minihell *minihell)
