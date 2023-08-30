@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+         #
+#    By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 16:12:22 by jhesso            #+#    #+#              #
-#    Updated: 2023/08/29 20:35:21 by dgerguri         ###   ########.fr        #
+#    Updated: 2023/08/30 03:41:47 by jhesso           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
-CFLAGS		=	-Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS		=	-Wall -Wextra -Werror -g #-fsanitize=address -g
 READLINE	=	-lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
 LIBFT		=	libft.a
 LIBFT_DIR	=	libft/
@@ -24,7 +24,7 @@ SRC			=	main.c utils.c cleanup.c \
 				parser/list/list.c parser/list/lst_utils.c \
 				execution/execute.c execution/path.c execution/argv.c \
 				execution/prepare_execution.c \
-				execution/file/file.c execution/file/file_utils.c \
+				execution/file/file.c \
 				builtins/builtin.c builtins/builtin_utils.c builtins/env.c builtins/cd.c\
 				builtins/echo.c builtins/export.c builtins/pwd.c builtins/unset.c builtins/exit.c\
 				signals/signals.c
