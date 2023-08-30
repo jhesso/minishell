@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/30 02:54:50 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/30 04:32:14 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,14 +131,14 @@ static void	parent(t_minihell *mini, int log)
 	close_pipes(mini);
 }
 
-// static void	print_fds(t_tokens *lst_tokens)
-// {
-// 	while (lst_tokens)
-// 	{
-// 		printf("fd_in: %d, fd_out: %d\n", lst_tokens->fd_in, lst_tokens->fd_out);
-// 		lst_tokens = lst_tokens->next;
-// 	}
-// }
+static void	print_fds(t_tokens *lst_tokens)
+{
+	while (lst_tokens)
+	{
+		printf("fd_in: %d, fd_out: %d\n", lst_tokens->fd_in, lst_tokens->fd_out);
+		lst_tokens = lst_tokens->next;
+	}
+}
 
 static int	open_log(void)
 {
@@ -162,11 +162,13 @@ bool	execute(t_minihell *minihell)
 	// int			pipe_read;
 	int			status;
 	int			log;
+	int			stdout;
 
 	prepare_execution(minihell);
-	// print_fds(minihell->lst_tokens);
+	print_fds(minihell->lst_tokens);
 	head = minihell->lst_tokens;
 	i = 0;
+	stdout = dup(STDOUT_FILENO);
 	// pipe_read = 0;
 	log = open_log();
 	if (log < 0)
@@ -180,10 +182,17 @@ bool	execute(t_minihell *minihell)
 			error_code = errno;
 			break ;
 		}
+		if (minihell->lst_tokens->fd_in == -1)
+		{
+			free(minihell->lst_tokens->command);
+			minihell->lst_tokens->command = NULL;
+		}
 		if (check_builtin(minihell->lst_tokens->command) && minihell->nb_cmds == 1)
 		{
 			redirect_io(minihell->lst_tokens, minihell->pipe_fds, i, log);
 			execute_builtin(minihell, check_builtin(minihell->lst_tokens->command));
+			dprintf(log, "builtin executed\n");
+			dup2(stdout, STDOUT_FILENO);
 		}
 		else
 			minihell->pids[i] = fork();
