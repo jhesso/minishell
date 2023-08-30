@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:41:34 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/30 19:54:45 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/30 20:12:57 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ static t_tokens	*allocate_content(char **command_line, int start)
 static int  create_node(char **c_line, int s, t_minihell *mini)
 {
     t_tokens	*node;
+	char		*ret;
 	int			c;
 
     node = allocate_content(c_line, s);
@@ -84,11 +85,15 @@ static int  create_node(char **c_line, int s, t_minihell *mini)
 			!ft_strncmp(c_line[s], ">\0", 2) ||
 			!ft_strncmp(c_line[s], ">>\0", 3))
 			parse_str(++s, mini);
-        else if (node->command != NULL)
-            node->opt[c++] = parse_str(s, mini);
 		else
-            node->command = parse_str(s, mini);
-        s++;
+		{
+			ret = parse_str(s, mini);
+        	if (node->command != NULL && ret)
+				node->opt[c++] = ret;
+			else if (ret)
+            	node->command = ret;
+		}
+		s++;
     }
     lst_add_back(&mini->lst_tokens, node);
     return (s);
