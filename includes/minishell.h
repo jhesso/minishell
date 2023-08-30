@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/30 03:04:19 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/30 03:18:48 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,8 @@ void			signals_noninteractive(void);
 
 /* cleanup.c */
 void			cleanup(t_minihell *minihell);
+void			*free_str_arr(char **s);
+void			close_pipes(t_minihell *mini);
 
 /* utils.c */
 void			*free_str_arr(char **s);
