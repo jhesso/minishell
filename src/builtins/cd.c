@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 19:11:36 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/30 03:12:42 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/30 03:53:42 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,13 @@ void	cd_builtin(t_minihell *minihell)
 	if (!old_pwd)
 		malloc_error();
 	home = get_value(ft_strdup("$HOME="), 6, minihell->env);
-	pwd = ft_strjoin("PWD=", home);
-	if (!pwd)
-		malloc_error();
 	if (argv_size == 1)
-		chdir(home);
+	{
+		if (!home[0])
+			printf("minishell: cd: HOME not set\n");
+		else
+			chdir(home);
+	}
 	else if (chdir(minihell->lst_tokens->argv[1]))
 	{
 		if (minihell->lst_tokens->argv[1][0] == '.')
@@ -39,6 +41,9 @@ void	cd_builtin(t_minihell *minihell)
 			printf("minishell: cd: %s: No such file or directory\n", minihell->lst_tokens->argv[1]);
 		flag = 1;
 	}
+	pwd = ft_strjoin("PWD=", getcwd(NULL, 0));
+	if (!pwd)
+		malloc_error();
 	if (!flag)
 	{
 		if (!already_exists(minihell->env, old_pwd))
@@ -47,6 +52,8 @@ void	cd_builtin(t_minihell *minihell)
 			minihell->env = export_variable(minihell->env, old_pwd);
 		modify_variable(minihell, pwd);
 	}
+	else
+		error_code = 1;
 	free(old_pwd);
 	free(home);
 	free(pwd);
