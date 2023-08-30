@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:41:34 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/24 23:58:57 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/30 18:25:53 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,44 +17,25 @@
 *	our tokens list
 *	Returns a struct containing the calculated values
 */
-static t_malloc_sizes	calculate_sizes(char **command_line, int start)
+static int	calculate_options(char **command_line, int start)
 {
-	t_malloc_sizes	sizes;
+	int	size_opt;
 
-	sizes.in = 0;
-	sizes.out = 0;
-	sizes.heredoc = 0;
-	sizes.out_app = 0;
-	sizes.options = -1;
+	size_opt = 0;
 	while (command_line[start] && command_line[start][0] != '|')
 	{
-		if (!ft_strncmp(command_line[start], "<\0", 2))
-		{
-			sizes.in++;
+		if (!ft_strncmp(command_line[start], "<\0", 2) ||
+			!ft_strncmp(command_line[start], "<<\0", 3) ||
+			!ft_strncmp(command_line[start], ">\0", 2) ||
+			!ft_strncmp(command_line[start], ">>\0", 3))
 			start += 2;
-		}
-		else if (!ft_strncmp(command_line[start], "<<\0", 3))
-		{
-			sizes.heredoc++;
-			start += 2;
-		}
-		else if (!ft_strncmp(command_line[start], ">\0", 2))
-		{
-			sizes.out++;
-			start += 2;
-		}
-		else if (!ft_strncmp(command_line[start], ">>\0", 3))
-		{
-			sizes.out_app++;
-			start += 2;
-		}
 		else
 		{
-			sizes.options++;
+			size_opt++;
 			start++;
 		}
 	}
-	return (sizes);
+	return (size_opt);
 }
 
 /*	allocate_content()
@@ -62,25 +43,18 @@ static t_malloc_sizes	calculate_sizes(char **command_line, int start)
 */
 static t_tokens	*allocate_content(char **command_line, int start)
 {
-	t_malloc_sizes	sizes;
-	t_tokens		*node;
+	int			size_opt;
+	t_tokens	*node;
 
 	node = malloc(sizeof(t_tokens));
 	if (node == NULL)
 		malloc_error();
-	sizes = calculate_sizes(command_line, start);
-	node->in = malloc(sizeof(char *) * (sizes.in + 1));
-	node->out = malloc(sizeof(char *) * (sizes.out + 1));
-	node->out_app = malloc(sizeof(char *) * (sizes.out_app + 1));
-	node->heredoc = malloc(sizeof(char *) * (sizes.heredoc + 1));
-	if (sizes.options > -1)
-		node->opt = malloc(sizeof(char *) * (sizes.options + 1));
-	else
-		node->opt = malloc(sizeof(char *));
-	if (node->in == NULL || node->out == NULL || node->heredoc == NULL
-		|| (sizes.options > -1 && node->opt == NULL) || node->out_app == NULL)
+	size_opt = calculate_options(command_line, start);
+	node->opt = ft_calloc(sizeof(char *), (size_opt + 1));
+	if (!node->opt)
 		malloc_error();
-	init_node(&node, sizes);
+	node->command = NULL;
+	node->next = NULL;
 	return (node);
 }
 
@@ -91,24 +65,21 @@ static t_tokens	*allocate_content(char **command_line, int start)
 */
 static int  create_node(char **c_line, int s, t_minihell *mini)
 {
-    t_tokens        *node;
-    t_malloc_sizes  c;
+    t_tokens	*node;
+	int			c;
 
     node = allocate_content(c_line, s);
-    c = init_counter();
+	c = 0;
     node->command = NULL;
     while (c_line[s] && c_line[s][0] != '|')
     {
-        if (!ft_strncmp(c_line[s], "<\0", 2))
-            node->in[c.in++] = parse_str(++s, mini);
-        else if (!ft_strncmp(c_line[s], "<<\0", 3))
-            node->heredoc[c.heredoc++] = parse_str(++s, mini);
-        else if (!ft_strncmp(c_line[s], ">\0", 2))
-            node->out[c.out++] = parse_str(++s, mini);
-        else if (!ft_strncmp(c_line[s], ">>\0", 3))
-            node->out_app[c.out_app++] = parse_str(++s, mini);
+        if (!ft_strncmp(c_line[s], "<\0", 2) ||
+			!ft_strncmp(c_line[s], "<<\0", 3) ||
+			!ft_strncmp(c_line[s], ">\0", 2) ||
+			!ft_strncmp(c_line[s], ">>\0", 3))
+			parse_str(++s, mini);
         else if (node->command != NULL)
-            node->opt[c.options++] = parse_str(s, mini);
+            node->opt[c++] = parse_str(s, mini);
         else
             node->command = parse_str(s, mini);
         s++;

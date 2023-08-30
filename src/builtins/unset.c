@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:11:25 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/30 02:12:38 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/30 18:31:34 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,8 @@ void	unset_builtin(t_minihell *minihell)
 {
 	int	i;
 	int	remove_env;
-	int	argv_size;
 
 	i = 1;
-	argv_size = count_strings(minihell->lst_tokens->argv);
 	while (minihell->lst_tokens->argv[i])
 	{
 		if (!check_validity(minihell->lst_tokens->argv[i]))

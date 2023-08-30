@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 23:22:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/29 20:18:15 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/30 18:29:13 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,6 @@ static void	free_list(t_tokens *lst_tokens)
 		if (tmp->fd_out > 0)
 			close(tmp->fd_out);
 		free_str_arr(tmp->opt);
-		free_str_arr(tmp->in);
-		free_str_arr(tmp->out);
-		free_str_arr(tmp->out_app);
-		free_str_arr(tmp->heredoc);
 		free(tmp->argv[0]);
 		free(tmp->argv);
 		free(tmp);
