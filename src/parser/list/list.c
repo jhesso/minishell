@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:41:34 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/30 19:17:26 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/30 19:54:45 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,14 @@ static t_tokens	*allocate_content(char **command_line, int start)
 	if (node == NULL)
 		malloc_error();
 	size_opt = calculate_options(command_line, start);
-		node->opt = ft_calloc(sizeof(char *), (size_opt + 1));
-	if (!node->opt)
+	if (size_opt > -1)
+        node->opt = ft_calloc(sizeof(char *), (size_opt + 1));
+    else
+	{
+		node->opt = malloc(sizeof(char *));
+		node->opt[0] = NULL;
+	}
+	if (size_opt > -1 && !node->opt)
 		malloc_error();
 	node->command = NULL;
 	node->next = NULL;
