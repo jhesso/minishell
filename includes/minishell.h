@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/30 02:14:03 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/30 03:04:19 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,10 @@ void			env_builtin(t_minihell *minihell);
 void			unset_builtin(t_minihell *minihell);
 void			export_builtin(t_minihell *minihell);
 void			cd_builtin(t_minihell *minihell);
+
+int				already_exists(char **env, char *arg);
+void			modify_variable(t_minihell *minihell, char *arg);
+char			**export_variable(char **env, char *arg);
 
 /* builtin_utils.c */
 int				check_builtin(char *cmd);

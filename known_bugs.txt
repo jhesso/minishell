@@ -7,3 +7,13 @@ known bugs in minishell:
 	- number of words printed is 0 (should not be like this)
 4. STDIN is fucked somehow and thats why running ./minishell exits the minishell immediately
 	propably the same reason cat doesn't want to work too well
+
+
+
+
+
+
+Dardan:
+	Check the expansion again! echo $random $USER should not give space in between...
+	if home is unset, "cd" should complain!!
+

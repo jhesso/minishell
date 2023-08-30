@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 20:55:01 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/30 02:35:51 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/30 02:46:48 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,12 @@ static void	exit_checks(t_minihell *minihell, int argv_size, int number, bool *e
 
 void	exit_builtin(t_minihell *minihell)
 {
-	bool				error;
-	int 				argv_size;
-	long int			number;
+	bool		error;
+	int			argv_size;
+	long int	number;
 
 	error = true;
- 	argv_size = count_strings(minihell->lst_tokens->argv);
+	argv_size = count_strings(minihell->lst_tokens->argv);
 	number = 0;
 	if (minihell->nb_cmds == 1)
 		printf("exit\n");
