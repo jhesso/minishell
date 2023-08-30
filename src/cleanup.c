@@ -6,11 +6,24 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 23:22:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/25 19:11:27 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/29 20:18:15 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	close_pipes(t_minihell *mini)
+{
+	int	i;
+
+	i = 0;
+	while (i < mini->nb_cmds)
+	{
+		close(mini->pipe_fds[i][0]);
+		close(mini->pipe_fds[i][1]);
+		i++;
+	}
+}
 
 /*	free_list()
 *	frees the lst_tokens linked list and all of its contents
