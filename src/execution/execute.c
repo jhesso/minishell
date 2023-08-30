@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/30 02:54:50 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/30 03:24:10 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,14 +131,14 @@ static void	parent(t_minihell *mini, int log)
 	close_pipes(mini);
 }
 
-// static void	print_fds(t_tokens *lst_tokens)
-// {
-// 	while (lst_tokens)
-// 	{
-// 		printf("fd_in: %d, fd_out: %d\n", lst_tokens->fd_in, lst_tokens->fd_out);
-// 		lst_tokens = lst_tokens->next;
-// 	}
-// }
+static void	print_fds(t_tokens *lst_tokens)
+{
+	while (lst_tokens)
+	{
+		printf("fd_in: %d, fd_out: %d\n", lst_tokens->fd_in, lst_tokens->fd_out);
+		lst_tokens = lst_tokens->next;
+	}
+}
 
 static int	open_log(void)
 {
@@ -164,7 +164,7 @@ bool	execute(t_minihell *minihell)
 	int			log;
 
 	prepare_execution(minihell);
-	// print_fds(minihell->lst_tokens);
+	print_fds(minihell->lst_tokens);
 	head = minihell->lst_tokens;
 	i = 0;
 	// pipe_read = 0;
