@@ -16,7 +16,7 @@
 *	prints out the contents of char **arr
 *	It is assumed that the char ** is NULL terminated
 */
-void	print_string_arr(char **arr, int fd)
+void	print_string_arr(char **arr)
 {
 	int	i;
 
