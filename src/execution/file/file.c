@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/31 19:46:58 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/31 20:12:40 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void	open_files(t_minihell *minihell)
 		{
 			if (minihell->tokens[i][0] == '<')
 				i = open_input_heredoc_files(minihell, i);
-			if (minihell->tokens[i][0] == '>')
+			else if (minihell->tokens[i][0] == '>')
 				i = open_output_append_files(minihell, i, &flag);
 			i++;
 		}
