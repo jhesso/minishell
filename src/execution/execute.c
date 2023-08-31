@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/31 23:10:30 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/01 00:32:05 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,13 +106,24 @@ static void	print_fds(t_tokens *lst_tokens)
 	}
 }
 
-static int	open_log(void)
+static int	open_log(t_minihell *minihell)
 {
-	int	fd;
+	int		fd;
+	char	*path;
+	char	*log_path;
 
-	fd = open("/home/jhesso/dev/minishell/log.txt", O_WRONLY | O_CREAT | O_APPEND, 0644);
+	path = get_value(ft_strdup("$PWD="), 5, minihell->env);
+	if (!path)
+		perror(strerror(errno));
+	log_path = ft_strjoin(path, "/log.txt");
+	if (!log_path)
+		perror("strjoin fail");
+	free(path);
+	printf("%s\n", log_path);
+	fd = open(log_path, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
 		perror(strerror(errno));
+	free(log_path);
 	return (fd);
 }
 
@@ -133,7 +144,7 @@ bool	execute(t_minihell *minihell)
 	print_fds(minihell->lst_tokens);
 	head = minihell->lst_tokens;
 	i = 0;
-	log = open_log();
+	log = open_log(minihell);
 	if (log < 0)
 		return (false);
 	while (minihell->lst_tokens)
