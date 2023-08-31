@@ -8,12 +8,21 @@
 # done
 
 FILE_TO_WATCH="log.txt"
-last_modified=$(stat -f "%m" "$FILE_TO_WATCH")
+if [[ "$(uname)" == "Darwin" ]]; then
+    last_modified=$(stat -f "%m" "$FILE_TO_WATCH")
+else
+    last_modified=$(stat -c "%Y" "$FILE_TO_WATCH")
+fi
 
 while true; do
-    current_modified=$(stat -f "%m" "$FILE_TO_WATCH")
+    if [[ "$(uname)" == "Darwin" ]]; then
+        current_modified=$(stat -f "%m" "$FILE_TO_WATCH")
+    else
+        current_modified=$(stat -c "%Y" "$FILE_TO_WATCH")
+    fi
+
     if [[ "$current_modified" -gt "$last_modified" ]]; then
-		clear
+        clear
         cat "$FILE_TO_WATCH"
         last_modified="$current_modified"
     fi
