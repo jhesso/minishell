@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_str_arr.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 15:08:12 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/31 23:37:31 by dardangergu      ###   ########.fr       */
+/*   Updated: 2023/08/31 23:55:00 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_string_arr(char **arr, int fd)
 	i = 0;
 	while (arr[i] != NULL)
 	{
-		ft_printf(fd, "%s\n", arr[i]);
+		ft_printf(1, "%s\n", arr[i]);
 		i++;
 	}
 }

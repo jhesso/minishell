@@ -6,8 +6,7 @@ known bugs in minishell:
 	minishell: file: No such file or directory
 	minishell: file: No such file or directory
 3. cat | cat | ls
-
-
+4. need further testing with the mkdir -p a/b/ ; cd a/b/ ; rm ../../a thing (after dardan does the pwd fix)
 
 Dardan:
 	Check the expansion again! echo $random $USER should not give space in between...
