@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/31 21:09:46 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/31 22:17:45 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	get_heredoc(char *delim)
 	while (1)
 	{
 		line = readline("> ");
-		if (ft_strncmp(line, delim, ft_strlen(delim)) == 0 &&
+		if (ft_strncmp(line, delim, ft_strlen(delim)) == 0 && \
 		line[ft_strlen(delim)] == '\0')
 		{
 			free(line);
@@ -69,7 +69,8 @@ static int	open_file(char *filename, int mode)
 	return (fd);
 }
 
-static int	open_input_heredoc_files(t_minihell *minihell, int i, bool *error_flag)
+static int	open_input(t_minihell *minihell, int i,
+bool *error_flag)
 {
 	if (!ft_strncmp(minihell->tokens[i], "<\0", 2))
 	{
@@ -80,7 +81,7 @@ static int	open_input_heredoc_files(t_minihell *minihell, int i, bool *error_fla
 		{
 			while (minihell->tokens[i + 1] && minihell->tokens[i][0] != '|')
 				i++;
-			*(error_flag) = false;
+			*(error_flag) = true;
 		}
 	}
 	else if (!ft_strncmp(minihell->tokens[i], "<<\0", 3))
@@ -99,7 +100,7 @@ static int	open_input_heredoc_files(t_minihell *minihell, int i, bool *error_fla
 *		(char *) filename: name of the file to be opened
 *		(int) mode: mode for opening the file
 */
-static int	open_output_append_files(t_minihell *minihell, int i, bool *flag)
+static int	open_output(t_minihell *minihell, int i, bool *flag)
 {
 	if (!ft_strncmp(minihell->tokens[i], ">\0", 2))
 	{
@@ -123,7 +124,6 @@ static int	open_output_append_files(t_minihell *minihell, int i, bool *flag)
 	return (i);
 }
 
-
 int	open_files(t_minihell *minihell, t_tokens *lst_tokens, int i)
 {
 	// int			i; // CANNOT USE INT HERE BC OTHERWISE IT ALWAYS START FROM 0!
@@ -133,19 +133,20 @@ int	open_files(t_minihell *minihell, t_tokens *lst_tokens, int i)
 	// i = 0;
 	lst_tokens->fd_in = 0;
 	lst_tokens->fd_out = 0;
-	error_flag = true;
+	error_flag = false;
 	flag = false;
-	while (minihell->tokens[i] && minihell->tokens[i][0] != '|' && error_flag != false)
+	while (minihell->tokens[i] && minihell->tokens[i][0] != '|' && \
+		error_flag != false)
 	{
 		if (minihell->tokens[i][0] == '<')
-			i = open_input_heredoc_files(minihell, i, &error_flag);
+			i = open_input(minihell, i, &error_flag);
 		else if (minihell->tokens[i][0] == '>')
-			i = open_output_append_files(minihell, i, &flag);
+			i = open_output(minihell, i, &flag);
 		i++;
 	}
 	if (minihell->tokens[i][0] == '|')
 		i++;
-	if (error_flag == true)
+	if (error_flag == false)
 		append_command_path(minihell, lst_tokens);
 	return (i);
 }
