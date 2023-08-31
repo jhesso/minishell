@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/30 03:18:48 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/30 18:31:01 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,27 +76,11 @@ typedef struct			s_tokens
 {
 	char				*command;
 	char				**opt;
-	char				**in;
-	char				**out;
-	char				**out_app;
-	char				**heredoc;
 	char				**argv;
 	int					fd_in;
 	int					fd_out;
 	struct s_tokens		*next;
 }						t_tokens;
-
-/*	s_malloc_sizes
-*	used to calculate and allocate the amount of memory needed for our tokens
-*/
-typedef struct		s_malloc_sizes
-{
-	int	in;
-	int	out;
-	int out_app;
-	int	heredoc;
-	int options;
-}	t_malloc_sizes;
 
 /******************************************************************************/
 /*								   Functions								  */
@@ -129,11 +113,8 @@ bool			create_lst_tokens(t_minihell *minihell);
 
 /* lst_utils.c */
 void			malloc_error(void);
-t_malloc_sizes	init_counter(void);
-void			init_node(t_tokens **node, t_malloc_sizes sizes);
 void			lst_print(t_tokens *lst_tokens);
 void			lst_add_back(t_tokens **lst_tokens, t_tokens *node);
-void			print_sizes(t_malloc_sizes sizes);
 
 /* expanding.c */
 char			*expand_variables(char *str, char **envp);
