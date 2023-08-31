@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/30 03:38:17 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/31 17:30:18 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	open_file(char *filename, int mode)
 	if (fd == -1)
 	{
 		printf("minishell: %s: %s\n", filename, strerror(errno));
-		error_code = errno;
+		error_code = 1;
 	}
 	return (fd);
 }

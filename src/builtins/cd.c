@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 19:11:36 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/31 16:28:32 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/31 17:45:10 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,10 @@ static void	modify_env(t_minihell *minihell, char *old_pwd, char *home, int flag
 		else
 			minihell->env = export_variable(minihell->env, old_pwd);
 		modify_variable(minihell, pwd);
+		error_code = 0;
 	}
 	else
-	{
-		printf("comes");
 		error_code = 1;
-	}
 	free(old_pwd);
 	free(home);
 	free(pwd);
@@ -52,16 +50,16 @@ void	cd_builtin(t_minihell *minihell)
 	{
 		if (chdir(home))
 		{
-			printf("minishell: cd: HOME not set\n");
+			ft_printf(2, "minishell: cd: HOME not set\n");
 			flag = 1;
 		}
 	}
 	else if (chdir(minihell->lst_tokens->argv[1]))
 	{
 		if (minihell->lst_tokens->argv[1][0] == '.')
-			printf("minishell: cd: %s: Not a directory\n", minihell->lst_tokens->argv[1]);
+			ft_printf(2, "minishell: cd: %s: Not a directory\n", minihell->lst_tokens->argv[1]);
 		else
-			printf("minishell: cd: %s: No such file or directory\n", minihell->lst_tokens->argv[1]);
+			ft_printf(2, "minishell: cd: %s: No such file or directory\n", minihell->lst_tokens->argv[1]);
 		flag = 1;
 	}
 	modify_env(minihell, old_pwd, home, flag);

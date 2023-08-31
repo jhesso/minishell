@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 13:51:46 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/30 00:26:05 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/31 17:45:58 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	env_builtin(t_minihell *minihell)
 	}
 	else
 	{
-		printf("env: %s: No such file or directory\n", minihell->lst_tokens->argv[1]);
+		ft_printf(2, "env: %s: No such file or directory\n", minihell->lst_tokens->argv[1]);
 		error_code = 127;
 	}
 }
