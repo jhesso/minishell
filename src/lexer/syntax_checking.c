@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 20:11:37 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/18 17:15:39 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/31 17:59:57 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,11 @@
 
 static bool	syntax_error_messages(int type, char *message)
 {
-	ft_putstr_fd("minishell: syntax error near unexpected token '",
-		STDERR_FILENO);
+	ft_printf(2, "minishell: syntax error near unexpected token '");
 	if (type == 1)
-		ft_putstr_fd("newline'\n", STDERR_FILENO);
+		ft_printf(2, "newline'\n");
 	else if (type == 2)
-	{
-		ft_putstr_fd(message, STDERR_FILENO);
-		ft_putstr_fd("'\n", STDERR_FILENO);
-	}
+		ft_printf(2, "%s'\n", message);
 	error_code = 258;
 	return (false);
 }

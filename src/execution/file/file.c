@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/31 17:30:18 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/31 17:54:44 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	open_file(char *filename, int mode)
 		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
-		printf("minishell: %s: %s\n", filename, strerror(errno));
+		ft_printf(2, "minishell: %s: %s\n", filename, strerror(errno));
 		error_code = 1;
 	}
 	return (fd);
