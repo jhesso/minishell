@@ -9,7 +9,7 @@ known bugs in minishell:
 	propably the same reason cat doesn't want to work too well
 
 
-5. < file | < input If either of these files exist the error massage
+5. < file | < input If either of these files exist the error massage ||| I FIXED THIS BUT WILL BE GOOD TO BE TESTED!!!
 	for both is only the first file!
 	minishell: file: No such file or directory
 	minishell: file: No such file or directory

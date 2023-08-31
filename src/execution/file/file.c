@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/31 17:54:44 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/31 19:25:11 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,23 +88,24 @@ void	open_files(t_minihell *minihell)
 	bool		flag;
 
 	tmp = minihell->lst_tokens;
+	i = 0;
 	while (minihell->lst_tokens)
 	{
-		i = 0;
 		minihell->lst_tokens->fd_in = 0;
 		minihell->lst_tokens->fd_out = 0;
 		flag = false;
 		while (minihell->tokens[i])
 		{
-			if (minihell->tokens[i][0] == '|')
-				break ;
 			if (!ft_strncmp(minihell->tokens[i], "<\0", 2))
 			{
 				if (minihell->lst_tokens->fd_in > 0)
 					close(minihell->lst_tokens->fd_in);
 				minihell->lst_tokens->fd_in = open_file(minihell->tokens[++i], 0);
 				if (minihell->lst_tokens->fd_in == -1)
-					break ;
+				{
+					while (minihell->tokens[i + 1] && minihell->tokens[i][0] != '|')
+						i++;
+				}
 			}
 			else if (!ft_strncmp(minihell->tokens[i], "<<\0", 3))
 			{
