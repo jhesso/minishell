@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 05:12:42 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/30 20:13:24 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/31 22:30:17 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@ char    *parse_str(int c, t_minihell *minihell)
 {
 	if (c == 0 || ft_strncmp(minihell->tokens[c - 1], "<<\0", 3))
 		minihell->tokens[c] = expand_variables(minihell->tokens[c], minihell->env);
-    if (!minihell->tokens[c])
-        malloc_error();
+	if (!minihell->tokens[c])
+		malloc_error();
 	if (!minihell->tokens[c][0])
 		return (NULL);
-    minihell->tokens[c] = remove_quotes(minihell->tokens[c], 0, 0, 0);
+	minihell->tokens[c] = remove_quotes(minihell->tokens[c], 0, 0, 0);
 	if (c != 0 && (!ft_strncmp(minihell->tokens[c - 1], "<\0", 2) ||
 		!ft_strncmp(minihell->tokens[c - 1], "<<\0", 3) ||
 		!ft_strncmp(minihell->tokens[c - 1], ">\0", 2) ||
 		!ft_strncmp(minihell->tokens[c - 1], ">>\0", 3)))
 		return (NULL);
-    return (ft_strdup(minihell->tokens[c]));
+	return (ft_strdup(minihell->tokens[c]));
 }
 
 /*	parse()
