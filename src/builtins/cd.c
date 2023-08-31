@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 19:11:36 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/31 17:45:10 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/31 19:52:31 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,7 @@ void	cd_builtin(t_minihell *minihell)
 	}
 	else if (chdir(minihell->lst_tokens->argv[1]))
 	{
-		if (minihell->lst_tokens->argv[1][0] == '.')
-			ft_printf(2, "minishell: cd: %s: Not a directory\n", minihell->lst_tokens->argv[1]);
-		else
-			ft_printf(2, "minishell: cd: %s: No such file or directory\n", minihell->lst_tokens->argv[1]);
+		ft_printf(2, "minishell: cd: %s: %s\n", minihell->lst_tokens->argv[1], strerror(errno));
 		flag = 1;
 	}
 	modify_env(minihell, old_pwd, home, flag);
