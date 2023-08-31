@@ -14,7 +14,15 @@ known bugs in minishell:
 	minishell: file: No such file or directory
 	minishell: file: No such file or directory
 
-6. cat | cat | ls
+6. cat | cat | ls  Since there are two 'cat' commands this should request a new command line after two enter! Our thing is going infinitely!
+
+7. 	mkdir a
+	cd a
+	mkdir b
+	cd b
+	rm -r ../../a
+	This is not crashing but is blocking everything! Check how bash works!
+
 
 
 

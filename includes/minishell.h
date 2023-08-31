@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/30 18:31:01 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/31 21:11:19 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,13 +131,13 @@ bool			execute(t_minihell *minihell);
 void			prepare_execution(t_minihell *minihell);
 
 /* path.c */
-void			append_command_path(t_minihell *minihell);
+void			append_command_path(t_minihell *minihell, t_tokens *lst_tokens);
 
 /* argv.c */
 void			create_argv(t_minihell *minihell);
 
 /* file.c */
-void			open_files(t_minihell *minihell);
+int				open_files(t_minihell *minihell, t_tokens *lst_tokens, int i);
 
 /* file_utils.c */
 void			close_files(t_minihell *minihell);

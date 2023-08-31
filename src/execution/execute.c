@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/30 04:32:14 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/31 21:10:26 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ bool	execute(t_minihell *minihell)
 	int			status;
 	int			log;
 	int			stdout;
+	int  token = 0;
 
 	prepare_execution(minihell);
 	print_fds(minihell->lst_tokens);
@@ -173,8 +174,9 @@ bool	execute(t_minihell *minihell)
 	log = open_log();
 	if (log < 0)
 		return (false);
-	while (minihell->lst_tokens)
+	while (minihell->lst_tokens) //// The first thing open files is changed it has append command in it!
 	{
+		token = open_files(minihell, minihell->lst_tokens, token); //IT IS CRASHING AFTER I ADDED THE TOKEN!
 		status = pipe(minihell->pipe_fds[i]);
 		if (status == -1)
 		{

@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/31 20:12:40 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/31 21:09:46 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int	open_file(char *filename, int mode)
 	return (fd);
 }
 
-static int	open_input_heredoc_files(t_minihell *minihell, int i)
+static int	open_input_heredoc_files(t_minihell *minihell, int i, bool *error_flag)
 {
 	if (!ft_strncmp(minihell->tokens[i], "<\0", 2))
 	{
@@ -80,6 +80,7 @@ static int	open_input_heredoc_files(t_minihell *minihell, int i)
 		{
 			while (minihell->tokens[i + 1] && minihell->tokens[i][0] != '|')
 				i++;
+			*(error_flag) = false;
 		}
 	}
 	else if (!ft_strncmp(minihell->tokens[i], "<<\0", 3))
@@ -122,33 +123,29 @@ static int	open_output_append_files(t_minihell *minihell, int i, bool *flag)
 	return (i);
 }
 
-/*	open_files()
-*	Opens all the files in the correct mode
-*	Parameters:
-*		(t_minihell *) minihell: structure containing all the information
-*/
-void	open_files(t_minihell *minihell)
+
+int	open_files(t_minihell *minihell, t_tokens *lst_tokens, int i)
 {
-	int			i;
-	t_tokens	*tmp;
+	// int			i; // CANNOT USE INT HERE BC OTHERWISE IT ALWAYS START FROM 0!
+	bool		error_flag;
 	bool		flag;
 
-	tmp = minihell->lst_tokens;
-	i = 0;
-	while (minihell->lst_tokens)
+	// i = 0;
+	lst_tokens->fd_in = 0;
+	lst_tokens->fd_out = 0;
+	error_flag = true;
+	flag = false;
+	while (minihell->tokens[i] && minihell->tokens[i][0] != '|' && error_flag != false)
 	{
-		minihell->lst_tokens->fd_in = 0;
-		minihell->lst_tokens->fd_out = 0;
-		flag = false;
-		while (minihell->tokens[i])
-		{
-			if (minihell->tokens[i][0] == '<')
-				i = open_input_heredoc_files(minihell, i);
-			else if (minihell->tokens[i][0] == '>')
-				i = open_output_append_files(minihell, i, &flag);
-			i++;
-		}
-		minihell->lst_tokens = minihell->lst_tokens->next;
+		if (minihell->tokens[i][0] == '<')
+			i = open_input_heredoc_files(minihell, i, &error_flag);
+		else if (minihell->tokens[i][0] == '>')
+			i = open_output_append_files(minihell, i, &flag);
+		i++;
 	}
-	minihell->lst_tokens = tmp;
+	if (minihell->tokens[i][0] == '|')
+		i++;
+	if (error_flag == true)
+		append_command_path(minihell, lst_tokens);
+	return (i);
 }
