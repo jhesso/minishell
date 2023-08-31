@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/30 18:31:01 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/31 23:48:50 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ void  			init_env(t_minihell *minihell, char **envp);
 
 void			exit_builtin(t_minihell *minihell);
 void			echo_builtin(t_minihell *minihell, int j, int flag, int i);
-void			pwd_builtin(void);
+void			pwd_builtin(t_minihell *minihell);
 void			env_builtin(t_minihell *minihell);
 void			unset_builtin(t_minihell *minihell);
 void			export_builtin(t_minihell *minihell);
