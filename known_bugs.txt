@@ -1,20 +1,11 @@
 known bugs in minishell:
 
 1. signals not working properly when in heredoc
-2. cat does not work when no file specified
-	- this is most likely a problem with piping or somethign
-3. echo hello | pwd | ls -la | wc -w
-	- number of words printed is 0 (should not be like this)
-4. STDIN is fucked somehow and thats why running ./minishell exits the minishell immediately
-	propably the same reason cat doesn't want to work too well
-
-
-5. < file | < input If either of these files exist the error massage ||| I FIXED THIS BUT WILL BE GOOD TO BE TESTED!!!
+2. < file | < input If either of these files exist the error massage ||| I FIXED THIS BUT WILL BE GOOD TO BE TESTED!!!
 	for both is only the first file!
 	minishell: file: No such file or directory
 	minishell: file: No such file or directory
-
-6. cat | cat | ls
+3. cat | cat | ls
 
 
 
