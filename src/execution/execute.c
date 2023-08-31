@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/30 04:32:14 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/30 17:14:50 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static void	child(t_tokens *cmd, t_minihell *mini, int not_first_cmd, int log)
 		execute_builtin(mini, check_builtin(cmd->command));
 		exit(error_code);
 	}
-	dprintf(log, "running execve...\n");
+	close(log);
 	if (execve(cmd->command, cmd->argv, mini->env) == -1)
 	{
 		perror(strerror(errno));
@@ -162,13 +162,12 @@ bool	execute(t_minihell *minihell)
 	// int			pipe_read;
 	int			status;
 	int			log;
-	int			stdout;
+	int			stdout_cpy;
 
 	prepare_execution(minihell);
 	print_fds(minihell->lst_tokens);
 	head = minihell->lst_tokens;
 	i = 0;
-	stdout = dup(STDOUT_FILENO);
 	// pipe_read = 0;
 	log = open_log();
 	if (log < 0)
@@ -189,10 +188,14 @@ bool	execute(t_minihell *minihell)
 		}
 		if (check_builtin(minihell->lst_tokens->command) && minihell->nb_cmds == 1)
 		{
+			if (minihell->lst_tokens->fd_out > 0)
+				stdout_cpy = dup(STDOUT_FILENO);
 			redirect_io(minihell->lst_tokens, minihell->pipe_fds, i, log);
+			close_pipes(minihell);
+			close(log);
 			execute_builtin(minihell, check_builtin(minihell->lst_tokens->command));
-			dprintf(log, "builtin executed\n");
-			dup2(stdout, STDOUT_FILENO);
+			dup2(stdout_cpy, STDOUT_FILENO);
+			close(stdout_cpy);
 		}
 		else
 			minihell->pids[i] = fork();
