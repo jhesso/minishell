@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:20:55 by jhesso            #+#    #+#             */
-/*   Updated: 2023/04/14 15:09:05 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/31 23:37:50 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ long	ft_calculate_digits(unsigned long int nbr);
 
 void	ft_bzero(void *s, size_t n);
 void	ft_putnbr_fd(int n, int fd);
-void	print_string_arr(char **arr);
+void	print_string_arr(char **arr, int fd);
 void	*ft_calloc(size_t count, size_t size);
 void	*ft_memset(void *b, int c, size_t len);
 void	ft_lstadd_back(t_list **lst, t_list *new);
