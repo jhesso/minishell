@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/01 15:26:10 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/01 16:09:44 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,12 @@ static void	redirect_io(t_tokens *cmd, int **pipe_fds, int nb_cmd, int log)
 	{
 		dprintf(log, "redirecting STDIN_FILENO into cmd->fd_in\n");
 		dup2(cmd->fd_in, STDIN_FILENO);
-		// close(pipe_read);
 	}
 	else if (nb_cmd)
 	{
 		dprintf(log, "redirecting STDIN_FILENO into pipe_fds[%d][0]\n", nb_cmd - 1);
 		dup2(pipe_fds[nb_cmd - 1][0], STDIN_FILENO);
-		close(pipe_fds[nb_cmd - 1][0]);
+		// close(pipe_fds[nb_cmd - 1][0]);
 	}
 	if (cmd->fd_out > 0)
 	{
@@ -43,10 +42,6 @@ static void	redirect_io(t_tokens *cmd, int **pipe_fds, int nb_cmd, int log)
 		dup2(pipe_fds[nb_cmd][1], STDOUT_FILENO);
 		close(pipe_fds[nb_cmd][1]);
 	}
-	// if (!cmd->next)
-	// 	close(pipe_fds[nb_cmd][1]);
-	// if (!nb_cmd && !check_builtin(cmd->command))
-	// 	close(pipe_read);
 }
 
 /*	child()
@@ -119,7 +114,6 @@ static int	open_log(t_minihell *minihell)
 	if (!log_path)
 		perror("strjoin fail");
 	free(path);
-	printf("%s\n", log_path);
 	fd = open(log_path, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
 		perror(strerror(errno));
@@ -133,13 +127,12 @@ static int	open_log(t_minihell *minihell)
 *	Returns TRUE if execution was successful, FALSE otherwise
 */
 bool	execute(t_minihell *minihell)
-{ //! Realized a potential problem with heredoc: if more than one command has heredoc as input, only the last commands heredoc will be kept
+{
 	t_tokens	*head;
 	int			i;
 	int			status;
 	int			log;
 	int			stdout_cpy;
-	// int  token = 0;
 
 	prepare_execution(minihell);
 	head = minihell->lst_tokens;
@@ -147,7 +140,7 @@ bool	execute(t_minihell *minihell)
 	log = open_log(minihell);
 	if (log < 0)
 		return (false);
-	while (minihell->lst_tokens) //// The first thing open files is changed it has append command in it!
+	while (minihell->lst_tokens)
 	{
 		open_files(minihell, minihell->lst_tokens);
 		print_fds(minihell->lst_tokens);

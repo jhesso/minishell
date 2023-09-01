@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/30 03:20:47 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/01 16:07:09 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	handle_eof(void)
 void	minishell(t_minihell *minihell)
 {
 	char		*command_line;
-	bool		ret; // return value of our functions, if set to false, error happened
+	bool		ret;
 
 	using_history();
 	ret = true;
@@ -36,9 +36,8 @@ void	minishell(t_minihell *minihell)
 		if (command_line == NULL)
 			handle_eof();
 		signals_noninteractive();
-		if (command_line && *command_line) //* check that command_line is not just an empty line
-			add_history(command_line); //* from what I understand, this adds the line to history but only for this session
-		// ft_putendl_fd(command_line, STDOUT_FILENO); //! this is just for testing
+		if (command_line && *command_line)
+			add_history(command_line);
 		ret = lexing(minihell, command_line);
 		if (ret)
 		{
@@ -47,7 +46,6 @@ void	minishell(t_minihell *minihell)
 				execute(minihell);
 			cleanup(minihell);
 		}
-		// system("leaks minishell"); //! this is just for testing
 	}
 }
 int	error_code = 0;
