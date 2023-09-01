@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/31 23:48:50 by dardangergu      ###   ########.fr       */
+/*   Updated: 2023/09/01 09:19:40 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# define RESET_COLOR	"\033[0m"
-# define BLUE_BOLD   	"\033[0;34m"
+# define RESET_COLOR "\001\e[0;m\002"
+# define BLUE_BOLD "\001\e[0;34m\002"
 
 /******************************************************************************/
 /*								Includes  									  */
