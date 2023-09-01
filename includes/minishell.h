@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/01 09:19:40 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/01 15:28:28 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,13 +131,13 @@ bool			execute(t_minihell *minihell);
 void			prepare_execution(t_minihell *minihell);
 
 /* path.c */
-void			append_command_path(t_minihell *minihell);
+void			append_command_path(t_minihell *minihell, t_tokens *lst_tokens);
 
 /* argv.c */
 void			create_argv(t_minihell *minihell);
 
 /* file.c */
-void			open_files(t_minihell *minihell);
+void				open_files(t_minihell *minihell, t_tokens *lst_tokens);
 
 /* file_utils.c */
 void			close_files(t_minihell *minihell);

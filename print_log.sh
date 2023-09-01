@@ -7,7 +7,7 @@
 # 	read -n 1
 # done
 
-FILE_TO_WATCH="log.txt"
+FILE_TO_WATCH="$HOME/log.txt"
 if [[ "$(uname)" == "Darwin" ]]; then
     last_modified=$(stat -f "%m" "$FILE_TO_WATCH")
 else
