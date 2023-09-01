@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 23:22:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/30 18:29:13 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/01 14:31:15 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	free_list(t_tokens *lst_tokens)
 	{
 		tmp = lst_tokens;
 		lst_tokens = lst_tokens->next;
+		if (tmp->command)
 		free(tmp->command);
 		if (tmp->fd_in > 0)
 			close(tmp->fd_in);

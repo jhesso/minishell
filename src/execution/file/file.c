@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/01 13:27:17 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/01 14:35:46 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,13 @@ void	open_files(t_minihell *minihell, t_tokens *lst_tokens)
 	}
 	if (minihell->tokens[i] && minihell->tokens[i][0] == '|')
 		i++;
+	if (!minihell->tokens[i])
+		i = 0;
 	if (error_flag == false)
 		append_command_path(minihell, lst_tokens);
-	// return (i);
+	else
+	{
+		free(minihell->lst_tokens->command);
+		minihell->lst_tokens->command = NULL;
+	}
 }
