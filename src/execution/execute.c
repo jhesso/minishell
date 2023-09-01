@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/31 21:20:21 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/01 13:26:42 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,10 +133,10 @@ static void	parent(t_minihell *mini, int log)
 
 static void	print_fds(t_tokens *lst_tokens)
 {
-	while (lst_tokens)
+	if (lst_tokens) // changed it an if, because we are going to print it for each node!
 	{
 		printf("fd_in: %d, fd_out: %d\n", lst_tokens->fd_in, lst_tokens->fd_out);
-		lst_tokens = lst_tokens->next;
+		// lst_tokens = lst_tokens->next;
 	}
 }
 
@@ -163,10 +163,9 @@ bool	execute(t_minihell *minihell)
 	int			status;
 	int			log;
 	int			stdout_cpy;
-	int  token = 0;
+	// int  token = 0;
 
 	prepare_execution(minihell);
-	print_fds(minihell->lst_tokens);
 	head = minihell->lst_tokens;
 	i = 0;
 	// pipe_read = 0;
@@ -175,7 +174,8 @@ bool	execute(t_minihell *minihell)
 		return (false);
 	while (minihell->lst_tokens) //// The first thing open files is changed it has append command in it!
 	{
-		token = open_files(minihell, minihell->lst_tokens, token); //IT IS CRASHING AFTER I ADDED THE TOKEN!
+		open_files(minihell, minihell->lst_tokens);
+		print_fds(minihell->lst_tokens);
 		status = pipe(minihell->pipe_fds[i]);
 		if (status == -1)
 		{
