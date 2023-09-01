@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/01 00:32:05 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/01 11:39:33 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ static int	open_log(t_minihell *minihell)
 	char	*path;
 	char	*log_path;
 
-	path = get_value(ft_strdup("$PWD="), 5, minihell->env);
+	path = get_value(ft_strdup("$HOME="), 6, minihell->env);
 	if (!path)
 		perror(strerror(errno));
 	log_path = ft_strjoin(path, "/log.txt");
