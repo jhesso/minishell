@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:23:18 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/31 17:56:23 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/08/31 21:11:05 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,51 +75,44 @@ int    cmd_is_dir(char *cmd)
     return (S_ISDIR(cmd_stat.st_mode));
 }
 
-void	append_command_path(t_minihell *minihell)
+void	append_command_path(t_minihell *minihell, t_tokens *lst_tokens)
 {
 	char		**path;
 	char		*cmd;
-	t_tokens	*tmp;
 
-	tmp = minihell->lst_tokens;
 	path = get_path(minihell->env);
-	while (minihell->lst_tokens != NULL)
+	if (!lst_tokens->command)
+		cmd = NULL;
+	else
 	{
-		if (!minihell->lst_tokens->command)
-			cmd = NULL;
-		else
+		cmd = ft_strdup(lst_tokens->command);
+		if (ft_strchr(cmd, '/'))
 		{
-			cmd = ft_strdup(minihell->lst_tokens->command);
-			if (ft_strchr(cmd, '/'))
+			if (access(cmd, F_OK | X_OK) != 0)
 			{
-				if (access(cmd, F_OK | X_OK) != 0)
-				{
-					free(minihell->lst_tokens->command);
-					minihell->lst_tokens->command = NULL;
-					ft_printf(2, "minishell: %s: No such file or directory\n", cmd);
-					error_code = 127;
-				}
-				else if (cmd_is_dir(minihell->lst_tokens->command))
-				{
-					free(minihell->lst_tokens->command);
-					minihell->lst_tokens->command = NULL;
-					ft_printf(2, "minishell: %s: is a directory\n", cmd);
-					error_code = 126;
-				}
-			}
-			else if (!check_builtin(cmd))
-			{
-				free(minihell->lst_tokens->command);
-				minihell->lst_tokens->command = check_valid_path(cmd, path);
-				if (!minihell->lst_tokens->command)
-					ft_printf(2, "minishell: %s: command not found\n", cmd);
+				free(lst_tokens->command);
+				lst_tokens->command = NULL;
+				ft_printf(2, "minishell: %s: No such file or directory\n", cmd);
 				error_code = 127;
 			}
-			free(cmd);
+			else if (cmd_is_dir(lst_tokens->command))
+			{
+				free(lst_tokens->command);
+				lst_tokens->command = NULL;
+				ft_printf(2, "minishell: %s: is a directory\n", cmd);
+				error_code = 126;
+			}
 		}
-    	minihell->lst_tokens = minihell->lst_tokens->next;
+		else if (!check_builtin(cmd))
+		{
+			free(lst_tokens->command);
+			lst_tokens->command = check_valid_path(cmd, path);
+			if (!lst_tokens->command)
+				ft_printf(2, "minishell: %s: command not found\n", cmd);
+			error_code = 127;
+		}
+		free(cmd);
 	}
 	if (path)
 		free_str_arr(path);
-	minihell->lst_tokens = tmp;
 }

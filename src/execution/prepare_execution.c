@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prepare_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 03:25:41 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/30 03:32:28 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/08/31 21:10:48 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ void	prepare_execution(t_minihell *minihell)
 {
 	int i;
 	create_argv(minihell);
-	append_command_path(minihell);
-	open_files(minihell);
 	init_pids(minihell);
 	minihell->pipe_fds = malloc(sizeof(int *) * minihell->nb_cmds);
 	if (!minihell->pipe_fds)
