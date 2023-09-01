@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 17:17:54 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/31 16:43:13 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/01 15:32:39 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ void	export_builtin(t_minihell *minihell)
 						modify_variable(minihell, minihell->lst_tokens->argv[i]);
 					else
 						minihell->env = export_variable(minihell->env, minihell->lst_tokens->argv[i]);
+					error_code = 0;
 				}
 			}
 			i++;

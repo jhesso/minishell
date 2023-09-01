@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:11:25 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/30 18:31:34 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/01 15:32:20 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ void	unset_builtin(t_minihell *minihell)
 				remove_env = identifier_exists(minihell->env, minihell->lst_tokens->argv[i]);
 				if (remove_env)
 					minihell->env = remove_variable(minihell->env, remove_env - 1);
+				error_code = 0;
 			}
 		}
 		i++;
