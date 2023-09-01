@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/01 15:28:28 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/01 17:30:33 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ typedef struct s_minihell
 	int				**pipe_fds;
 	pid_t			*pids;
 	int				nb_cmds;
+	char			**heredocs;
+	int				heredoc_nb;
 	struct s_tokens	*lst_tokens;
 }					t_minihell;
 
@@ -137,10 +139,11 @@ void			append_command_path(t_minihell *minihell, t_tokens *lst_tokens);
 void			create_argv(t_minihell *minihell);
 
 /* file.c */
-void				open_files(t_minihell *minihell, t_tokens *lst_tokens);
+void			open_files(t_minihell *minihell, t_tokens *lst_tokens, int i);
 
-/* file_utils.c */
-void			close_files(t_minihell *minihell);
+/* heredoc.c */
+int				heredoc(char *delim, char *name);
+void			get_heredoc_name(t_minihell *mini, int cmd);
 
 /* pipe */
 // void			open_pipes(t_tokens *lst_tokens);

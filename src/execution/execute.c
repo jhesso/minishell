@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/01 16:09:44 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/01 17:14:14 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,22 +84,22 @@ static void	parent(t_minihell *mini, int log)
 		if (mini->pids[i] != -2)
 			waitpid(mini->pids[i], &status, 0);
 		dprintf(log, "i: %d\n", i);
+		if (WIFEXITED(status))
+			error_code = WEXITSTATUS(status);
 		i++;
 	}
 	dprintf(log, "done waiting :)\n");
-	if (WIFEXITED(status)) //! should be moved inside the while loop
-		error_code = WEXITSTATUS(status);
 	close_pipes(mini);
 }
 
-static void	print_fds(t_tokens *lst_tokens)
-{
-	if (lst_tokens) // changed it an if, because we are going to print it for each node!
-	{
-		printf("fd_in: %d, fd_out: %d\n", lst_tokens->fd_in, lst_tokens->fd_out);
-		// lst_tokens = lst_tokens->next;
-	}
-}
+// static void	print_fds(t_tokens *lst_tokens)
+// {
+// 	if (lst_tokens) // changed it an if, because we are going to print it for each node!
+// 	{
+// 		printf("fd_in: %d, fd_out: %d\n", lst_tokens->fd_in, lst_tokens->fd_out);
+// 		// lst_tokens = lst_tokens->next;
+// 	}
+// }
 
 static int	open_log(t_minihell *minihell)
 {
@@ -142,8 +142,8 @@ bool	execute(t_minihell *minihell)
 		return (false);
 	while (minihell->lst_tokens)
 	{
-		open_files(minihell, minihell->lst_tokens);
-		print_fds(minihell->lst_tokens);
+		open_files(minihell, minihell->lst_tokens, i);
+		// print_fds(minihell->lst_tokens);
 		status = pipe(minihell->pipe_fds[i]);
 		if (status == -1)
 		{
@@ -190,7 +190,6 @@ bool	execute(t_minihell *minihell)
 		minihell->lst_tokens = minihell->lst_tokens->next;
 	}
 	parent(minihell, log);
-	unlink(".heredoc.tmp");
 	dprintf(log, "exit_code: %d\n", error_code);
 	dprintf(log, "----------------------------\n");
 	close(log);
