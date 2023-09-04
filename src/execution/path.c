@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:23:18 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/31 21:11:05 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:44:17 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,13 @@ void	append_command_path(t_minihell *minihell, t_tokens *lst_tokens)
 		{
 			if (access(cmd, F_OK | X_OK) != 0)
 			{
+				ft_printf(2, "minishell: %s: %s\n", cmd, strerror(errno));
+				if (access(cmd, F_OK != 0) && access(cmd, X_OK == 0))
+					error_code = 127;
+				else
+					error_code = 126;
 				free(lst_tokens->command);
 				lst_tokens->command = NULL;
-				ft_printf(2, "minishell: %s: No such file or directory\n", cmd);
-				error_code = 127;
 			}
 			else if (cmd_is_dir(lst_tokens->command))
 			{
