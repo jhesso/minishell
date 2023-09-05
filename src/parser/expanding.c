@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:45:20 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/01 17:19:48 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/05 12:47:55 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ char	*expand_str(char *str, char **envp, int s)
 			malloc_error();
 	}
 	else if (str[s + 1] == '?')
-		new_str = insert_value(str, ft_itoa(error_code), s, s + 2);
+		new_str = insert_value(str, ft_itoa(global.error_code), s, s + 2);
 	else
 	{
 		end = get_end_index(str, s + 1, 1);

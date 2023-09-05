@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:23:18 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/31 21:11:05 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/05 12:47:55 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,14 @@ void	append_command_path(t_minihell *minihell, t_tokens *lst_tokens)
 				free(lst_tokens->command);
 				lst_tokens->command = NULL;
 				ft_printf(2, "minishell: %s: No such file or directory\n", cmd);
-				error_code = 127;
+				global.error_code = 127;
 			}
 			else if (cmd_is_dir(lst_tokens->command))
 			{
 				free(lst_tokens->command);
 				lst_tokens->command = NULL;
 				ft_printf(2, "minishell: %s: is a directory\n", cmd);
-				error_code = 126;
+				global.error_code = 126;
 			}
 		}
 		else if (!check_builtin(cmd))
@@ -109,7 +109,7 @@ void	append_command_path(t_minihell *minihell, t_tokens *lst_tokens)
 			lst_tokens->command = check_valid_path(cmd, path);
 			if (!lst_tokens->command)
 				ft_printf(2, "minishell: %s: command not found\n", cmd);
-			error_code = 127;
+			global.error_code = 127;
 		}
 		free(cmd);
 	}

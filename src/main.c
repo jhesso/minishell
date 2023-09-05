@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/01 16:43:22 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/05 14:26:21 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	minishell(t_minihell *minihell)
 		}
 	}
 }
-int	error_code = 0;
 
 static void	init_minihell(t_minihell *minihell)
 {
@@ -63,6 +62,8 @@ static void	init_minihell(t_minihell *minihell)
 	minihell->heredoc_nb = 0;
 	// minihell->lst_tokens = NULL;
 }
+
+t_global	global;
 
 int	main(int ac, char **av, char **envp)
 {

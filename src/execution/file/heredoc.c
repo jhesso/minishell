@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 16:25:07 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/05 11:59:53 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/05 14:25:51 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	heredoc_sigint(int sign)
 {
 	(void)sign;
-	printf("SIGINT\n");
+	close(global.heredoc_tmp);
 	exit (0);
 }
 
@@ -29,19 +29,9 @@ static void	heredoc_sigint(int sign)
 static int	get_heredoc(char *delim, char *name)
 {
 	char	*line;
-	int		tmp_fd;
-	struct sigaction	sa;
 
-    sa.sa_handler = &heredoc_sigint;
-    sa.sa_flags = 0;
-    sigemptyset(&sa.sa_mask);
-	if (sigaction(SIGINT, &sa, NULL) == -1)
-	{
-        perror("sigaction");
-        return (-1);
-    }
-	tmp_fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (tmp_fd == -1)
+	global.heredoc_tmp = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (global.heredoc_tmp == -1)
 		return (-1);
 	while (1)
 	{
@@ -52,17 +42,26 @@ static int	get_heredoc(char *delim, char *name)
 			free(line);
 			break ;
 		}
-		ft_putendl_fd(line, tmp_fd);
+		ft_putendl_fd(line, global.heredoc_tmp);
 		free(line);
 	}
-	close(tmp_fd);
+	close(global.heredoc_tmp);
 	return (0);
 }
 
 static void	heredoc_child(char *delim, char *name)
 {
 	int	ret;
+	struct sigaction	sa;
 
+    sa.sa_handler = &heredoc_sigint;
+    sa.sa_flags = 0;
+    sigemptyset(&sa.sa_mask);
+	if (sigaction(SIGINT, &sa, NULL) == -1)
+	{
+        perror("sigaction");
+        exit (1);
+    }
 	ret = 0;
 	ret = get_heredoc(delim, name);
 	if (ret == -1)
@@ -76,7 +75,6 @@ static void	heredoc_child(char *delim, char *name)
 int	heredoc(char *delim, char *name)
 {
 	pid_t	pid;
-	int		status;
 
 	pid = fork();
 	if (pid == -1)
@@ -84,12 +82,12 @@ int	heredoc(char *delim, char *name)
 	if (pid == 0)
 		heredoc_child(delim, name);
 	else
-	{
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			error_code = WEXITSTATUS(status);
-	}
-	return (error_code); //! this needs to be tested
+		waitpid(pid, NULL, 0);
+	if (access(name, F_OK) == -1)
+		global.error_code = 1;
+	else
+		global.error_code = 0;
+	return (global.error_code);
 }
 
 void	get_heredoc_name(t_minihell *mini, int cmd)

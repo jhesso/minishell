@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/01 17:14:14 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/05 12:47:55 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,18 @@ static void	redirect_io(t_tokens *cmd, int **pipe_fds, int nb_cmd, int log)
 static void	child(t_tokens *cmd, t_minihell *mini, int not_first_cmd, int log)
 {
 	if (!cmd->command)
-		exit(error_code) ;
+		exit(global.error_code) ;
 	redirect_io(cmd, mini->pipe_fds, not_first_cmd, log);
 	if (check_builtin(cmd->command))
 	{
 		execute_builtin(mini, check_builtin(cmd->command));
-		exit(error_code);
+		exit(global.error_code);
 	}
 	close(log);
 	if (execve(cmd->command, cmd->argv, mini->env) == -1)
 	{
 		perror(strerror(errno));
-		error_code = errno;
+		global.error_code = errno;
 	}
 }
 
@@ -85,7 +85,7 @@ static void	parent(t_minihell *mini, int log)
 			waitpid(mini->pids[i], &status, 0);
 		dprintf(log, "i: %d\n", i);
 		if (WIFEXITED(status))
-			error_code = WEXITSTATUS(status);
+			global.error_code = WEXITSTATUS(status);
 		i++;
 	}
 	dprintf(log, "done waiting :)\n");
@@ -123,7 +123,7 @@ static int	open_log(t_minihell *minihell)
 
 /*	execute()
 *	Execute the command line
-*	error_code is set to the exit status of the last command
+*	global.error_code is set to the exit status of the last command
 *	Returns TRUE if execution was successful, FALSE otherwise
 */
 bool	execute(t_minihell *minihell)
@@ -148,7 +148,7 @@ bool	execute(t_minihell *minihell)
 		if (status == -1)
 		{
 			perror(strerror(errno));
-			error_code = errno;
+			global.error_code = errno;
 			break ;
 		}
 		if (minihell->lst_tokens->fd_in == -1)
@@ -179,7 +179,7 @@ bool	execute(t_minihell *minihell)
 		if (minihell->pids[i] == -1)
 		{
 			perror(strerror(errno));
-			error_code = errno;
+			global.error_code = errno;
 			break ;
 		}
 		else if (minihell->pids[i] == 0)
@@ -190,7 +190,7 @@ bool	execute(t_minihell *minihell)
 		minihell->lst_tokens = minihell->lst_tokens->next;
 	}
 	parent(minihell, log);
-	dprintf(log, "exit_code: %d\n", error_code);
+	dprintf(log, "exit_code: %d\n", global.error_code);
 	dprintf(log, "----------------------------\n");
 	close(log);
 	minihell->lst_tokens = head;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 13:51:46 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/31 17:45:58 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/05 12:47:55 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void	env_builtin(t_minihell *minihell)
 			printf("%s\n", minihell->env[i]);
 			i++;
 		}
-		error_code = 0;
+		global.error_code = 0;
 	}
 	else
 	{
 		ft_printf(2, "env: %s: No such file or directory\n", minihell->lst_tokens->argv[1]);
-		error_code = 127;
+		global.error_code = 127;
 	}
 }
 
