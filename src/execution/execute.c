@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/05 14:36:01 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/05 14:37:34 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,14 @@ static void	parent(t_minihell *mini)
 		global.error_code = WEXITSTATUS(status);
 }
 
-static void	print_fds(t_tokens *lst_tokens)
-{
-	if (lst_tokens) // changed it an if, because we are going to print it for each node!
-	{
-		printf("fd_in: %d, fd_out: %d\n", lst_tokens->fd_in, lst_tokens->fd_out);
-		// lst_tokens = lst_tokens->next;
-	}
-}
+// static void	print_fds(t_tokens *lst_tokens)
+// {
+// 	if (lst_tokens) // changed it an if, because we are going to print it for each node!
+// 	{
+// 		printf("fd_in: %d, fd_out: %d\n", lst_tokens->fd_in, lst_tokens->fd_out);
+// 		// lst_tokens = lst_tokens->next;
+// 	}
+// }
 
 /*	execute()
 *	Execute the command line
