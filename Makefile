@@ -6,7 +6,7 @@
 #    By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 16:12:22 by jhesso            #+#    #+#              #
-#    Updated: 2023/08/30 18:26:20 by dgerguri         ###   ########.fr        #
+#    Updated: 2023/09/05 14:15:19 by dgerguri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ LIBFT		=	libft.a
 LIBFT_DIR	=	libft/
 SRC_PATH	=	src/
 OBJ_PATH	=	obj/
-SRC			=	main.c utils.c cleanup.c \
+SRC			=	main.c utils.c cleanup.c error.c\
 				lexer/lexing.c lexer/lexing_utils.c lexer/syntax_checking.c \
 				lexer/tokenization.c \
 				parser/parsing.c parser/expanding.c parser/removing_quotes.c \

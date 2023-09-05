@@ -6,19 +6,11 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 20:13:15 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/31 18:01:03 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/05 14:06:22 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	malloc_error(void)
-{
-	// ft_putstr_fd(strerror(errno), 2);
-	ft_printf(2, "Error: Malloc Error!");
-	exit(12); //! probably not the right way to exit, but it works for now
-	//? error code 12!!!!!
-}
 
 /*	lst_add_back()
 *	add given node to the back of the given list
