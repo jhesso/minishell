@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_checking.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 20:11:37 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/05 12:47:55 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/05 22:53:19 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,20 @@ static bool	syntax_error_messages(int type, char *message)
 	if (type == 1)
 		ft_printf(2, "newline'\n");
 	else if (type == 2)
+	{
+		if (!message[1] || !message[2])
+			ft_printf(2, "%s'\n", message);
+		else
+			ft_printf(2, "%s'\n", "<<<");
+	}
+	else if (type == 3)
+	{
+		if (!message[1])
+			ft_printf(2, "%s'\n", message);
+		else
+			ft_printf(2, "%s'\n", ">>");
+	}
+	else if (type == 4)
 		ft_printf(2, "%s'\n", message);
 	global.error_code = 258;
 	return (false);
@@ -25,28 +39,19 @@ static bool	syntax_error_messages(int type, char *message)
 
 static bool	char_syntax_check_continue(char **tokens, int array)
 {
-	if (!ft_strrchr("\"\'", tokens[array + 1][0])
-		&& ft_strrchr("|<>", tokens[array + 1][0]))
+	if (ft_strrchr("<>", tokens[array + 1][0]) || ft_strlen(tokens[array]) > 2)
 	{
-		if (ft_strlen(tokens[array]) == 1 && tokens[array][0] == '<'
-			&& tokens[array + 1][0] == '>')
-		{
-			if (ft_strlen(tokens[array + 1]) == 1)
-				return (syntax_error_messages(1, NULL));
-			else
-				return (syntax_error_messages(2, tokens[array + 1] + 1));
-		}
-		else if (!tokens[array + 2] || ft_strrchr("|", tokens[array + 1][0]))
-			return (syntax_error_messages(2, tokens[array + 1]));
-	}
-	else if (!ft_strrchr("\"\'", tokens[array][0])
-		&& !ft_strrchr("|<>", tokens[array + 1][0]))
-	{
-		if (ft_strrchr("<>", tokens[array][0]) && ft_strlen(tokens[array]) > 2)
-			return (syntax_error_messages(2, tokens[array] + 2));
-		else if ((tokens[array][0] == '|' && ft_strlen(tokens[array]) > 1)
-			|| tokens[0][0] == '|')
+		if (tokens[array][0] == '<' && !ft_strrchr("><", tokens[array + 1][0])
+			&& ft_strlen(tokens[array]) == 3)
 			return (syntax_error_messages(2, tokens[array]));
+		else if (tokens[array][0] == '<' && ft_strlen(tokens[array]) > 3)
+			return (syntax_error_messages(2, tokens[array] + 3));
+		else if (tokens[array][0] == '>' && ft_strlen(tokens[array]) > 2)
+			return (syntax_error_messages(3, tokens[array] + 2));
+		else if (tokens[array + 1][0] == '<')
+			return (syntax_error_messages(2, tokens[array + 1]));
+		else if (tokens[array + 1][0] == '>')
+			return (syntax_error_messages(3, tokens[array + 1]));
 	}
 	return (true);
 }
@@ -55,18 +60,19 @@ static bool	characters_syntax_check(char **tokens, int array)
 {
 	if (!tokens[array + 1])
 	{
-		if (tokens[array][0] == '|')
-			return (syntax_error_messages(2, tokens[array]));
-		else if (ft_strrchr("><", tokens[array][0])
-			&& (ft_strlen(tokens[array]) <= 2
-			|| ((ft_strlen(tokens[array]) == 3) && tokens[array][2] == '<')))
-			return (syntax_error_messages(1, NULL));
-		else
+		if (tokens[array][0] == '<')
 		{
-			if (tokens[array][2] == '<')
+			if (ft_strlen(tokens[array]) > 3)
 				return (syntax_error_messages(2, tokens[array] + 3));
 			else
-				return (syntax_error_messages(2, tokens[array] + 2));
+				return (syntax_error_messages(1, NULL));
+		}
+		else if (tokens[array][0] == '>')
+		{
+			if (ft_strlen(tokens[array]) > 2)
+				return (syntax_error_messages(3, tokens[array] + 2));
+			else
+				return (syntax_error_messages(1, NULL));
 		}
 	}
 	else if (!char_syntax_check_continue(tokens, array))
@@ -77,14 +83,19 @@ static bool	characters_syntax_check(char **tokens, int array)
 bool	syntax_checker(char **tokens)
 {
 	int	array;
-	int	i;
 
 	array = 0;
-	i = 0;
 	while (tokens[array])
 	{
-		if (tokens[array][i] && ft_strrchr("|><", tokens[array][i])
-			&& !ft_strrchr("\'\"", tokens[array][i]))
+		if (tokens[array][0] == '|'
+		&& (array == 0 || !tokens[array + 1] || ft_strlen(tokens[array]) > 1))
+		{
+			if (ft_strlen(tokens[array]) > 1)
+				return (syntax_error_messages(4, "||"));
+			else
+				return (syntax_error_messages(4, "|"));
+		}
+		else if (ft_strrchr("><", tokens[array][0]))
 			if (!characters_syntax_check(tokens, array))
 				return (false);
 		array++;
