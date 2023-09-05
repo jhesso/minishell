@@ -6,12 +6,12 @@
 #    By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 16:12:22 by jhesso            #+#    #+#              #
-#    Updated: 2023/09/01 17:21:09 by jhesso           ###   ########.fr        #
+#    Updated: 2023/09/05 12:03:45 by jhesso           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
-CFLAGS		=	-Wall -Wextra -Werror -g -fsanitize=address -g
+CFLAGS		=	-Wall -Wextra -Werror -g #-fsanitize=address -g
 READLINE	=	-lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
 LIBFT		=	libft.a
 LIBFT_DIR	=	libft/
