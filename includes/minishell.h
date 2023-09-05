@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/05 14:30:44 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/05 15:53:53 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ void			append_command_path(t_minihell *minihell, t_tokens *lst_tokens);
 void			create_argv(t_minihell *minihell);
 
 /* file.c */
-void			open_files(t_minihell *minihell, t_tokens *lst_tokens, int i);
+void			open_files(t_minihell *minihell, int cmd);
 
 /* heredoc.c */
 int				heredoc(char *delim, char *name);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/05 14:37:34 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/05 16:01:39 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ bool	execute(t_minihell *minihell)
 	i = 0;
 	while (minihell->lst_tokens)
 	{
-		open_files(minihell, minihell->lst_tokens, i);
+		open_files(minihell, i);
 		// print_fds(minihell->lst_tokens);
 		status = pipe(minihell->pipe_fds[i]);
 		if (status == -1)
