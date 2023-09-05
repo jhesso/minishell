@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 15:46:22 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/23 00:10:37 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/05 12:47:55 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ bool	lexing(t_minihell *minihell, char *command_line)
 {
 	if (!char_checker(command_line, minihell, 0))
 	{
-		error_code = 258;
+		global.error_code = 258;
 		return (false);
 	}
 	minihell->tokens = tokenize_cmd(command_line, ' ');

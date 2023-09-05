@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/05 14:15:48 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/05 14:36:01 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,18 @@ static void	redirect_io(t_tokens *cmd, int **pipe_fds, int nb_cmd)
 static void	child(t_tokens *cmd, t_minihell *mini, int not_first_cmd)
 {
 	if (!cmd->command)
-		exit(error_code) ;
+		exit(global.error_code) ;
 	redirect_io(cmd, mini->pipe_fds, not_first_cmd);
 	close(mini->pipe_fds[not_first_cmd][0]);
 	if (check_builtin(cmd->command))
 	{
 		execute_builtin(mini, check_builtin(cmd->command));
-		exit(error_code);
+		exit(global.error_code);
 	}
 	if (execve(cmd->command, cmd->argv, mini->env) == -1)
 	{
 		perror(strerror(errno));
-		error_code = errno;
+		global.error_code = errno;
 	}
 }
 
@@ -78,10 +78,12 @@ static void	parent(t_minihell *mini)
 	{
 		if (mini->pids[i] != -2)
 			waitpid(mini->pids[i], &status, 0);
+		if (WIFEXITED(status))
+			global.error_code = WEXITSTATUS(status);
 		i++;
 	}
 	if (WIFEXITED(status))
-		error_code = WEXITSTATUS(status);
+		global.error_code = WEXITSTATUS(status);
 }
 
 static void	print_fds(t_tokens *lst_tokens)
@@ -95,7 +97,7 @@ static void	print_fds(t_tokens *lst_tokens)
 
 /*	execute()
 *	Execute the command line
-*	error_code is set to the exit status of the last command
+*	global.error_code is set to the exit status of the last command
 *	Returns TRUE if execution was successful, FALSE otherwise
 */
 bool	execute(t_minihell *minihell)
@@ -110,13 +112,13 @@ bool	execute(t_minihell *minihell)
 	i = 0;
 	while (minihell->lst_tokens)
 	{
-		open_files(minihell, minihell->lst_tokens);
-		print_fds(minihell->lst_tokens);
+		open_files(minihell, minihell->lst_tokens, i);
+		// print_fds(minihell->lst_tokens);
 		status = pipe(minihell->pipe_fds[i]);
 		if (status == -1)
 		{
 			perror(strerror(errno));
-			error_code = errno;
+			global.error_code = errno;
 			break ;
 		}
 		if (minihell->lst_tokens->fd_in == -1)
@@ -140,7 +142,7 @@ bool	execute(t_minihell *minihell)
 		if (minihell->pids[i] == -1)
 		{
 			perror(strerror(errno));
-			error_code = errno;
+			global.error_code = errno;
 			break ;
 		}
 		else if (minihell->pids[i] == 0)

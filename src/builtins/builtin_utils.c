@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:19:14 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/31 17:42:13 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/05 12:47:55 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,6 @@ int	invalid_variable(char *arg, int type)
 			ft_printf(2, "minishell: export: `%s': not a valid identifier\n", arg);
 		if (type == 2)
 			ft_printf(2, "minishell: unset: `%s': not a valid identifier\n", arg);
-		error_code = 1;
+		global.error_code = 1;
 		return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:59:01 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/25 04:33:13 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/05 12:47:55 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 // 	if (pipe(fd) == -1)
 // 	{
 // 		ft_putstr_fd(strerror(errno), 2);
-// 		error_code = errno;
+// 		global.error_code = errno;
 // 	}
 // 	tmp->fd_out = fd[1];
 // 	tmp->next->fd_in = fd[0];

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:19:38 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/29 23:42:20 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/05 12:47:55 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,5 @@ void	echo_builtin(t_minihell *minihell, int j, int flag, int i)
 		else
 			print_line(minihell, j, flag);
 	}
-	error_code = 0;
+	global.error_code = 0;
 }

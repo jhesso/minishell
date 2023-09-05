@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:45:20 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/30 00:28:26 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/05 12:47:55 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ char	*insert_value(char *str, char *value, int start, int new_start)
 	int		value_len;
 	int		new_str_len;
 
+	if (!value || !str)
+		malloc_error();
 	value_len = ft_strlen(value);
 	new_str_len = ft_strlen(str) + value_len + 1;
 	new_str = malloc(sizeof(char) * (new_str_len));
@@ -140,7 +142,7 @@ char	*expand_str(char *str, char **envp, int s)
 			malloc_error();
 	}
 	else if (str[s + 1] == '?')
-		new_str = insert_value(str, ft_itoa(error_code), s, s + 2);
+		new_str = insert_value(str, ft_itoa(global.error_code), s, s + 2);
 	else
 	{
 		end = get_end_index(str, s + 1, 1);

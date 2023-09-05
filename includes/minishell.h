@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/05 14:15:13 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/05 14:30:44 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@
 /*								Structs 									  */
 /******************************************************************************/
 
-extern int				error_code;
-
 typedef struct s_tokens	t_tokens;
 
 /*	s_minihell
@@ -59,6 +57,8 @@ typedef struct s_minihell
 	int				**pipe_fds;
 	pid_t			*pids;
 	int				nb_cmds;
+	char			**heredocs;
+	int				heredoc_nb;
 	struct s_tokens	*lst_tokens;
 }					t_minihell;
 
@@ -81,6 +81,18 @@ typedef struct			s_tokens
 	int					fd_out;
 	struct s_tokens		*next;
 }						t_tokens;
+
+typedef struct	s_global
+{
+	int			heredoc_tmp;
+	int			error_code;
+}				t_global;
+
+/******************************************************************************/
+/*								   GLOBAL									  */
+/******************************************************************************/
+
+extern t_global	global;
 
 /******************************************************************************/
 /*								   Functions								  */
@@ -136,10 +148,11 @@ void			append_command_path(t_minihell *minihell, t_tokens *lst_tokens);
 void			create_argv(t_minihell *minihell);
 
 /* file.c */
-void				open_files(t_minihell *minihell, t_tokens *lst_tokens);
+void			open_files(t_minihell *minihell, t_tokens *lst_tokens, int i);
 
-/* file_utils.c */
-void			close_files(t_minihell *minihell);
+/* heredoc.c */
+int				heredoc(char *delim, char *name);
+void			get_heredoc_name(t_minihell *mini, int cmd);
 
 /* pipe */
 // void			open_pipes(t_tokens *lst_tokens);

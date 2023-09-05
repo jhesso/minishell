@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 20:55:01 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/31 17:46:18 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/05 12:47:55 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,24 @@ static void	exit_checks(t_minihell *minihell, int argv_size, int number, bool *e
 {
 	if (argv_size == 2 && error && !arg_is_digit(minihell->lst_tokens->argv[1]))
 	{
-		error_code = number % 256;
-		exit(error_code);
+		global.error_code = number % 256;
+		exit(global.error_code);
 	}
 	else if (argv_size >= 2 && (!error || arg_is_digit(minihell->lst_tokens->argv[1])))
 	{
 		ft_printf(2, "minishell: exit: %s: numeric argument required\n", minihell->lst_tokens->argv[1]);
-		error_code = 255;
-		exit(error_code);
+		global.error_code = 255;
+		exit(global.error_code);
 	}
 	else if (argv_size >= 2)
 	{
 		ft_printf(2, "minishell: exit: too many arguments\n");
-		error_code = 1;
+		global.error_code = 1;
 	}
 	else
 	{
-		error_code = 0;
-		exit(error_code);
+		global.error_code = 0;
+		exit(global.error_code);
 	}
 }
 

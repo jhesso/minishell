@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 23:22:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/01 14:31:15 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/01 17:18:30 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,20 @@ void	close_pipes(t_minihell *mini)
 		close(mini->pipe_fds[i][1]);
 		i++;
 	}
+}
+
+static void	close_heredocs(t_minihell *mini)
+{
+	int	i;
+
+	i = 0;
+	while (mini->heredocs[i])
+	{
+		unlink(mini->heredocs[i]);
+		free(mini->heredocs[i]);
+		i++;
+	}
+	free(mini->heredocs);
 }
 
 /*	free_list()
@@ -68,4 +82,5 @@ void	cleanup(t_minihell *minihell)
 		i++;
 	}
 	free(minihell->pipe_fds);
+	close_heredocs(minihell);
 }

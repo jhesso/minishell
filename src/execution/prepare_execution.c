@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prepare_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 03:25:41 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/31 21:10:48 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/01 16:34:51 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,7 @@ void	prepare_execution(t_minihell *minihell)
 			malloc_error();
 		i++;
 	}
+	minihell->heredocs = ft_calloc(minihell->nb_cmds + 1, sizeof(char *));
+	if (!minihell->heredocs)
+		malloc_error();
 }
