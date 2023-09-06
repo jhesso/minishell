@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   removing_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:42:59 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/15 19:01:12 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/05 16:07:35 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*	len_without_quotes()
+*	Calculates the length of the string without quotes
+*	Return value: int (length of the string without quotes)
+*	Parameters:
+*		(char *) str: string to be calculated
+*/
 static int	len_without_quotes(char *str)
 {
 	char	c;
@@ -37,30 +43,39 @@ static int	len_without_quotes(char *str)
 	return (len - flag);
 }
 
-char	*remove_quotes(char *str, int i, int j)
+/*	remove_quotes()
+*	Removes quotes from string
+*	Return value: char * (modified string)
+*	Parameters:
+*		(char *) str: string to be modified
+*		(int) i: index of new string
+*		(int) j: index of old string
+*/
+char	*remove_quotes(char *str, int i, int j, int len)
 {
 	char	*new_str;
 	char	c;
-	int		len;
 
+	if (!str)
+		return (NULL);
 	len = len_without_quotes(str);
 	new_str = ft_calloc(sizeof(char), (len + 1));
 	if (!new_str)
-	{
-		free(str);
-		return (NULL);
-	}
-	while (str[j] && j < len)
+		malloc_error();
+	while (str[j] && (size_t)j <= ft_strlen(str))
 	{
 		if (str[j] == '\'' || str[j] == '\"')
 		{
 			c = str[j++];
 			while (str[j] && str[j] != c)
 				new_str[i++] = str[j++];
-			if (str[j] || j == len)
+			if (!str[j] || j == len + 1)
 				break ;
 		}
-		new_str[i++] = str[j++];
+		else
+			new_str[i++] = str[j++];
+		if (str[j] && str[j] == c)
+			j++;
 	}
 	free(str);
 	return (new_str);

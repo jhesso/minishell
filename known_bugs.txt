@@ -1,0 +1,7 @@
+known bugs in minishell:
+
+1. cat Makefile || << end cat ; this should print a warning about the 2 pipes
+2. exit status changes in the parent process
+
+Dardan:
+	Test cd error message at school!

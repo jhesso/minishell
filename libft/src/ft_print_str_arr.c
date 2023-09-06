@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 15:08:12 by jhesso            #+#    #+#             */
-/*   Updated: 2023/04/15 18:16:12 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/01 15:28:45 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_string_arr(char **arr)
 	i = 0;
 	while (arr[i] != NULL)
 	{
-		ft_printf("%s\n", arr[i]);
+		ft_printf(1, "%s\n", arr[i]);
 		i++;
 	}
 }
