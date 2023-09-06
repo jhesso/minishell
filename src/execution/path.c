@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:23:18 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 20:53:33 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 23:16:30 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ static void	append_absolute_path(t_cmds *cmds, char *cmd)
 			g_global.error_code = 126;
 		free(cmds->command);
 		cmds->command = NULL;
-		ft_printf(2, "minishell: %s: No such file or directory\n", cmd);
-		g_global.error_code = 127;
 	}
 	else if (cmd_is_dir(cmds->command))
 	{
