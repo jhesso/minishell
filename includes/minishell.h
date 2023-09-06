@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 19:25:40 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 19:35:37 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ bool			syntax_checker(char **tokens);
 
 /* parsing.c */
 bool			parse(t_minihell *minihell);
-char    		*parse_str(int c, t_minihell *minihell);
+char    		*parse_str(int c, t_minihell *mini);
 
 /* list.c */
 bool			create_cmds(t_minihell *minihell);
