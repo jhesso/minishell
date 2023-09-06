@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 19:20:03 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 19:21:14 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,15 +99,16 @@ extern t_global	g_global;
 /*----------------------------------Lexing------------------------------------*/
 
 /* lexing.c */
-bool			lexing(t_minihell *command, char *command_line);
+bool			lexing(t_minihell *minihell, char *command_line);
+
+/* lexing_utils.c */
+int				quotes(char const *s, int i);
+bool			char_checker(char *command_line, int i, int flag);
 
 /* tokenization.c */
 int				get_amount_of_words(char const *s, char c);
 int				get_word_len(char const *s, char c, int start);
 
-/* lexing_utils.c */
-bool			char_checker(char *command_line, int i);
-int				quotes(char const *s, int i);
 
 /* syntax_checking.c */
 bool			syntax_checker(char **tokens);
