@@ -6,13 +6,13 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:59:01 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 19:20:03 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 20:53:33 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static void	open_pipe(t_tokens *tmp)
+// static void	open_pipe(t_cmds *tmp)
 // {
 // 	int	fd[2];
 
@@ -25,9 +25,9 @@
 // 	tmp->next->fd_in = fd[0];
 // }
 
-// void	open_pipes(t_tokens *cmds)
+// void	open_pipes(t_cmds *cmds)
 // {
-// 	t_tokens	*tmp;
+// 	t_cmds	*tmp;
 
 // 	tmp = cmds;
 // 	while (tmp)

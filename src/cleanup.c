@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 23:22:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 19:20:03 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 20:53:33 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ static void	close_heredocs(t_minihell *mini)
 /*	free_list()
 *	frees the cmds linked list and all of its contents
 */
-static void	free_list(t_tokens *cmds)
+static void	free_list(t_cmds *cmds)
 {
-	t_tokens	*tmp;
+	t_cmds	*tmp;
 
 	while (cmds)
 	{

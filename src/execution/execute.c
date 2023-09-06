@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 20:47:37 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 21:02:12 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 *	Child process executes the command and/or builtin function
 *	redirects input and output to either specified files or to a pipe
 */
-static void	child(t_tokens *cmd, t_minihell *mini, int not_first_cmd)
+static void	child(t_cmds *cmd, t_minihell *mini, int not_first_cmd)
 {
 	if (!cmd->command)
 		exit(g_global.error_code);
@@ -40,9 +40,9 @@ static void	child(t_tokens *cmd, t_minihell *mini, int not_first_cmd)
 */
 static void	parent(t_minihell *mini)
 {
-	int			status;
-	int			i;
-	t_tokens	*tmp;
+	int		status;
+	int		i;
+	t_cmds	*tmp;
 
 	i = 0;
 	close_pipes(mini);
@@ -91,8 +91,8 @@ static bool	execute_continue(t_minihell *mini, int i)
 */
 void	execute(t_minihell *mini)
 {
-	t_tokens	*head;
-	int			i;
+	t_cmds	*head;
+	int		i;
 
 	prepare_execution(mini);
 	head = mini->cmds;

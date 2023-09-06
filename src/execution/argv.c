@@ -6,13 +6,13 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:26:39 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 19:55:00 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 20:53:33 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	create_argv(t_minihell *minihell, t_tokens *tmp, int i, int options)
+void	create_argv(t_minihell *minihell, t_cmds *tmp, int i, int options)
 {
 	tmp = minihell->cmds;
 	while (minihell->cmds != NULL)

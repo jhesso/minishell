@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 20:46:58 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 20:49:03 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 20:53:33 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 *	Redirects input and output to either specified files or to a pipe
 *	Close unused file descriptors
 */
-void	redirect_io(t_tokens *cmd, int **pipe_fds, int nb_cmd)
+void	redirect_io(t_cmds *cmd, int **pipe_fds, int nb_cmd)
 {
 	if (cmd->fd_in > 0 && !check_builtin(cmd->command))
 	{

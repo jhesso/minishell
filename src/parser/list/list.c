@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:41:34 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 20:26:54 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/06 21:02:58 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ static int	calculate_options(char **command_line, int start)
 /*	allocate_content()
 *	Allocate memory for the contents of a node in our tokens list
 */
-static t_tokens	*allocate_content(char **command_line, int start)
+static t_cmds	*allocate_content(char **command_line, int start)
 {
-	int			size_opt;
-	t_tokens	*node;
+	int		size_opt;
+	t_cmds	*node;
 
-	node = malloc(sizeof(t_tokens));
+	node = malloc(sizeof(t_cmds));
 	if (node == NULL)
 		malloc_error();
 	size_opt = calculate_options(command_line, start);
@@ -67,9 +67,9 @@ static t_tokens	*allocate_content(char **command_line, int start)
 /*	lst_add_back()
 *	add given node to the back of the given list
 */
-static void	lst_add_back(t_tokens **cmds, t_tokens *node)
+static void	lst_add_back(t_cmds **cmds, t_cmds *node)
 {
-	t_tokens	*tmp;
+	t_cmds	*tmp;
 
 	if (*cmds == NULL)
 	{
@@ -83,14 +83,14 @@ static void	lst_add_back(t_tokens **cmds, t_tokens *node)
 }
 
 /*	create_node()
-*	Allocate memory for a node of t_tokens
+*	Allocate memory for a node of t_cmds
 *	and save all the information for that node
 *	Returns the index of the new pipe we found
 */
 static int	create_node(char **c_line, int s, t_minihell *mini, int c)
 {
-	t_tokens	*node;
-	char		*ret;
+	t_cmds	*node;
+	char	*ret;
 
 	node = allocate_content(c_line, s);
 	node->command = NULL;

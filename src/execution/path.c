@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:23:18 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 20:32:48 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 20:53:33 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	cmd_is_dir(char *cmd)
 	return (S_ISDIR(cmd_stat.st_mode));
 }
 
-static void	append_absolute_path(t_tokens *cmds, char *cmd)
+static void	append_absolute_path(t_cmds *cmds, char *cmd)
 {
 	if (access(cmd, F_OK | X_OK) != 0)
 	{
@@ -98,7 +98,7 @@ static void	append_absolute_path(t_tokens *cmds, char *cmd)
 	}
 }
 
-void	append_command_path(t_minihell *minihell, t_tokens *cmds)
+void	append_command_path(t_minihell *minihell, t_cmds *cmds)
 {
 	char		**path;
 	char		*cmd;

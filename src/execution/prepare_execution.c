@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 03:25:41 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 20:24:23 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 21:02:39 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	init_pids(t_minihell *minihell)
 {
-	t_tokens	*tmp;
-	int			i;
+	t_cmds	*tmp;
+	int		i;
 
 	i = 0;
 	tmp = minihell->cmds;
