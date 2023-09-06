@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 21:01:00 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 21:50:40 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,11 +207,10 @@ void			close_pipes(t_minihell *mini);
 /* utils.c */
 void			*free_str_arr(char **s);
 int				count_strings(char **array);
+char			*get_value(char *path, int len, char **envp);
 
 /* error.c */
 void			malloc_error(void);
 void			dup_error(void);
-
-char			*get_value(char *path, int len, char **envp);
 
 #endif
