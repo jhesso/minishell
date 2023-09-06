@@ -3,21 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:11:25 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/06 19:20:03 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 19:59:51 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	check_validity(char *arg)
+static int	check_validity(char *arg, int i)
 {
-	int	i;
 	int	flag;
 
-	i = 0;
 	flag = 0;
 	if (!arg[i] || arg[i] == '=' || arg[i] == '+')
 		return (invalid_variable(arg, 2));
@@ -35,7 +33,7 @@ static int	check_validity(char *arg)
 			i++;
 		}
 		else if (arg[i] == '=')
-			break ;
+			return (invalid_variable(arg, 2));
 		else
 			return (invalid_variable(arg, 2));
 	}
@@ -94,25 +92,20 @@ static char	**remove_variable(char **env, int remove_env)
 	return (new_env);
 }
 
-void	unset_builtin(t_minihell *minihell)
+void	unset_builtin(t_minihell *mini)
 {
 	int	i;
 	int	remove_env;
 
 	i = 1;
-	while (minihell->cmds->argv[i])
+	while (mini->cmds->argv[i])
 	{
-		if (!check_validity(minihell->cmds->argv[i]))
+		if (!check_validity(mini->cmds->argv[i], 0))
 		{
-			if (ft_strrchr(minihell->cmds->argv[i], '='))
-				invalid_variable(minihell->cmds->argv[i], 2);
-			else
-			{
-				remove_env = identifier_exists(minihell->env, minihell->cmds->argv[i]);
-				if (remove_env)
-					minihell->env = remove_variable(minihell->env, remove_env - 1);
-				g_global.error_code = 0;
-			}
+			remove_env = identifier_exists(mini->env, mini->cmds->argv[i]);
+			if (remove_env)
+				mini->env = remove_variable(mini->env, remove_env - 1);
+			g_global.error_code = 0;
 		}
 		i++;
 	}

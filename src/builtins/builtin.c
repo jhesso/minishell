@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 04:47:46 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/31 23:46:02 by dardangergu      ###   ########.fr       */
+/*   Updated: 2023/09/06 20:03:04 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	execute_builtin(t_minihell *minihell, int builtin)
 	else if (builtin == 3)
 		pwd_builtin(minihell);
 	else if (builtin == 4)
-		export_builtin(minihell);
+		export_builtin(minihell, 0, 0);
 	else if (builtin == 5)
 		unset_builtin(minihell);
 	else if (builtin == 6)

@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 20:22:31 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 20:33:48 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,10 +122,6 @@ char    		*parse_str(int c, t_minihell *mini);
 /* list.c */
 bool			create_cmds(t_minihell *minihell);
 
-/* lst_utils.c */
-void			lst_print(t_tokens *cmds);
-void			lst_add_back(t_tokens **cmds, t_tokens *node);
-
 /* expanding.c */
 char			*expand_variables(char *str, char **envp);
 
@@ -166,23 +162,34 @@ void			get_heredoc_name(t_minihell *mini, int cmd);
 /* builtin.c */
 void			execute_builtin(t_minihell *minihell, int builtin);
 
+/* exit.c */
+void			exit_builtin(t_minihell *minihell);
+
+/* echo.c */
+void			echo_builtin(t_minihell *minihell, int j, int flag, int i);
+
+/* pwd.c */
+void			pwd_builtin(t_minihell *minihell);
+
+/* env.c */
+void			env_builtin(t_minihell *minihell);
 void  			init_env(t_minihell *minihell, char **envp);
 
-void			exit_builtin(t_minihell *minihell);
-void			echo_builtin(t_minihell *minihell, int j, int flag, int i);
-void			pwd_builtin(t_minihell *minihell);
-void			env_builtin(t_minihell *minihell);
-void			unset_builtin(t_minihell *minihell);
-void			export_builtin(t_minihell *minihell);
-void			cd_builtin(t_minihell *minihell);
+/* unset.c */
+void			unset_builtin(t_minihell *mini);
 
-int				already_exists(char **env, char *arg);
-void			modify_variable(t_minihell *minihell, char *arg);
-char			**export_variable(char **env, char *arg);
+/* export.c */
+void			export_builtin(t_minihell *mini, int i, int argv_size);
+
+/* cd.c */
+void			cd_builtin(t_minihell *mini);
 
 /* builtin_utils.c */
 int				check_builtin(char *cmd);
 int				invalid_variable(char *arg, int type);
+int				already_exists(char **env, char *arg);
+void			modify_variable(t_minihell *minihell, char *arg);
+char			**export_variable(char **env, char *arg);
 
 /*----------------------------------Signals-----------------------------------*/
 

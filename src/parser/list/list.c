@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:41:34 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 19:46:21 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 20:26:54 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,24 @@ static t_tokens	*allocate_content(char **command_line, int start)
 	node->command = NULL;
 	node->next = NULL;
 	return (node);
+}
+
+/*	lst_add_back()
+*	add given node to the back of the given list
+*/
+static void	lst_add_back(t_tokens **cmds, t_tokens *node)
+{
+	t_tokens	*tmp;
+
+	if (*cmds == NULL)
+	{
+		*cmds = node;
+		return ;
+	}
+	tmp = *cmds;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = node;
 }
 
 /*	create_node()

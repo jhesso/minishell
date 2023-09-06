@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 20:55:01 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/06 19:20:03 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 19:52:09 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,21 @@ static int	arg_is_digit(char *arg)
 	return (0);
 }
 
-static void	exit_checks(t_minihell *minihell, int argv_size, int number, bool *error)
+static void	exit_checks(t_minihell *mini, int arg_size, int number, bool *error)
 {
-	if (argv_size == 2 && error && !arg_is_digit(minihell->cmds->argv[1]))
+	if (arg_size == 2 && error && !arg_is_digit(mini->cmds->argv[1]))
 	{
 		g_global.error_code = number % 256;
 		exit(g_global.error_code);
 	}
-	else if (argv_size >= 2 && (!error || arg_is_digit(minihell->cmds->argv[1])))
+	else if (arg_size >= 2 && (!error || arg_is_digit(mini->cmds->argv[1])))
 	{
-		ft_printf(2, "minishell: exit: %s: numeric argument required\n", minihell->cmds->argv[1]);
+		ft_printf(2, "minishell: exit: %s: numeric argument required\n", \
+			mini->cmds->argv[1]);
 		g_global.error_code = 255;
 		exit(g_global.error_code);
 	}
-	else if (argv_size >= 2)
+	else if (arg_size >= 2)
 	{
 		ft_printf(2, "minishell: exit: too many arguments\n");
 		g_global.error_code = 1;
