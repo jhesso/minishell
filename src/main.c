@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 18:51:45 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 18:57:05 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,14 @@ static void	init_minihell(t_minihell *minihell)
 	minihell->heredoc_nb = 0;
 }
 
-t_global	global;
+t_global	g_global;
 
 int	main(int ac, char **av, char **envp)
 {
-	(void)ac;
-	(void)av;
 	t_minihell	minihell;
 
+	(void)ac;
+	(void)av;
 	init_minihell(&minihell);
 	init_env(&minihell, envp);
 	minishell(&minihell);
