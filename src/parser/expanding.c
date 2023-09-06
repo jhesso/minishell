@@ -6,24 +6,29 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:45:20 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/06 19:15:33 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 19:28:01 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*expand_str2()
+static char	*expand_str_continue(char *str, char **envp, int s)
 {
+	char	*value;
+	char	*new_str;
+	int		end;
+
 	end = get_end_index(str, s + 1, 1);
-		value = expand(str, envp, s, end);
-		if (!value)
-		{
-			free(str);
-			return (NULL);
-		}
-		new_str = insert_value(str, value, s, end);
-		if (!new_str)
-			return (NULL);
+	value = expand(str, envp, s, end);
+	if (!value)
+	{
+		free(str);
+		return (NULL);
+	}
+	new_str = insert_value(str, value, s, end);
+	if (!new_str)
+		return (NULL);
+	return (new_str);
 }
 
 /*	expand_str()
@@ -37,8 +42,6 @@ static char	*expand_str2()
 char	*expand_str(char *str, char **envp, int s)
 {
 	char	*new_str;
-	char	*value;
-	int		end;
 
 	if (str[s + 1] == '\'' || str[s + 1] == '\"')
 	{
@@ -55,7 +58,7 @@ char	*expand_str(char *str, char **envp, int s)
 	else if (str[s + 1] == '?')
 		new_str = insert_value(str, ft_itoa(g_global.error_code), s, s + 2);
 	else
-		new_str = expand_str2();
+		new_str = expand_str_continue(str, envp, s);
 	free(str);
 	return (new_str);
 }
