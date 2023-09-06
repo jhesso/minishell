@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:41:34 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 19:20:03 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 19:46:21 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ static int	calculate_options(char **command_line, int start)
 	size_opt = -1;
 	while (command_line[start] && command_line[start][0] != '|')
 	{
-		if (!ft_strncmp(command_line[start], "<\0", 2) ||
-			!ft_strncmp(command_line[start], "<<\0", 3) ||
-			!ft_strncmp(command_line[start], ">\0", 2) ||
+		if (!ft_strncmp(command_line[start], "<\0", 2) || \
+			!ft_strncmp(command_line[start], "<<\0", 3) || \
+			!ft_strncmp(command_line[start], ">\0", 2) || \
 			!ft_strncmp(command_line[start], ">>\0", 3))
 			start += 2;
 		else
@@ -51,8 +51,8 @@ static t_tokens	*allocate_content(char **command_line, int start)
 		malloc_error();
 	size_opt = calculate_options(command_line, start);
 	if (size_opt > -1)
-        node->opt = ft_calloc(sizeof(char *), (size_opt + 1));
-    else
+		node->opt = ft_calloc(sizeof(char *), (size_opt + 1));
+	else
 	{
 		node->opt = malloc(sizeof(char *));
 		node->opt[0] = NULL;
@@ -69,35 +69,34 @@ static t_tokens	*allocate_content(char **command_line, int start)
 *	and save all the information for that node
 *	Returns the index of the new pipe we found
 */
-static int  create_node(char **c_line, int s, t_minihell *mini)
+static int	create_node(char **c_line, int s, t_minihell *mini, int c)
 {
-    t_tokens	*node;
+	t_tokens	*node;
 	char		*ret;
-	int			c;
 
-    node = allocate_content(c_line, s);
-	c = 0;
-    node->command = NULL;
-    while (c_line[s] && c_line[s][0] != '|')
-    {
-        if (!ft_strncmp(c_line[s], "<\0", 2) ||
-			!ft_strncmp(c_line[s], "<<\0", 3) ||
-			!ft_strncmp(c_line[s], ">\0", 2) ||
+	node = allocate_content(c_line, s);
+	node->command = NULL;
+	while (c_line[s] && c_line[s][0] != '|')
+	{
+		if (!ft_strncmp(c_line[s], "<\0", 2) || \
+			!ft_strncmp(c_line[s], "<<\0", 3) || \
+			!ft_strncmp(c_line[s], ">\0", 2) || \
 			!ft_strncmp(c_line[s], ">>\0", 3))
 			parse_str(++s, mini);
 		else
 		{
 			ret = remove_quotes(parse_str(s, mini), 0, 0);
-        	if (node->command != NULL && ret)
+			if (node->command != NULL && ret)
 				node->opt[c++] = ret;
 			else if (ret)
-            	node->command = ret;
+				node->command = ret;
 		}
 		s++;
-    }
-    lst_add_back(&mini->cmds, node);
-    return (s);
+	}
+	lst_add_back(&mini->cmds, node);
+	return (s);
 }
+
 /*
 *	loop through the command_line char**
 *	each time we hit a '|', create a new node containing everything after that pipe
@@ -109,19 +108,15 @@ bool	create_cmds(t_minihell *minihell)
 	int			i;
 
 	minihell->cmds = NULL;
-	i = create_node(minihell->tokens, 0, minihell);
+	i = create_node(minihell->tokens, 0, minihell, 0);
 	if (minihell->tokens[i] && minihell->tokens[i][0] == '|')
-	{
-		// free (minihell->tokens[i]);
 		i++;
-	}
-	while(minihell->tokens[i])
+	while (minihell->tokens[i])
 	{
 		if (minihell->tokens[i][0] != '|')
-			i = create_node(minihell->tokens, i, minihell);
+			i = create_node(minihell->tokens, i, minihell, 0);
 		else
 			i++;
-		// 	free (minihell->tokens[i++]);
 	}
 	return (true);
 }

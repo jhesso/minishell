@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 20:04:37 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/06 20:07:06 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ bool			syntax_checker(char **tokens);
 
 /* parsing.c */
 bool			parse(t_minihell *minihell);
-char    		*parse_str(int c, t_minihell *minihell);
+char    		*parse_str(int c, t_minihell *mini);
 
 /* list.c */
 bool			create_cmds(t_minihell *minihell);
