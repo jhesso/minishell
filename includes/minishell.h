@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 19:21:14 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 19:25:40 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,11 @@ void			lst_add_back(t_tokens **cmds, t_tokens *node);
 
 /* expanding.c */
 char			*expand_variables(char *str, char **envp);
+
+/* expanding_utils.c */
+char			*expand(char *str, char **envp, int start, int end);
+char			*insert_value(char *str, char *value, int start, int new_start);
+int				get_end_index(char *str, int i, int type);
 
 /* removing_quotes.c */
 char			*remove_quotes(char *str, int i, int j);
