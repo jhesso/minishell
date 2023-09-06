@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_checking.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 20:11:37 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/05 22:53:19 by dardangergu      ###   ########.fr       */
+/*   Updated: 2023/09/06 18:55:56 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static bool	syntax_error_messages(int type, char *message)
 	}
 	else if (type == 4)
 		ft_printf(2, "%s'\n", message);
-	global.error_code = 258;
+	g_global.error_code = 258;
 	return (false);
 }
 

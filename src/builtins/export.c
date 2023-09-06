@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 17:17:54 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/05 12:47:55 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 18:55:56 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void	export_builtin(t_minihell *minihell)
 						modify_variable(minihell, minihell->lst_tokens->argv[i]);
 					else
 						minihell->env = export_variable(minihell->env, minihell->lst_tokens->argv[i]);
-					global.error_code = 0;
+					g_global.error_code = 0;
 				}
 			}
 			i++;

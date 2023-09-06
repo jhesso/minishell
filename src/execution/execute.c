@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 18:36:29 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 18:55:56 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,18 @@ static void	redirect_io(t_tokens *cmd, int **pipe_fds, int nb_cmd)
 static void	child(t_tokens *cmd, t_minihell *mini, int not_first_cmd)
 {
 	if (!cmd->command)
-		exit(global.error_code) ;
+		exit(g_global.error_code) ;
 	redirect_io(cmd, mini->pipe_fds, not_first_cmd);
 	close(mini->pipe_fds[not_first_cmd][0]);
 	if (check_builtin(cmd->command))
 	{
 		execute_builtin(mini, check_builtin(cmd->command));
-		exit(global.error_code);
+		exit(g_global.error_code);
 	}
 	if (execve(cmd->command, cmd->argv, mini->env) == -1)
 	{
 		perror(strerror(errno));
-		global.error_code = errno;
+		g_global.error_code = errno;
 	}
 }
 
@@ -80,7 +80,7 @@ static void	parent(t_minihell *mini)
 		if (mini->pids[i] != -2)
 			waitpid(mini->pids[i], &status, 0);
 		if (!check_builtin(mini->lst_tokens->command) && WIFEXITED(status))
-			global.error_code = WEXITSTATUS(status);
+			g_global.error_code = WEXITSTATUS(status);
 		i++;
 		mini->lst_tokens = mini->lst_tokens->next;
 	}
@@ -88,7 +88,7 @@ static void	parent(t_minihell *mini)
 
 /*	execute()
 *	Execute the command line
-*	global.error_code is set to the exit status of the last command
+*	g_global.error_code is set to the exit status of the last command
 *	Returns TRUE if execution was successful, FALSE otherwise
 */
 void	execute(t_minihell *mini)
@@ -108,7 +108,7 @@ void	execute(t_minihell *mini)
 		if (status == -1)
 		{
 			perror(strerror(errno));
-			global.error_code = errno;
+			g_global.error_code = errno;
 			break ;
 		}
 		if (mini->lst_tokens->fd_in == -1)
@@ -132,7 +132,7 @@ void	execute(t_minihell *mini)
 		if (mini->pids[i] == -1)
 		{
 			perror(strerror(errno));
-			global.error_code = errno;
+			g_global.error_code = errno;
 			break ;
 		}
 		else if (mini->pids[i] == 0)

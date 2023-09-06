@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 16:25:07 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/05 14:25:51 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 18:55:56 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	heredoc_sigint(int sign)
 {
 	(void)sign;
-	close(global.heredoc_tmp);
+	close(g_global.heredoc_tmp);
 	exit (0);
 }
 
@@ -30,8 +30,8 @@ static int	get_heredoc(char *delim, char *name)
 {
 	char	*line;
 
-	global.heredoc_tmp = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (global.heredoc_tmp == -1)
+	g_global.heredoc_tmp = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (g_global.heredoc_tmp == -1)
 		return (-1);
 	while (1)
 	{
@@ -42,10 +42,10 @@ static int	get_heredoc(char *delim, char *name)
 			free(line);
 			break ;
 		}
-		ft_putendl_fd(line, global.heredoc_tmp);
+		ft_putendl_fd(line, g_global.heredoc_tmp);
 		free(line);
 	}
-	close(global.heredoc_tmp);
+	close(g_global.heredoc_tmp);
 	return (0);
 }
 
@@ -84,10 +84,10 @@ int	heredoc(char *delim, char *name)
 	else
 		waitpid(pid, NULL, 0);
 	if (access(name, F_OK) == -1)
-		global.error_code = 1;
+		g_global.error_code = 1;
 	else
-		global.error_code = 0;
-	return (global.error_code);
+		g_global.error_code = 0;
+	return (g_global.error_code);
 }
 
 void	get_heredoc_name(t_minihell *mini, int cmd)

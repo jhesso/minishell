@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 19:11:36 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/06 17:28:45 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/06 18:55:56 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ static void	modify_env(t_minihell *minihell, char *old_pwd, char *home, int flag
 			modify_variable(minihell, pwd);
 		else
 			minihell->env = export_variable(minihell->env, pwd);
-		global.error_code = 0;
+		g_global.error_code = 0;
 	}
 	else
-		global.error_code = 1;
+		g_global.error_code = 1;
 	free(old_pwd);
 	free(home);
 	free(pwd);

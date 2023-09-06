@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:19:38 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/05 12:47:55 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 18:55:56 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,5 @@ void	echo_builtin(t_minihell *minihell, int j, int flag, int i)
 		else
 			print_line(minihell, j, flag);
 	}
-	global.error_code = 0;
+	g_global.error_code = 0;
 }
