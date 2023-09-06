@@ -3,41 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexing_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 20:11:25 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/11 19:03:51 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 19:14:11 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-bool	char_checker(char *command_line, t_minihell *command, int i)
-{
-	command->double_quote = 0;
-	command->single_quote = 0;
-	while (command_line[i])
-	{
-		if (command_line[i] == '\"')
-			command->double_quote++;
-		else if (command_line[i] == '\'')
-			command->single_quote++;
-		else if ((ft_strrchr("\\;()", command_line[i]))
-			&& command->single_quote % 2 != 1 && command->double_quote % 2 != 1)
-		{
-			ft_putstr_fd("Minishell: Syntax Error:\
- Semicolon, Backslash, or Bracket!\n", STDERR_FILENO);
-			return (false);
-		}
-		i++;
-	}
-	if (command->double_quote % 2 != 0 || command->single_quote % 2 != 0)
-	{
-		ft_putstr_fd("Minishell: Syntax Error: Open Quotes!\n", STDERR_FILENO);
-		return (false);
-	}
-	return (true);
-}
 
 int	quotes(char const *s, int i)
 {
@@ -48,4 +21,31 @@ int	quotes(char const *s, int i)
 	while (s[i] && s[i] != c)
 		i++;
 	return (i);
+}
+
+bool	char_checker(char *command_line, int i, int flag)
+{
+	while (command_line[i])
+	{
+		if (command_line[i] == '\"' || command_line[i] == '\'')
+		{
+			flag = 1;
+			i = quotes(command_line, i);
+		}
+		else if ((ft_strrchr("\\;()", command_line[i])))
+		{
+			ft_printf(2, "Minishell: Syntax Error:\
+ Semicolon, Backslash, or Bracket!\n");
+			return (false);
+		}
+		if (!command_line[i] && flag == 1)
+		{
+			ft_printf(2, "Minishell: Syntax Error: Open Quotes!\n");
+			return (false);
+		}
+		else
+			flag = 0;
+		i++;
+	}
+	return (true);
 }

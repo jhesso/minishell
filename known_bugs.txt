@@ -1,0 +1,17 @@
+known bugs in minishell:
+
+1. exit status changes in the parent process
+
+Dardan:
+	Test cd error message at school!
+
+notes:
+	1. exiting heredoc with SIGINT leaves the process open until minishell is exited
+	this doesn't happen with EOF or normally exiting with the delimiter
+
+	2. running a command that is not found -> memory leaks
+
+	4. echo "123'rrr" -> open quotes error, should print: 123'rrr
+
+	5. export PATH=$PWD/exe -> path is now empty
+		- export PATH=/home/jhesso/dev/minishell/exe -> this sets it correctly

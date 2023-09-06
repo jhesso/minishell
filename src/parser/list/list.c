@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:41:34 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/15 19:06:34 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 21:02:58 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,105 +17,101 @@
 *	our tokens list
 *	Returns a struct containing the calculated values
 */
-static t_malloc_sizes	calculate_sizes(char **command_line, int start)
+static int	calculate_options(char **command_line, int start)
 {
-	t_malloc_sizes	sizes;
+	int	size_opt;
 
-	sizes.in = 0;
-	sizes.out = 0;
-	sizes.heredoc = 0;
-	sizes.out_app = 0;
-	sizes.options = -1; //* start options at -1 since the first non special character is the command
+	size_opt = -1;
 	while (command_line[start] && command_line[start][0] != '|')
 	{
-		if (!ft_strncmp(command_line[start], "<\0", 2))
-		{
-			sizes.in++;
+		if (!ft_strncmp(command_line[start], "<\0", 2) || \
+			!ft_strncmp(command_line[start], "<<\0", 3) || \
+			!ft_strncmp(command_line[start], ">\0", 2) || \
+			!ft_strncmp(command_line[start], ">>\0", 3))
 			start += 2;
-		}
-		else if (!ft_strncmp(command_line[start], "<<\0", 3))
-		{
-			sizes.heredoc++;
-			start += 2;
-		}
-		else if (!ft_strncmp(command_line[start], ">\0", 2))
-		{
-			sizes.out++;
-			start += 2;
-		}
-		else if (!ft_strncmp(command_line[start], ">>\0", 3))
-		{
-			sizes.out_app++;
-			start += 2;
-		}
 		else
 		{
-			sizes.options++;
+			size_opt++;
 			start++;
 		}
 	}
-	return (sizes);
+	return (size_opt);
 }
 
 /*	allocate_content()
 *	Allocate memory for the contents of a node in our tokens list
 */
-static t_tokens	*allocate_content(char **command_line, int start)
+static t_cmds	*allocate_content(char **command_line, int start)
 {
-	t_malloc_sizes	sizes;
-	t_tokens		*node;
+	int		size_opt;
+	t_cmds	*node;
 
-	node = malloc(sizeof(t_tokens));
+	node = malloc(sizeof(t_cmds));
 	if (node == NULL)
-		malloc_error(); //! add malloc protection
-	sizes = calculate_sizes(command_line, start);
-	print_sizes(sizes);
-	node->in = malloc(sizeof(char *) * (sizes.in + 1));
-	node->out = malloc(sizeof(char *) * (sizes.out + 1));
-	node->out_app = malloc(sizeof(char *) * (sizes.out_app + 1));
-	node->heredoc = malloc(sizeof(char *) * (sizes.heredoc + 1));
-	if (sizes.options > -1)
-		node->opt = malloc(sizeof(char *) * (sizes.options + 1));
+		malloc_error();
+	size_opt = calculate_options(command_line, start);
+	if (size_opt > -1)
+		node->opt = ft_calloc(sizeof(char *), (size_opt + 1));
 	else
+	{
 		node->opt = malloc(sizeof(char *));
-	if (node->in == NULL || node->out == NULL || node->heredoc == NULL
-		|| (sizes.options > -1 && node->opt == NULL) || node->out_app == NULL)
-		malloc_error(); //! add malloc protection
-	init_node(&node, sizes);
+		node->opt[0] = NULL;
+	}
+	if (size_opt > -1 && !node->opt)
+		malloc_error();
+	node->command = NULL;
+	node->next = NULL;
 	return (node);
 }
 
+/*	lst_add_back()
+*	add given node to the back of the given list
+*/
+static void	lst_add_back(t_cmds **cmds, t_cmds *node)
+{
+	t_cmds	*tmp;
+
+	if (*cmds == NULL)
+	{
+		*cmds = node;
+		return ;
+	}
+	tmp = *cmds;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = node;
+}
+
 /*	create_node()
-*	Allocate memory for a node of t_tokens
+*	Allocate memory for a node of t_cmds
 *	and save all the information for that node
 *	Returns the index of the new pipe we found
 */
-static int	create_node(char **c_line, int s, t_minihell *mini)
+static int	create_node(char **c_line, int s, t_minihell *mini, int c)
 {
-	t_tokens		*node;
-	t_malloc_sizes	c; //* repurposing the struct to use as indexes instead of sizes
+	t_cmds	*node;
+	char	*ret;
 
 	node = allocate_content(c_line, s);
-	c = init_counter();
-	node->command = NULL; //? I'm thinking we need to allocate memory for this
+	node->command = NULL;
 	while (c_line[s] && c_line[s][0] != '|')
 	{
-		ft_printf("c_line[%d] = %s\n", s, c_line[s]);
-		if (!ft_strncmp(c_line[s], "<\0", 2))
-			node->in[c.in++] = parse_str(c_line[++s], mini);
-		else if (!ft_strncmp(c_line[s], "<<\0", 3))
-			node->heredoc[c.heredoc++] = remove_quotes(c_line[++s], 0, 0); //parse_str(c_line[++s], mini);
-		else if (!ft_strncmp(c_line[s], ">\0", 2))
-			node->out[c.out++] = parse_str(c_line[++s], mini);
-		else if (!ft_strncmp(c_line[s], ">>\0", 3))
-			node->out_app[c.out_app++] = parse_str(c_line[++s], mini);
-		else if (node->command != NULL)
-			node->opt[c.options++] = parse_str(c_line[s], mini);
+		if (!ft_strncmp(c_line[s], "<\0", 2) || \
+			!ft_strncmp(c_line[s], "<<\0", 3) || \
+			!ft_strncmp(c_line[s], ">\0", 2) || \
+			!ft_strncmp(c_line[s], ">>\0", 3))
+			parse_str(++s, mini);
 		else
-			node->command = parse_str(c_line[s], mini);
+		{
+			ret = remove_quotes(parse_str(s, mini), 0, 0);
+			if (node->command != NULL && ret)
+				node->opt[c++] = ret;
+			else if (ret)
+				node->command = ret;
+		}
 		s++;
 	}
-	lst_add_back(&mini->lst_tokens, node);
+	lst_add_back(&mini->cmds, node);
 	return (s);
 }
 
@@ -125,31 +121,20 @@ static int	create_node(char **c_line, int s, t_minihell *mini)
 *	until we reach a new pipe (or the end of command_line)
 *	return the finished lst_token list
 */
-bool	create_lst_tokens(t_minihell *minihell)
-{ //! no malloc protection yet
+bool	create_cmds(t_minihell *minihell)
+{
 	int			i;
 
-	minihell->lst_tokens = NULL;
-	i = create_node(minihell->tokens, 0, minihell);
+	minihell->cmds = NULL;
+	i = create_node(minihell->tokens, 0, minihell, 0);
 	if (minihell->tokens[i] && minihell->tokens[i][0] == '|')
-	{
-		free (minihell->tokens[i]);
 		i++;
-	}
-	// ft_printf("i = %d\n", i);
-	// ft_printf("starting while loop inside create_lst_tokens\n");
-	ft_printf("minihell->tokens[%d] = %s\n", i, minihell->tokens[i]);
-	while(minihell->tokens[i])
+	while (minihell->tokens[i])
 	{
 		if (minihell->tokens[i][0] != '|')
-			i = create_node(minihell->tokens, i, minihell);
+			i = create_node(minihell->tokens, i, minihell, 0);
 		else
-		{
-			free (minihell->tokens[i]);
-			i++; //? the whole if else can be replaced with i = create_node(minihell->tokens, i, mini);?
-		}
-		ft_printf("minihell->tokens[%d] = %s\n", i, minihell->tokens[i]);
+			i++;
 	}
-	free (minihell->tokens);
 	return (true);
 }

@@ -3,21 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 05:12:42 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/14 14:24:14 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/06 19:38:23 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// bool	append_path(t_tokens *lst_tokens, char **env)
-// {
-// 	(void)lst_tokens;
-// 	(void)env;
-// 	return (true);
-// }
+/*	parse_str()
+*	expand environment variables and remove extra quotes
+*	Return value: char * (modified string)
+*	Parameters:
+*		int c: index of the string we are modifying
+*		t_minihell *minihell: the base struct containing everything
+*/
+char	*parse_str(int c, t_minihell *mini)
+{
+	if (c == 0 || ft_strncmp(mini->tokens[c - 1], "<<\0", 3))
+		mini->tokens[c] = expand_variables(mini->tokens[c], mini->env);
+	if (!mini->tokens[c])
+		malloc_error();
+	if (!mini->tokens[c][0])
+		return (NULL);
+	if (c != 0 && (!ft_strncmp(mini->tokens[c - 1], "<\0", 2) || \
+		!ft_strncmp(mini->tokens[c - 1], "<<\0", 3) || \
+		!ft_strncmp(mini->tokens[c - 1], ">\0", 2) || \
+		!ft_strncmp(mini->tokens[c - 1], ">>\0", 3)))
+		return (NULL);
+	return (ft_strdup(mini->tokens[c]));
+}
 
 /*	parse()
 *	parse the saved command line and save into a linked list
@@ -25,11 +41,7 @@
 */
 bool	parse(t_minihell *minihell)
 {
-	//TODO: move list creation here, remove quotes, expand variables, append correct path to command
-	if (!create_lst_tokens(minihell))
+	if (!create_cmds(minihell))
 		return (false);
-	lst_print(minihell->lst_tokens); //! remove this (debugging purposes)
-	// if (!append_path(minihell->lst_tokens, minihell->env)) //TODO: I might be able to simply rip this out from my pipex
-	// 	return (false);
 	return (true);
 }

@@ -6,143 +6,71 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:45:20 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/15 19:07:09 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 19:28:01 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_end_index(char *str, int i, int type)
+static char	*expand_str_continue(char *str, char **envp, int s)
 {
-	if (type == 1)
-	{
-		while (str[i] && str[i] != '\'' && str[i] != '\"'
-			&& str[i] != '$' && str[i] != ' ')
-			i++;
-		return (i);
-	}
-	else if (type == 2)
-	{
-		i++;
-		while (str[i] && str[i] != '\'')
-			i++;
-		if (str[i])
-			i++;
-		return (i);
-	}
-	else if (type == 3)
-	{
-		while (str[i] && str[i] != '\"')
-			i++;
-		if (str[i])
-			i++;
-		return (i);
-	}
-	return (0);
-}
-
-char	*insert_value(char *str, char *value, int start, int new_start)
-{
+	char	*value;
 	char	*new_str;
-	int		value_len;
-	int		new_str_len;
+	int		end;
 
-	value_len = ft_strlen(value);
-	new_str_len = ft_strlen(str) + value_len + 1;
-	new_str = malloc(sizeof(char) * (new_str_len));
-	if (new_str == NULL)
+	end = get_end_index(str, s + 1, 1);
+	value = expand(str, envp, s, end);
+	if (!value)
 	{
-		free(value);
 		free(str);
 		return (NULL);
 	}
-	ft_strlcpy(new_str, str, new_str_len);
-	ft_strlcpy(new_str + start, value, new_str_len);
-	ft_strlcpy(new_str + start + value_len, str + new_start, new_str_len);
-	free(value);
+	new_str = insert_value(str, value, s, end);
+	if (!new_str)
+		return (NULL);
 	return (new_str);
 }
 
-char	*get_value(char *path, int len, char **envp, int i)
-{
-	char	*value;
-	printf("path:%s\n", path);
-
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], &path[1], len - 1) == 0)
-		{
-			value = ft_substr(envp[i], len - 1, ft_strlen(envp[i]));
-			if (!value)
-			{
-				free(path);
-				return (NULL);
-			}
-			free(path);
-			return (value);
-		}
-		i++;
-	}
-	value = ft_calloc(1, 1);
-	free(path);
-	return (value);
-}
-
-char	*expand(char *str, char **envp, int start, int end)
-{
-	char	*sub_path;
-	char	*value;
-	char	*path;
-	int		len;
-
-	sub_path = ft_substr(str, start, end - start);
-	if (!sub_path)
-		return (NULL);
-	path = ft_strjoin(sub_path, "=");
-	if (!path)
-	{
-		free(sub_path);
-		return (NULL);
-	}
-	free(sub_path);
-	len = ft_strlen(path);
-	value = get_value(path, len, envp, 0);
-	if (!value)
-		return (NULL);
-	return (value);
-}
-
+/*	expand_str()
+*	do the actual expanding (replace the variable with its value)
+*	Return value: char * (expanded string)
+*	Parameters:
+*		char *str: string to expand
+*		char **envp: environment variables
+*		int s: index of the '$' character
+*/
 char	*expand_str(char *str, char **envp, int s)
 {
 	char	*new_str;
-	char	*value;
-	int		end;
 
-	if (str[s + 1] == '\0' || str[s + 1] == '\'' || str[s + 1] == '\"')
+	if (str[s + 1] == '\'' || str[s + 1] == '\"')
 	{
 		new_str = insert_value(str, (char *)ft_calloc(1, 1), s, s + 1);
 		if (!new_str)
 			return (NULL);
 	}
-	else if (str[s + 1] == '?')
-		new_str = insert_value(str, ft_itoa(error_code), s, s + 2);
-	else
+	else if (!str[s + 1])
 	{
-		end = get_end_index(str, s + 1, 1);
-		value = expand(str, envp, s, end);
-		if (!value)
-		{
-			free(str);
-			return (NULL);
-		}
-		new_str = insert_value(str, value, s, end);
+		new_str = ft_strdup("$");
 		if (!new_str)
-			return (NULL);
+			malloc_error();
 	}
+	else if (str[s + 1] == '?')
+		new_str = insert_value(str, ft_itoa(g_global.error_code), s, s + 2);
+	else
+		new_str = expand_str_continue(str, envp, s);
 	free(str);
 	return (new_str);
 }
 
+/*	expand_quotes()
+*	expand variables inside double quotes
+*	Return value: char * (expanded string)
+*	Parameters:
+*		char *str: string to expand
+*		char **envp: environment variables
+*		int start: index of the first quote
+*/
 char	*expand_quotes(char *str, char **envp, int start)
 {
 	char	*new_str;
@@ -153,7 +81,7 @@ char	*expand_quotes(char *str, char **envp, int start)
 	start++;
 	while (new_str[start] && new_str[start] != '\"')
 	{
-		if (new_str[start] == '$')
+		if (new_str[start] == '$' && new_str[start + 1] != ' ')
 		{
 			new_str = expand_str(new_str, envp, start);
 			if (!new_str)
@@ -168,6 +96,13 @@ char	*expand_quotes(char *str, char **envp, int start)
 	return (new_str);
 }
 
+/*	expand_variables()
+*	expand environment variables
+*	Return value: char * (expanded string)
+*	Parameters:
+*		char *str: string to expand
+*		char **envp: environment variables
+*/
 char	*expand_variables(char *str, char **envp)
 {
 	int	start;
@@ -175,7 +110,7 @@ char	*expand_variables(char *str, char **envp)
 	start = 0;
 	while (str[start])
 	{
-		if (str[start] == '$')
+		if (str[start] == '$' && str[start + 1])
 		{
 			str = expand_str(str, envp, start);
 			if (!str)
@@ -195,16 +130,4 @@ char	*expand_variables(char *str, char **envp)
 			start++;
 	}
 	return (str);
-}
-
-char	*parse_str(char *str, t_minihell *minihell)
-{
-	char	*ret;
-
-	ret = expand_variables(str, minihell->env);
-	if (!ret)
-		malloc_error();
-	//free the remaining char**
-	ret = remove_quotes(ret, 0, 0);
-	return (ret);
 }

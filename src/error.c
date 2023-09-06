@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_str_arr.c                                 :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/14 15:08:12 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/01 15:28:45 by jhesso           ###   ########.fr       */
+/*   Created: 2023/09/05 14:04:47 by dgerguri          #+#    #+#             */
+/*   Updated: 2023/09/06 18:59:55 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-/*	print_string_arr()
-*	prints out the contents of char **arr
-*	It is assumed that the char ** is NULL terminated
-*/
-void	print_string_arr(char **arr)
+void	malloc_error(void)
 {
-	int	i;
+	ft_printf(2, "Error: Malloc Error!");
+	exit(1);
+}
 
-	i = 0;
-	while (arr[i] != NULL)
-	{
-		ft_printf(1, "%s\n", arr[i]);
-		i++;
-	}
+void	dup_error(void)
+{
+	ft_printf(2, "Error: Dup failed!");
+	exit(1);
 }

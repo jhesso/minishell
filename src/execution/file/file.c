@@ -6,105 +6,127 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/16 18:34:31 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 20:23:29 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	get_heredoc(char *delim)
+static int	open_file(char *filename, int mode, t_minihell *mini)
 {
-	int		tmp_fd;
-	int		stdin_fd;
-	char	*line;
-
-	tmp_fd = open(".heredoc.tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (tmp_fd == -1)
-	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(delim, 2);
-		ft_putstr_fd(": ", 2);
-		ft_putendl_fd(strerror(errno), 2);
-	}
-	stdin_fd = dup(STDIN_FILENO);
-	// dup2(tmp_fd, STDIN_FILENO);
-	while (1)
-	{
-		line = readline("> ");
-		if (ft_strncmp(line, delim, ft_strlen(delim)) == 0 &&
-		line[ft_strlen(delim)] == '\0')
-		{
-			free(line);
-			break ;
-		}
-		ft_putendl_fd(line, tmp_fd);
-		free(line);
-	}
-	close(stdin_fd);
-	close(tmp_fd);
-}
-
-/*	open_file()
-*	Opens the given file in the correct mode
-*	Returns the file descriptor or -1 if open failed
-*/
-static int	open_file(char *filename, int mode)
-{
-	int	fd;
+	int			fd;
 
 	if (mode == 0)
 		fd = open(filename, O_RDONLY, 0644);
 	else if (mode == 1)
 	{
-		get_heredoc(filename);
-		fd = open(".heredoc.tmp", O_RDONLY, 0644);
+		fd = heredoc(filename, mini->heredocs[mini->heredoc_nb]);
+		if (fd == 0)
+			fd = open(mini->heredocs[mini->heredoc_nb], O_RDONLY, 0644);
 	}
 	else if (mode == 2)
 		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
 		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	ft_printf("fd: %d\n", fd);
 	if (fd == -1)
 	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(filename, 2);
-		ft_putstr_fd(": ", 2);
-		ft_putendl_fd(strerror(errno), 2);
+		ft_printf(2, "minishell: %s: %s\n", filename, strerror(errno));
+		g_global.error_code = 1;
 	}
 	return (fd);
 }
 
-/*	open_files()
-*	1. Allocate memory for fd arrays
-*	2. Open files
-*	3. create heredoc if needed
-*	4. return true if success
-*/
-void	open_files(t_tokens *lst_tokens)
+static int	file_error(t_minihell *mini, int i, bool *error_flag)
 {
-	t_tokens	*tmp;
-	int			i;
-	int			j;
+	while (mini->tokens[i + 1] && mini->tokens[i][0] != '|')
+		i++;
+	*(error_flag) = true;
+	free(mini->cmds->command);
+	mini->cmds->command = NULL;
+	return (i);
+}
 
-	tmp = lst_tokens;
-	while (lst_tokens)
+static int	open_input(t_minihell *minihell, int i, bool *error_flag)
+{
+	if (!ft_strncmp(minihell->tokens[i - 1], "<\0", 2))
 	{
-		allocate_fds(lst_tokens);
-		i = 0;
-		j = 0;
-		while (lst_tokens->in[i])
-			lst_tokens->fd_in[j] = open_file(lst_tokens->in[i++], 0);
-		i = 0;
-		while (lst_tokens->heredoc[i])
-			lst_tokens->fd_in[j++] = open_file(lst_tokens->heredoc[i++], 1);
-		i = 0;
-		j = 0;
-		while (lst_tokens->out[i])
-			lst_tokens->fd_out[j++] = open_file(lst_tokens->out[i++], 2);
-		i = 0;
-		while (lst_tokens->out_app[i])
-			lst_tokens->fd_out[j++] = open_file(lst_tokens->out_app[i++], 3);
-		lst_tokens = lst_tokens->next;
+		if (minihell->cmds->fd_in > 0)
+			close(minihell->cmds->fd_in);
+		minihell->tokens[i] = remove_quotes(minihell->tokens[i], 0, 0);
+		minihell->cmds->fd_in = open_file(minihell->tokens[i], 0, NULL);
+		if (minihell->cmds->fd_in == -1)
+			i = file_error(minihell, i, error_flag);
 	}
-	lst_tokens = tmp;
+	else if (!ft_strncmp(minihell->tokens[i - 1], "<<\0", 3))
+	{
+		if (minihell->cmds->fd_in > 0)
+			close(minihell->cmds->fd_in);
+		minihell->tokens[i] = remove_quotes(minihell->tokens[i], 0, 0);
+		minihell->cmds->fd_in = open_file(minihell->tokens[i], 1, minihell);
+	}
+	return (i);
+}
+
+/*	open_file()
+*	Opens the given file in the correct mode
+*	Return value: int (file descriptor. -1 if failed)
+*	Parameters:
+*		(char *) filename: name of the file to be opened
+*		(int) mode: mode for opening the file
+*/
+static int	open_output(t_minihell *mini, int i, bool *flag, bool *error_flag)
+{
+	if (!ft_strncmp(mini->tokens[i - 1], ">\0", 2))
+	{
+		if (mini->cmds->fd_out > 0)
+			close(mini->cmds->fd_out);
+		*(flag) = true;
+		mini->tokens[i] = remove_quotes(mini->tokens[i], 0, 0);
+		mini->cmds->fd_out = open_file(mini->tokens[i], 2, NULL);
+	}
+	else if (!ft_strncmp(mini->tokens[i - 1], ">>\0", 3) && *(flag) == false)
+	{
+		if (mini->cmds->fd_out > 0)
+			close(mini->cmds->fd_out);
+		mini->tokens[i] = remove_quotes(mini->tokens[i], 0, 0);
+		mini->cmds->fd_out = open_file(mini->tokens[i], 3, NULL);
+	}
+	else if (!ft_strncmp(mini->tokens[i - 1], ">>\0", 3) && *(flag) == true)
+	{
+		if (mini->cmds->fd_out > 0)
+			close(mini->cmds->fd_out);
+		mini->tokens[i] = remove_quotes(mini->tokens[i], 0, 0);
+		mini->cmds->fd_out = open_file(mini->tokens[i], 2, NULL);
+	}
+	if (mini->cmds->fd_out == -1)
+		i = file_error(mini, i, error_flag);
+	return (i);
+}
+
+void	open_files(t_minihell *mini, int cmd, bool flag, bool error_flag)
+{
+	static int	i = 0;
+
+	mini->cmds->fd_in = 0;
+	mini->cmds->fd_out = 0;
+	get_heredoc_name(mini, cmd);
+	while (mini->tokens[i] && mini->tokens[i][0] != '|' && error_flag == false)
+	{
+		if (mini->tokens[i][0] == '<' && flag == false)
+			i = open_input(mini, i + 1, &error_flag);
+		else if (mini->tokens[i][0] == '>')
+			i = open_output(mini, i + 1, &flag, &error_flag);
+		i++;
+	}
+	if (mini->tokens[i] && mini->tokens[i][0] == '|')
+		i++;
+	if (!mini->tokens[i])
+		i = 0;
+	if (error_flag == false)
+		append_command_path(mini, mini->cmds);
+	else
+	{
+		free(mini->cmds->command);
+		mini->cmds->command = NULL;
+	}
 }

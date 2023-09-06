@@ -6,3 +6,4 @@ minishell.code-workspace
 .vscode
 libft/obj/
 obj/
+log.txt

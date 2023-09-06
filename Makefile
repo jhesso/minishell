@@ -6,25 +6,29 @@
 #    By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 16:12:22 by jhesso            #+#    #+#              #
-#    Updated: 2023/08/16 18:20:11 by jhesso           ###   ########.fr        #
+#    Updated: 2023/09/06 20:56:53 by jhesso           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
-CFLAGS		=	-Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS		=	-Wall -Wextra -Werror -g -fsanitize=address -g
 READLINE	=	-lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
 LIBFT		=	libft.a
 LIBFT_DIR	=	libft/
 SRC_PATH	=	src/
 OBJ_PATH	=	obj/
-SRC			=	main.c utils.c \
+SRC			=	main.c utils.c cleanup.c error.c\
 				lexer/lexing.c lexer/lexing_utils.c lexer/syntax_checking.c \
 				lexer/tokenization.c \
 				parser/parsing.c parser/expanding.c parser/removing_quotes.c \
-				parser/list/list.c parser/list/lst_utils.c \
-				execution/execute.c \
-				execution/file/file.c execution/file/file_utils.c \
-				builtins/env.c
+				parser/expanding_utils.c \
+				parser/list/list.c \
+				execution/execute.c execution/path.c execution/argv.c \
+				execution/prepare_execution.c execution/execute_utils.c \
+				execution/file/file.c execution/file/heredoc.c \
+				builtins/builtin.c builtins/builtin_utils.c builtins/env.c builtins/cd.c\
+				builtins/echo.c builtins/export.c builtins/pwd.c builtins/unset.c builtins/exit.c\
+				signals/signals.c
 SRCS		=	$(addprefix $(SRC_PATH), $(SRC))
 OBJ			=	$(SRC:.c=.o)
 OBJS		=	$(addprefix $(OBJ_PATH), $(OBJ))
@@ -49,9 +53,10 @@ $(OBJ_PATH):
 	@mkdir $(OBJ_PATH)/builtins
 	@mkdir $(OBJ_PATH)/execution
 	@mkdir $(OBJ_PATH)/execution/file
+	@mkdir $(OBJ_PATH)/signals
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
-	@cc $(CFLAGS) -c $< -o $@ $(INCS)
+	@cc $(CFLAGS) -I ~/.brew/opt/readline/include -c $< -o $@ $(INCS)
 
 $(NAME): $(OBJS)
 	@echo "$(BLUE)Compiling $(NAME)$(RESET)"

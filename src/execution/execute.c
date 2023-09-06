@@ -3,136 +3,107 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/16 23:38:13 by dardangergu      ###   ########.fr       */
+/*   Updated: 2023/09/06 21:02:12 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**get_path(char **env)
+/*	child()
+*	Child process executes the command and/or builtin function
+*	redirects input and output to either specified files or to a pipe
+*/
+static void	child(t_cmds *cmd, t_minihell *mini, int not_first_cmd)
 {
-	int     i;
-	char    *tmp;
-	char    **path;
-
-	i = -1;
-	path = NULL;
-	while (env[++i])
+	if (!cmd->command)
+		exit(g_global.error_code);
+	redirect_io(cmd, mini->pipe_fds, not_first_cmd);
+	close(mini->pipe_fds[not_first_cmd][0]);
+	if (check_builtin(cmd->command))
 	{
-		if (!ft_strncmp(env[i], "PATH=", 5))
-		{
-			tmp = ft_strdup(env[i]);
-			if (!tmp)
-				malloc_error();
-			path = ft_split(tmp + 5, ':');
-			if (!path)
-				malloc_error();
-			free(tmp);
-			break ;
-		}
+		execute_builtin(mini, check_builtin(cmd->command));
+		exit(g_global.error_code);
 	}
-	return (path);
+	if (execve(cmd->command, cmd->argv, mini->env) == -1)
+	{
+		perror(strerror(errno));
+		g_global.error_code = errno;
+	}
 }
 
-char *check_valid_path(char *command, char **path)
+/*	parent()
+*	Parent process waits for all child processes to finish
+*	Also saves the exit status of the last command (for $?)
+*/
+static void	parent(t_minihell *mini)
 {
-	int     i;
-	char    *cmd_path;
-	char	*cmd;
+	int		status;
+	int		i;
+	t_cmds	*tmp;
 
 	i = 0;
-	cmd = ft_strjoin("/", command);
-	if (!cmd)
-		malloc_error();
-	while (path[i])
+	close_pipes(mini);
+	tmp = mini->cmds;
+	while (i < mini->nb_cmds)
 	{
-		cmd_path = ft_strjoin(path[i], cmd);
-		if (!cmd_path)
-			malloc_error();
-		if (access(cmd_path, F_OK | X_OK) == 0)
-		{
-			free(cmd);
-			return (cmd_path);
-		}
-		free(cmd_path);
+		if (mini->pids[i] != -2)
+			waitpid(mini->pids[i], &status, 0);
+		if (!check_builtin(mini->cmds->command) && WIFEXITED(status))
+			g_global.error_code = WEXITSTATUS(status);
 		i++;
+		mini->cmds = mini->cmds->next;
 	}
-	free(cmd);
-	return (NULL);
 }
 
-void append_commands(t_minihell *minihell)
+static bool	execute_continue(t_minihell *mini, int i)
 {
-	char	**path;
-	char	*cmd;
-
-	path = get_path(minihell->env);
-	if (!path)
-    	malloc_error();
-	while (minihell->lst_tokens != NULL)
+	open_files(mini, i, false, false);
+	if (pipe(mini->pipe_fds[i]) == -1)
 	{
-		cmd = ft_strdup(minihell->lst_tokens->command);
-		if (ft_strchr(cmd, '/'))
-		{
-			if (access(cmd, F_OK | X_OK) != 0)
-			{
-				free(minihell->lst_tokens->command);
-				minihell->lst_tokens->command = NULL;
-				printf("bash: %s: No such file or directory\n", cmd);
-			}
-		}
-		else
-		{
-			free(minihell->lst_tokens->command);
-			minihell->lst_tokens->command = check_valid_path(cmd, path);
-			if (!minihell->lst_tokens->command)
-				printf("bash: %s: command not found\n", cmd);
-		}
-		free(cmd);
-    	minihell->lst_tokens = minihell->lst_tokens->next;
+		perror(strerror(errno));
+		g_global.error_code = errno;
+		return (false);
 	}
-	free_str_arr(path);
-}
-
-void	create_argv(t_minihell *minihell)
-{
-	t_tokens	*temp;
-	int			options;
-	int			i;
-
-	temp = minihell->lst_tokens;
-	while (minihell->lst_tokens != NULL)
+	if (check_builtin(mini->cmds->command) && mini->nb_cmds == 1)
+		solo_builtin(mini, i);
+	else
+		mini->pids[i] = fork();
+	if (mini->pids[i] == -1)
 	{
-		options = count_strings(minihell->lst_tokens->opt);
-		minihell->lst_tokens->argv = malloc(sizeof(char *) * (options + 2));
-		if (!minihell->lst_tokens->argv)
-			malloc_error();
-		minihell->lst_tokens->argv[0] = ft_strdup(minihell->lst_tokens->command);
-		if (!minihell->lst_tokens->argv[0])
-			malloc_error();
-		i = 0;
-		while (minihell->lst_tokens->opt[i])
-		{
-			minihell->lst_tokens->argv[i + 1] = minihell->lst_tokens->opt[i];
-			i++;
-		}
-		minihell->lst_tokens->argv[i + 1] = NULL;
-    	minihell->lst_tokens = minihell->lst_tokens->next;
+		perror(strerror(errno));
+		g_global.error_code = errno;
+		return (false);
 	}
-	minihell->lst_tokens = temp;
-}
-
-bool	execute(t_minihell *minihell)
-{
-	// system("leaks minishell");
-	create_argv(minihell);
-// system("leaks minishell");
-	open_files(minihell->lst_tokens);
-	// check_builtin(minihell);
-	append_commands(minihell); // dardan has this basically done
-	system("leaks minishell");
+	else if (mini->pids[i] == 0)
+		child(mini->cmds, mini, i);
+	else
+		close(mini->pipe_fds[i][1]);
 	return (true);
+}
+
+/*	execute()
+*	Execute the command line
+*	g_global.error_code is set to the exit status of the last command
+*	Returns TRUE if execution was successful, FALSE otherwise
+*/
+void	execute(t_minihell *mini)
+{
+	t_cmds	*head;
+	int		i;
+
+	prepare_execution(mini);
+	head = mini->cmds;
+	i = 0;
+	while (mini->cmds)
+	{
+		if (!execute_continue(mini, i))
+			break ;
+		i++;
+		mini->cmds = mini->cmds->next;
+	}
+	mini->cmds = head;
+	parent(mini);
 }
