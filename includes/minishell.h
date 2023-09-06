@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 20:33:48 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 20:48:40 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,10 @@ char			*remove_quotes(char *str, int i, int j);
 
 /* execute.c */
 void			execute(t_minihell *mini);
+
+/* execute_utils.c */
+void			redirect_io(t_tokens *cmd, int **pipe_fds, int nb_cmd);
+void			solo_builtin(t_minihell *mini, int i);
 
 /* prepare_execution.c */
 void			prepare_execution(t_minihell *minihell);
