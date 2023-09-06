@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+         #
+#    By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 16:12:22 by jhesso            #+#    #+#              #
-#    Updated: 2023/09/06 19:28:36 by jhesso           ###   ########.fr        #
+#    Updated: 2023/09/06 20:28:09 by dgerguri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRC			=	main.c utils.c cleanup.c error.c\
 				lexer/tokenization.c \
 				parser/parsing.c parser/expanding.c parser/removing_quotes.c \
 				parser/expanding_utils.c \
-				parser/list/list.c parser/list/lst_utils.c \
+				parser/list/list.c \
 				execution/execute.c execution/path.c execution/argv.c \
 				execution/prepare_execution.c \
 				execution/file/file.c execution/file/heredoc.c \

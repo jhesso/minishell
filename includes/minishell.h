@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 20:07:06 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/06 20:27:06 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,10 +121,6 @@ char    		*parse_str(int c, t_minihell *mini);
 
 /* list.c */
 bool			create_cmds(t_minihell *minihell);
-
-/* lst_utils.c */
-void			lst_print(t_tokens *cmds);
-void			lst_add_back(t_tokens **cmds, t_tokens *node);
 
 /* expanding.c */
 char			*expand_variables(char *str, char **envp);
