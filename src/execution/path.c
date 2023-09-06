@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:23:18 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 23:16:30 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/07 00:49:11 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static char	*check_valid_path(char *command, char **path)
 	return (NULL);
 }
 
-int	cmd_is_dir(char *cmd)
+static int	cmd_is_dir(char *cmd)
 {
 	struct stat	cmd_stat;
 
