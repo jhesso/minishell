@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 03:25:41 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 19:20:03 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 20:24:23 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ static void	init_pids(t_minihell *minihell)
 
 void	prepare_execution(t_minihell *minihell)
 {
-	int i;
-	create_argv(minihell);
+	int	i;
+
+	create_argv(minihell, NULL, 0, 0);
 	init_pids(minihell);
 	minihell->pipe_fds = malloc(sizeof(int *) * minihell->nb_cmds);
 	if (!minihell->pipe_fds)

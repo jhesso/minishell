@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:23:18 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 19:20:03 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 20:32:48 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static char	**get_path(char **env)
 {
-	int     i;
-	char    *tmp;
-	char    **path;
+	int		i;
+	char	*tmp;
+	char	**path;
 
 	i = -1;
 	path = NULL;
@@ -37,10 +37,10 @@ static char	**get_path(char **env)
 	return (path);
 }
 
-static char *check_valid_path(char *command, char **path)
+static char	*check_valid_path(char *command, char **path)
 {
-	int     i;
-	char    *cmd_path;
+	int		i;
+	char	*cmd_path;
 	char	*cmd;
 
 	i = 0;
@@ -66,13 +66,36 @@ static char *check_valid_path(char *command, char **path)
 	return (NULL);
 }
 
-int    cmd_is_dir(char *cmd)
+int	cmd_is_dir(char *cmd)
 {
-    struct stat    cmd_stat;
+	struct stat	cmd_stat;
 
-    ft_memset(&cmd_stat, 0, sizeof(cmd_stat));
-  	stat(cmd, &cmd_stat);
-    return (S_ISDIR(cmd_stat.st_mode));
+	ft_memset(&cmd_stat, 0, sizeof(cmd_stat));
+	stat(cmd, &cmd_stat);
+	return (S_ISDIR(cmd_stat.st_mode));
+}
+
+static void	append_absolute_path(t_tokens *cmds, char *cmd)
+{
+	if (access(cmd, F_OK | X_OK) != 0)
+	{
+		ft_printf(2, "minishell: %s: %s\n", cmd, strerror(errno));
+		if (access(cmd, F_OK != 0) && access(cmd, X_OK == 0))
+			g_global.error_code = 127;
+		else
+			g_global.error_code = 126;
+		free(cmds->command);
+		cmds->command = NULL;
+		ft_printf(2, "minishell: %s: No such file or directory\n", cmd);
+		g_global.error_code = 127;
+	}
+	else if (cmd_is_dir(cmds->command))
+	{
+		free(cmds->command);
+		cmds->command = NULL;
+		ft_printf(2, "minishell: %s: is a directory\n", cmd);
+		g_global.error_code = 126;
+	}
 }
 
 void	append_command_path(t_minihell *minihell, t_tokens *cmds)
@@ -87,27 +110,7 @@ void	append_command_path(t_minihell *minihell, t_tokens *cmds)
 	{
 		cmd = ft_strdup(cmds->command);
 		if (ft_strchr(cmd, '/'))
-		{
-			if (access(cmd, F_OK | X_OK) != 0)
-			{
-				ft_printf(2, "minishell: %s: %s\n", cmd, strerror(errno));
-				if (access(cmd, F_OK != 0) && access(cmd, X_OK == 0))
-					g_global.error_code = 127;
-				else
-					g_global.error_code = 126;
-				free(cmds->command);
-				cmds->command = NULL;
-				ft_printf(2, "minishell: %s: No such file or directory\n", cmd);
-				g_global.error_code = 127;
-			}
-			else if (cmd_is_dir(cmds->command))
-			{
-				free(cmds->command);
-				cmds->command = NULL;
-				ft_printf(2, "minishell: %s: is a directory\n", cmd);
-				g_global.error_code = 126;
-			}
-		}
+			append_absolute_path(minihell->cmds, cmd);
 		else if (!check_builtin(cmd))
 		{
 			free(cmds->command);

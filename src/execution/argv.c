@@ -6,19 +6,15 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:26:39 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 19:20:03 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 19:55:00 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	create_argv(t_minihell *minihell)
+void	create_argv(t_minihell *minihell, t_tokens *tmp, int i, int options)
 {
-	t_tokens	*temp;
-	int			options;
-	int			i;
-
-	temp = minihell->cmds;
+	tmp = minihell->cmds;
 	while (minihell->cmds != NULL)
 	{
 		options = count_strings(minihell->cmds->opt);
@@ -40,7 +36,7 @@ void	create_argv(t_minihell *minihell)
 			i++;
 		}
 		minihell->cmds->argv[i + 1] = NULL;
-    	minihell->cmds = minihell->cmds->next;
+		minihell->cmds = minihell->cmds->next;
 	}
-	minihell->cmds = temp;
+	minihell->cmds = tmp;
 }

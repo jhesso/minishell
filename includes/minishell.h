@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 19:35:37 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 20:22:31 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,10 +149,10 @@ void			prepare_execution(t_minihell *minihell);
 void			append_command_path(t_minihell *minihell, t_tokens *cmds);
 
 /* argv.c */
-void			create_argv(t_minihell *minihell);
+void			create_argv(t_minihell *minihell, t_tokens *tmp, int i, int options);
 
 /* file.c */
-void			open_files(t_minihell *minihell, int cmd);
+void			open_files(t_minihell *minihell, int cmd, bool flag, bool error_flag);
 
 /* heredoc.c */
 int				heredoc(char *delim, char *name);

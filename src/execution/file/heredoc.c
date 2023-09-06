@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 16:25:07 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 18:55:56 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 20:24:04 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,17 @@ static int	get_heredoc(char *delim, char *name)
 
 static void	heredoc_child(char *delim, char *name)
 {
-	int	ret;
+	int					ret;
 	struct sigaction	sa;
 
-    sa.sa_handler = &heredoc_sigint;
-    sa.sa_flags = 0;
-    sigemptyset(&sa.sa_mask);
+	sa.sa_handler = &heredoc_sigint;
+	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
 	if (sigaction(SIGINT, &sa, NULL) == -1)
 	{
-        perror("sigaction");
-        exit (1);
-    }
+		perror("sigaction");
+		exit (1);
+	}
 	ret = 0;
 	ret = get_heredoc(delim, name);
 	if (ret == -1)
