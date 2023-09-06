@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 19:12:41 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/06 19:19:10 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ extern t_global	g_global;
 /*----------------------------------Lexing------------------------------------*/
 
 /* lexing.c */
-bool			lexing(t_minihell *command, char *command_line);
+bool			lexing(t_minihell *minihell, char *command_line);
 
 /* lexing_utils.c */
 int				quotes(char const *s, int i);
