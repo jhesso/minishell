@@ -6,7 +6,7 @@
 /*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:23:18 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/07 00:49:11 by dardangergu      ###   ########.fr       */
+/*   Updated: 2023/09/07 00:54:12 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,16 @@ static void	append_absolute_path(t_cmds *cmds, char *cmd)
 }
 
 void	append_command_path(t_minihell *minihell, t_cmds *cmds)
-{
+{printf("comes\n");
 	char		**path;
 	char		*cmd;
 
 	path = get_path(minihell->env);
 	if (!cmds->command)
+	{
 		cmd = NULL;
+		g_global.error_code = 0;
+	}
 	else
 	{
 		cmd = ft_strdup(cmds->command);
