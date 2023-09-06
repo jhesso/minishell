@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 20:23:29 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 23:17:51 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	open_files(t_minihell *mini, int cmd, bool flag, bool error_flag)
 	get_heredoc_name(mini, cmd);
 	while (mini->tokens[i] && mini->tokens[i][0] != '|' && error_flag == false)
 	{
-		if (mini->tokens[i][0] == '<' && flag == false)
+		if (mini->tokens[i][0] == '<')
 			i = open_input(mini, i + 1, &error_flag);
 		else if (mini->tokens[i][0] == '>')
 			i = open_output(mini, i + 1, &flag, &error_flag);
