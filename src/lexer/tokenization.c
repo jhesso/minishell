@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:28:05 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/08/11 18:56:22 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 18:06:16 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,8 @@ int	get_word_len(char const *s, char c, int start)
 		len++;
 		while (s[i] && s[i] == s[i - 1])
 		{
-				len++;
-				i++;
+			len++;
+			i++;
 		}
 	}
 	return (len);
