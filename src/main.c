@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 18:39:22 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 18:51:45 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	handle_eof(void)
 {
 	ft_putendl_fd("exit", STDOUT_FILENO);
+	rl_clear_history();
 	exit(EXIT_SUCCESS);
 }
 
@@ -58,7 +59,6 @@ static void	init_minihell(t_minihell *minihell)
 	minihell->nb_cmds = 0;
 	minihell->heredocs = NULL;
 	minihell->heredoc_nb = 0;
-	// minihell->lst_tokens = NULL;
 }
 
 t_global	global;
@@ -72,9 +72,6 @@ int	main(int ac, char **av, char **envp)
 	init_minihell(&minihell);
 	init_env(&minihell, envp);
 	minishell(&minihell);
-	//exit shell
-	//! seems that clear_history() is not allowed in the subject but checking the
-	//! readline/history.h there is no function called rl_clear_history which is allowed in the subject
-	rl_clear_history(); // this needs to be moved to our exit routine once we have one
+	rl_clear_history();
 	return (0);
 }
