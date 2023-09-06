@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 21:02:12 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/07 00:28:53 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static void	parent(t_minihell *mini)
 		i++;
 		mini->cmds = mini->cmds->next;
 	}
+	mini->cmds = tmp;
 }
 
 static bool	execute_continue(t_minihell *mini, int i)
