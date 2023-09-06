@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 05:12:42 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/05 15:43:20 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/06 19:20:03 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char    *parse_str(int c, t_minihell *minihell)
 */
 bool	parse(t_minihell *minihell)
 {
-	if (!create_lst_tokens(minihell))
+	if (!create_cmds(minihell))
 		return (false);
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 19:11:36 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/06 18:55:56 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 19:20:03 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	cd_builtin(t_minihell *minihell)
 	home = get_value(ft_strdup("$HOME="), 6, minihell->env);
 	if (!old_pwd || !home)
 		malloc_error();
-	if (count_strings(minihell->lst_tokens->argv) == 1)
+	if (count_strings(minihell->cmds->argv) == 1)
 	{
 		if (chdir(home))
 		{
@@ -57,9 +57,9 @@ void	cd_builtin(t_minihell *minihell)
 			flag = 1;
 		}
 	}
-	else if (chdir(minihell->lst_tokens->argv[1]))
+	else if (chdir(minihell->cmds->argv[1]))
 	{
-		ft_printf(2, "minishell: cd: %s: %s\n", minihell->lst_tokens->argv[1], strerror(errno));
+		ft_printf(2, "minishell: cd: %s: %s\n", minihell->cmds->argv[1], strerror(errno));
 		flag = 1;
 	}
 	modify_env(minihell, old_pwd, home, flag);

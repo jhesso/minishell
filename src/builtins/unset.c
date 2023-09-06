@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:11:25 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/06 18:55:56 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 19:20:03 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,15 +100,15 @@ void	unset_builtin(t_minihell *minihell)
 	int	remove_env;
 
 	i = 1;
-	while (minihell->lst_tokens->argv[i])
+	while (minihell->cmds->argv[i])
 	{
-		if (!check_validity(minihell->lst_tokens->argv[i]))
+		if (!check_validity(minihell->cmds->argv[i]))
 		{
-			if (ft_strrchr(minihell->lst_tokens->argv[i], '='))
-				invalid_variable(minihell->lst_tokens->argv[i], 2);
+			if (ft_strrchr(minihell->cmds->argv[i], '='))
+				invalid_variable(minihell->cmds->argv[i], 2);
 			else
 			{
-				remove_env = identifier_exists(minihell->env, minihell->lst_tokens->argv[i]);
+				remove_env = identifier_exists(minihell->env, minihell->cmds->argv[i]);
 				if (remove_env)
 					minihell->env = remove_variable(minihell->env, remove_env - 1);
 				g_global.error_code = 0;

@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:23:18 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 18:55:56 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 19:20:03 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,17 @@ int    cmd_is_dir(char *cmd)
     return (S_ISDIR(cmd_stat.st_mode));
 }
 
-void	append_command_path(t_minihell *minihell, t_tokens *lst_tokens)
+void	append_command_path(t_minihell *minihell, t_tokens *cmds)
 {
 	char		**path;
 	char		*cmd;
 
 	path = get_path(minihell->env);
-	if (!lst_tokens->command)
+	if (!cmds->command)
 		cmd = NULL;
 	else
 	{
-		cmd = ft_strdup(lst_tokens->command);
+		cmd = ft_strdup(cmds->command);
 		if (ft_strchr(cmd, '/'))
 		{
 			if (access(cmd, F_OK | X_OK) != 0)
@@ -95,24 +95,24 @@ void	append_command_path(t_minihell *minihell, t_tokens *lst_tokens)
 					g_global.error_code = 127;
 				else
 					g_global.error_code = 126;
-				free(lst_tokens->command);
-				lst_tokens->command = NULL;
+				free(cmds->command);
+				cmds->command = NULL;
 				ft_printf(2, "minishell: %s: No such file or directory\n", cmd);
 				g_global.error_code = 127;
 			}
-			else if (cmd_is_dir(lst_tokens->command))
+			else if (cmd_is_dir(cmds->command))
 			{
-				free(lst_tokens->command);
-				lst_tokens->command = NULL;
+				free(cmds->command);
+				cmds->command = NULL;
 				ft_printf(2, "minishell: %s: is a directory\n", cmd);
 				g_global.error_code = 126;
 			}
 		}
 		else if (!check_builtin(cmd))
 		{
-			free(lst_tokens->command);
-			lst_tokens->command = check_valid_path(cmd, path);
-			if (!lst_tokens->command)
+			free(cmds->command);
+			cmds->command = check_valid_path(cmd, path);
+			if (!cmds->command)
 				ft_printf(2, "minishell: %s: command not found\n", cmd);
 			g_global.error_code = 127;
 		}

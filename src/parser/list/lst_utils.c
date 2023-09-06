@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 20:13:15 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/05 14:06:22 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/06 19:20:03 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 /*	lst_add_back()
 *	add given node to the back of the given list
 */
-void	lst_add_back(t_tokens **lst_tokens, t_tokens *node)
+void	lst_add_back(t_tokens **cmds, t_tokens *node)
 {
 	t_tokens	*tmp;
 
-	if (*lst_tokens == NULL)
+	if (*cmds == NULL)
 	{
-		*lst_tokens = node;
+		*cmds = node;
 		return ;
 	}
-	tmp = *lst_tokens;
+	tmp = *cmds;
 	while (tmp->next != NULL)
 		tmp = tmp->next;
 	tmp->next = node;
@@ -33,7 +33,7 @@ void	lst_add_back(t_tokens **lst_tokens, t_tokens *node)
 /*	lst_print()
 *	print given linked list's contents
 */
-void	lst_print(t_tokens *lst_tokens)
+void	lst_print(t_tokens *cmds)
 {
 	int	i;
 	int	j;
@@ -41,18 +41,18 @@ void	lst_print(t_tokens *lst_tokens)
 	i = 0;
 	j = 0;
 	printf("\nlst_print:\n");
-	while (lst_tokens)
+	while (cmds)
 	{
 		printf("node %d:\n", j);
-		printf("	command: %s\n", lst_tokens->command);
+		printf("	command: %s\n", cmds->command);
 		printf("	options:\n");
 		i = 0;
-		while (lst_tokens->opt[i])
+		while (cmds->opt[i])
 		{
-			printf("		opt[%d]: %s\n", i, lst_tokens->opt[i]);
+			printf("		opt[%d]: %s\n", i, cmds->opt[i]);
 			i++;
 		}
-		lst_tokens = lst_tokens->next;
+		cmds = cmds->next;
 		j++;
 	}
 }

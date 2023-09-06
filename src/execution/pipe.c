@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:59:01 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 18:55:56 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 19:20:03 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@
 // 	tmp->next->fd_in = fd[0];
 // }
 
-// void	open_pipes(t_tokens *lst_tokens)
+// void	open_pipes(t_tokens *cmds)
 // {
 // 	t_tokens	*tmp;
 
-// 	tmp = lst_tokens;
+// 	tmp = cmds;
 // 	while (tmp)
 // 	{
 // 		if (tmp->next != NULL && tmp->fd_out <= 0)

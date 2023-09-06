@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:41:34 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 18:58:08 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/06 19:20:03 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static int  create_node(char **c_line, int s, t_minihell *mini)
 		}
 		s++;
     }
-    lst_add_back(&mini->lst_tokens, node);
+    lst_add_back(&mini->cmds, node);
     return (s);
 }
 /*
@@ -104,11 +104,11 @@ static int  create_node(char **c_line, int s, t_minihell *mini)
 *	until we reach a new pipe (or the end of command_line)
 *	return the finished lst_token list
 */
-bool	create_lst_tokens(t_minihell *minihell)
+bool	create_cmds(t_minihell *minihell)
 {
 	int			i;
 
-	minihell->lst_tokens = NULL;
+	minihell->cmds = NULL;
 	i = create_node(minihell->tokens, 0, minihell);
 	if (minihell->tokens[i] && minihell->tokens[i][0] == '|')
 	{

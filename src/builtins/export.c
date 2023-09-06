@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 17:17:54 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/06 18:55:56 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 19:20:03 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,23 +114,23 @@ void	export_builtin(t_minihell *minihell)
 	int	argv_size;
 
 	i = 0;
-	argv_size = count_strings(minihell->lst_tokens->argv);
+	argv_size = count_strings(minihell->cmds->argv);
 	if (argv_size == 1)
 		while (minihell->env[i])
 			printf("declare -x %s\n", minihell->env[i++]);
 	else
 	{
 		i = 1;
-		while (minihell->lst_tokens->argv[i])
+		while (minihell->cmds->argv[i])
 		{
-			if (!check_validity(minihell->lst_tokens->argv[i]))
+			if (!check_validity(minihell->cmds->argv[i]))
 			{
-				if (ft_strrchr(minihell->lst_tokens->argv[i], '='))
+				if (ft_strrchr(minihell->cmds->argv[i], '='))
 				{
-					if (!already_exists(minihell->env, minihell->lst_tokens->argv[i]))
-						modify_variable(minihell, minihell->lst_tokens->argv[i]);
+					if (!already_exists(minihell->env, minihell->cmds->argv[i]))
+						modify_variable(minihell, minihell->cmds->argv[i]);
 					else
-						minihell->env = export_variable(minihell->env, minihell->lst_tokens->argv[i]);
+						minihell->env = export_variable(minihell->env, minihell->cmds->argv[i]);
 					g_global.error_code = 0;
 				}
 			}

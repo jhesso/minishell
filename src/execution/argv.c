@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:26:39 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/20 15:26:59 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 19:20:03 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,29 +18,29 @@ void	create_argv(t_minihell *minihell)
 	int			options;
 	int			i;
 
-	temp = minihell->lst_tokens;
-	while (minihell->lst_tokens != NULL)
+	temp = minihell->cmds;
+	while (minihell->cmds != NULL)
 	{
-		options = count_strings(minihell->lst_tokens->opt);
-		minihell->lst_tokens->argv = malloc(sizeof(char *) * (options + 2));
-		if (!minihell->lst_tokens->argv)
+		options = count_strings(minihell->cmds->opt);
+		minihell->cmds->argv = malloc(sizeof(char *) * (options + 2));
+		if (!minihell->cmds->argv)
 			malloc_error();
-		if (!minihell->lst_tokens->command)
-			minihell->lst_tokens->argv[0] = NULL;
+		if (!minihell->cmds->command)
+			minihell->cmds->argv[0] = NULL;
 		else
 		{
-			minihell->lst_tokens->argv[0] = ft_strdup(minihell->lst_tokens->command);
-			if (!minihell->lst_tokens->argv[0])
+			minihell->cmds->argv[0] = ft_strdup(minihell->cmds->command);
+			if (!minihell->cmds->argv[0])
 				malloc_error();
 		}
 		i = 0;
-		while (minihell->lst_tokens->opt[i])
+		while (minihell->cmds->opt[i])
 		{
-			minihell->lst_tokens->argv[i + 1] = minihell->lst_tokens->opt[i];
+			minihell->cmds->argv[i + 1] = minihell->cmds->opt[i];
 			i++;
 		}
-		minihell->lst_tokens->argv[i + 1] = NULL;
-    	minihell->lst_tokens = minihell->lst_tokens->next;
+		minihell->cmds->argv[i + 1] = NULL;
+    	minihell->cmds = minihell->cmds->next;
 	}
-	minihell->lst_tokens = temp;
+	minihell->cmds = temp;
 }

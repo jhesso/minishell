@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 19:02:50 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 19:20:03 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_minihell
 	int				nb_cmds;
 	char			**heredocs;
 	int				heredoc_nb;
-	struct s_tokens	*lst_tokens;
+	struct s_tokens	*cmds;
 }					t_minihell;
 
 /*	s_tokens
@@ -119,11 +119,11 @@ bool			parse(t_minihell *minihell);
 char    		*parse_str(int c, t_minihell *minihell);
 
 /* list.c */
-bool			create_lst_tokens(t_minihell *minihell);
+bool			create_cmds(t_minihell *minihell);
 
 /* lst_utils.c */
-void			lst_print(t_tokens *lst_tokens);
-void			lst_add_back(t_tokens **lst_tokens, t_tokens *node);
+void			lst_print(t_tokens *cmds);
+void			lst_add_back(t_tokens **cmds, t_tokens *node);
 
 /* expanding.c */
 char			*expand_variables(char *str, char **envp);
@@ -140,7 +140,7 @@ void			execute(t_minihell *mini);
 void			prepare_execution(t_minihell *minihell);
 
 /* path.c */
-void			append_command_path(t_minihell *minihell, t_tokens *lst_tokens);
+void			append_command_path(t_minihell *minihell, t_tokens *cmds);
 
 /* argv.c */
 void			create_argv(t_minihell *minihell);
@@ -153,7 +153,7 @@ int				heredoc(char *delim, char *name);
 void			get_heredoc_name(t_minihell *mini, int cmd);
 
 /* pipe */
-// void			open_pipes(t_tokens *lst_tokens);
+// void			open_pipes(t_tokens *cmds);
 
 /*---------------------------------Builtins-----------------------------------*/
 

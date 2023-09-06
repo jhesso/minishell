@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 13:51:46 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/06 18:55:56 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 19:20:03 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	env_builtin(t_minihell *minihell)
 	int	argv_size;
 
 	i = 0;
-	argv_size = count_strings(minihell->lst_tokens->argv);
+	argv_size = count_strings(minihell->cmds->argv);
 	if (argv_size == 1)
 	{
 		while (minihell->env[i])
@@ -30,7 +30,7 @@ void	env_builtin(t_minihell *minihell)
 	}
 	else
 	{
-		ft_printf(2, "env: %s: No such file or directory\n", minihell->lst_tokens->argv[1]);
+		ft_printf(2, "env: %s: No such file or directory\n", minihell->cmds->argv[1]);
 		g_global.error_code = 127;
 	}
 }

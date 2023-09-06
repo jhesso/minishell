@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 18:55:56 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 19:20:03 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,15 @@ static void	parent(t_minihell *mini)
 
 	i = 0;
 	close_pipes(mini);
-	tmp = mini->lst_tokens;
+	tmp = mini->cmds;
 	while(i < mini->nb_cmds)
 	{
 		if (mini->pids[i] != -2)
 			waitpid(mini->pids[i], &status, 0);
-		if (!check_builtin(mini->lst_tokens->command) && WIFEXITED(status))
+		if (!check_builtin(mini->cmds->command) && WIFEXITED(status))
 			g_global.error_code = WEXITSTATUS(status);
 		i++;
-		mini->lst_tokens = mini->lst_tokens->next;
+		mini->cmds = mini->cmds->next;
 	}
 }
 
@@ -99,9 +99,9 @@ void	execute(t_minihell *mini)
 	int			stdout_cpy;
 
 	prepare_execution(mini);
-	head = mini->lst_tokens;
+	head = mini->cmds;
 	i = 0;
-	while (mini->lst_tokens)
+	while (mini->cmds)
 	{
 		open_files(mini, i);
 		status = pipe(mini->pipe_fds[i]);
@@ -111,20 +111,20 @@ void	execute(t_minihell *mini)
 			g_global.error_code = errno;
 			break ;
 		}
-		if (mini->lst_tokens->fd_in == -1)
+		if (mini->cmds->fd_in == -1)
 		{
-			free(mini->lst_tokens->command);
-			mini->lst_tokens->command = NULL;
+			free(mini->cmds->command);
+			mini->cmds->command = NULL;
 		}
-		if (check_builtin(mini->lst_tokens->command) && mini->nb_cmds == 1)
+		if (check_builtin(mini->cmds->command) && mini->nb_cmds == 1)
 		{
-			if (mini->lst_tokens->fd_out > 0)
+			if (mini->cmds->fd_out > 0)
 				stdout_cpy = dup(STDOUT_FILENO);
-			if (mini->lst_tokens->fd_out > 0)
+			if (mini->cmds->fd_out > 0)
 				stdout_cpy = dup(STDOUT_FILENO);
-			redirect_io(mini->lst_tokens, mini->pipe_fds, i);
+			redirect_io(mini->cmds, mini->pipe_fds, i);
 			close_pipes(mini);
-			execute_builtin(mini, check_builtin(mini->lst_tokens->command));
+			execute_builtin(mini, check_builtin(mini->cmds->command));
 			dup2(stdout_cpy, STDOUT_FILENO);
 		}
 		else
@@ -136,12 +136,12 @@ void	execute(t_minihell *mini)
 			break ;
 		}
 		else if (mini->pids[i] == 0)
-			child(mini->lst_tokens, mini, i);
+			child(mini->cmds, mini, i);
 		else
 			close(mini->pipe_fds[i][1]);
 		i++;
-		mini->lst_tokens = mini->lst_tokens->next;
+		mini->cmds = mini->cmds->next;
 	}
-	mini->lst_tokens = head;
+	mini->cmds = head;
 	parent(mini);
 }

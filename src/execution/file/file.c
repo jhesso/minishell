@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 19:03:16 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 19:20:03 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ static int	open_input(t_minihell *minihell, int i, bool *error_flag)
 {
 	if (!ft_strncmp(minihell->tokens[i - 1], "<\0", 2))
 	{
-		if (minihell->lst_tokens->fd_in > 0)
-			close(minihell->lst_tokens->fd_in);
+		if (minihell->cmds->fd_in > 0)
+			close(minihell->cmds->fd_in);
 		minihell->tokens[i] = remove_quotes(minihell->tokens[i], 0, 0);
-		minihell->lst_tokens->fd_in = open_file(minihell->tokens[i], 0, NULL);
-		if (minihell->lst_tokens->fd_in == -1)
+		minihell->cmds->fd_in = open_file(minihell->tokens[i], 0, NULL);
+		if (minihell->cmds->fd_in == -1)
 		{
 			while (minihell->tokens[i + 1] && minihell->tokens[i][0] != '|')
 				i++;
@@ -53,10 +53,10 @@ static int	open_input(t_minihell *minihell, int i, bool *error_flag)
 	}
 	else if (!ft_strncmp(minihell->tokens[i - 1], "<<\0", 3))
 	{
-		if (minihell->lst_tokens->fd_in > 0)
-			close(minihell->lst_tokens->fd_in);
+		if (minihell->cmds->fd_in > 0)
+			close(minihell->cmds->fd_in);
 		minihell->tokens[i] = remove_quotes(minihell->tokens[i], 0, 0);
-		minihell->lst_tokens->fd_in = open_file(minihell->tokens[i], 1, minihell);
+		minihell->cmds->fd_in = open_file(minihell->tokens[i], 1, minihell);
 	}
 	return (i);
 }
@@ -72,27 +72,27 @@ static int	open_output(t_minihell *minihell, int i, bool *flag, bool *error_flag
 {
 	if (!ft_strncmp(minihell->tokens[i - 1], ">\0", 2))
 	{
-		if (minihell->lst_tokens->fd_out > 0)
-			close(minihell->lst_tokens->fd_out);
+		if (minihell->cmds->fd_out > 0)
+			close(minihell->cmds->fd_out);
 		*(flag) = true;
 		minihell->tokens[i] = remove_quotes(minihell->tokens[i], 0, 0);
-		minihell->lst_tokens->fd_out = open_file(minihell->tokens[i], 2, NULL);
+		minihell->cmds->fd_out = open_file(minihell->tokens[i], 2, NULL);
 	}
 	else if (!ft_strncmp(minihell->tokens[i - 1], ">>\0", 3) && *(flag) == false)
 	{
-		if (minihell->lst_tokens->fd_out > 0)
-			close(minihell->lst_tokens->fd_out);
+		if (minihell->cmds->fd_out > 0)
+			close(minihell->cmds->fd_out);
 		minihell->tokens[i] = remove_quotes(minihell->tokens[i], 0, 0);
-		minihell->lst_tokens->fd_out = open_file(minihell->tokens[i], 3, NULL);
+		minihell->cmds->fd_out = open_file(minihell->tokens[i], 3, NULL);
 	}
 	else if (!ft_strncmp(minihell->tokens[i - 1], ">>\0", 3) && *(flag) == true)
 	{
-		if (minihell->lst_tokens->fd_out > 0)
-			close(minihell->lst_tokens->fd_out);
+		if (minihell->cmds->fd_out > 0)
+			close(minihell->cmds->fd_out);
 		minihell->tokens[i] = remove_quotes(minihell->tokens[i], 0, 0);
-		minihell->lst_tokens->fd_out = open_file(minihell->tokens[i], 2, NULL);
+		minihell->cmds->fd_out = open_file(minihell->tokens[i], 2, NULL);
 	}
-	if (minihell->lst_tokens->fd_out == -1)
+	if (minihell->cmds->fd_out == -1)
 	{
 		while (minihell->tokens[i + 1] && minihell->tokens[i][0] != '|')
 			i++;
@@ -107,8 +107,8 @@ void	open_files(t_minihell *minihell, int cmd)
 	bool		error_flag;
 	bool		flag;
 
-	minihell->lst_tokens->fd_in = 0;
-	minihell->lst_tokens->fd_out = 0;
+	minihell->cmds->fd_in = 0;
+	minihell->cmds->fd_out = 0;
 	error_flag = false;
 	flag = false;
 	get_heredoc_name(minihell, cmd);
@@ -125,10 +125,10 @@ void	open_files(t_minihell *minihell, int cmd)
 	if (!minihell->tokens[i])
 		i = 0;
 	if (error_flag == false)
-		append_command_path(minihell, minihell->lst_tokens);
+		append_command_path(minihell, minihell->cmds);
 	else
 	{
-		free(minihell->lst_tokens->command);
-		minihell->lst_tokens->command = NULL;
+		free(minihell->cmds->command);
+		minihell->cmds->command = NULL;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 20:55:01 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/06 18:55:56 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 19:20:03 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ static int	arg_is_digit(char *arg)
 
 static void	exit_checks(t_minihell *minihell, int argv_size, int number, bool *error)
 {
-	if (argv_size == 2 && error && !arg_is_digit(minihell->lst_tokens->argv[1]))
+	if (argv_size == 2 && error && !arg_is_digit(minihell->cmds->argv[1]))
 	{
 		g_global.error_code = number % 256;
 		exit(g_global.error_code);
 	}
-	else if (argv_size >= 2 && (!error || arg_is_digit(minihell->lst_tokens->argv[1])))
+	else if (argv_size >= 2 && (!error || arg_is_digit(minihell->cmds->argv[1])))
 	{
-		ft_printf(2, "minishell: exit: %s: numeric argument required\n", minihell->lst_tokens->argv[1]);
+		ft_printf(2, "minishell: exit: %s: numeric argument required\n", minihell->cmds->argv[1]);
 		g_global.error_code = 255;
 		exit(g_global.error_code);
 	}
@@ -70,14 +70,14 @@ void	exit_builtin(t_minihell *minihell)
 	long int	number;
 
 	error = true;
-	argv_size = count_strings(minihell->lst_tokens->argv);
+	argv_size = count_strings(minihell->cmds->argv);
 	number = 0;
 	if (minihell->nb_cmds == 1)
 		printf("exit\n");
 	if (argv_size >= 2)
 	{
-		number = ft_atoi(minihell->lst_tokens->argv[1]);
-		overflows(number, minihell->lst_tokens->argv[1], &error);
+		number = ft_atoi(minihell->cmds->argv[1]);
+		overflows(number, minihell->cmds->argv[1], &error);
 	}
 	exit_checks(minihell, argv_size, number, &error);
 }
