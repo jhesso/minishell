@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 18:36:48 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 18:38:35 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ typedef struct s_minihell
 {
 	char			**tokens;
 	char			**env;
-	int				double_quote;
-	int				single_quote;
 	int				**pipe_fds;
 	pid_t			*pids;
 	int				nb_cmds;
@@ -108,7 +106,7 @@ int				get_amount_of_words(char const *s, char c);
 int				get_word_len(char const *s, char c, int start);
 
 /* lexing_utils.c */
-bool			char_checker(char *command_line, t_minihell *command, int i);
+bool			char_checker(char *command_line, int i);
 int				quotes(char const *s, int i);
 
 /* syntax_checking.c */

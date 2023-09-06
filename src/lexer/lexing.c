@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 15:46:22 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/05 12:47:55 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 18:34:49 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	**tokenize_cmd(char const *s, char c)
 
 bool	lexing(t_minihell *minihell, char *command_line)
 {
-	if (!char_checker(command_line, minihell, 0))
+	if (!char_checker(command_line, 0))
 	{
 		global.error_code = 258;
 		return (false);
