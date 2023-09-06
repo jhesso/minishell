@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 03:25:41 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/01 16:34:51 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 21:02:39 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 static void	init_pids(t_minihell *minihell)
 {
-	t_tokens	*tmp;
-	int			i;
+	t_cmds	*tmp;
+	int		i;
 
 	i = 0;
-	tmp = minihell->lst_tokens;
-	while (minihell->lst_tokens)
+	tmp = minihell->cmds;
+	while (minihell->cmds)
 	{
 		i++;
-		minihell->lst_tokens = minihell->lst_tokens->next;
+		minihell->cmds = minihell->cmds->next;
 	}
 	minihell->nb_cmds = i;
 	minihell->pids = malloc(sizeof(pid_t) * minihell->nb_cmds);
@@ -31,13 +31,14 @@ static void	init_pids(t_minihell *minihell)
 	i = 0;
 	while (i < minihell->nb_cmds)
 		minihell->pids[i++] = -2;
-	minihell->lst_tokens = tmp;
+	minihell->cmds = tmp;
 }
 
 void	prepare_execution(t_minihell *minihell)
 {
-	int i;
-	create_argv(minihell);
+	int	i;
+
+	create_argv(minihell, NULL, 0, 0);
 	init_pids(minihell);
 	minihell->pipe_fds = malloc(sizeof(int *) * minihell->nb_cmds);
 	if (!minihell->pipe_fds)

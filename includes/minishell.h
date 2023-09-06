@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 18:57:28 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/06 21:01:00 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 /*								Structs 									  */
 /******************************************************************************/
 
-typedef struct s_tokens	t_tokens;
+typedef struct s_cmds	t_cmds;
 
 /*	s_minihell
 *	the 'main' struct of the project
@@ -57,7 +57,7 @@ typedef struct s_minihell
 	int				nb_cmds;
 	char			**heredocs;
 	int				heredoc_nb;
-	struct s_tokens	*lst_tokens;
+	struct s_cmds	*cmds;
 }					t_minihell;
 
 /*	s_tokens
@@ -70,17 +70,17 @@ typedef struct s_minihell
 *	fd_in and fd_out being the file descriptors for redirections
 *	note that fd_in, fd_out and argv are allocated later on in the program!
 */
-typedef struct			s_tokens
+typedef struct s_cmds
 {
 	char				*command;
 	char				**opt;
 	char				**argv;
 	int					fd_in;
 	int					fd_out;
-	struct s_tokens		*next;
-}						t_tokens;
+	struct s_cmds		*next;
+}						t_cmds;
 
-typedef struct	s_global
+typedef struct s_global
 {
 	int			heredoc_tmp;
 	int			error_code;
@@ -90,7 +90,7 @@ typedef struct	s_global
 /*								   GLOBAL									  */
 /******************************************************************************/
 
-extern t_global	global;
+extern t_global			g_global;
 
 /******************************************************************************/
 /*								   Functions								  */
@@ -99,15 +99,15 @@ extern t_global	global;
 /*----------------------------------Lexing------------------------------------*/
 
 /* lexing.c */
-bool			lexing(t_minihell *command, char *command_line);
+bool			lexing(t_minihell *minihell, char *command_line);
+
+/* lexing_utils.c */
+int				quotes(char const *s, int i);
+bool			char_checker(char *command_line, int i, int flag);
 
 /* tokenization.c */
 int				get_amount_of_words(char const *s, char c);
 int				get_word_len(char const *s, char c, int start);
-
-/* lexing_utils.c */
-bool			char_checker(char *command_line, int i);
-int				quotes(char const *s, int i);
 
 /* syntax_checking.c */
 bool			syntax_checker(char **tokens);
@@ -116,17 +116,18 @@ bool			syntax_checker(char **tokens);
 
 /* parsing.c */
 bool			parse(t_minihell *minihell);
-char    		*parse_str(int c, t_minihell *minihell);
+char			*parse_str(int c, t_minihell *mini);
 
 /* list.c */
-bool			create_lst_tokens(t_minihell *minihell);
-
-/* lst_utils.c */
-void			lst_print(t_tokens *lst_tokens);
-void			lst_add_back(t_tokens **lst_tokens, t_tokens *node);
+bool			create_cmds(t_minihell *minihell);
 
 /* expanding.c */
 char			*expand_variables(char *str, char **envp);
+
+/* expanding_utils.c */
+char			*expand(char *str, char **envp, int start, int end);
+char			*insert_value(char *str, char *value, int start, int new_start);
+int				get_end_index(char *str, int i, int type);
 
 /* removing_quotes.c */
 char			*remove_quotes(char *str, int i, int j);
@@ -136,47 +137,59 @@ char			*remove_quotes(char *str, int i, int j);
 /* execute.c */
 void			execute(t_minihell *mini);
 
+/* execute_utils.c */
+void			redirect_io(t_cmds *cmd, int **pipe_fds, int nb_cmd);
+void			solo_builtin(t_minihell *mini, int i);
+
 /* prepare_execution.c */
 void			prepare_execution(t_minihell *minihell);
 
 /* path.c */
-void			append_command_path(t_minihell *minihell, t_tokens *lst_tokens);
+void			append_command_path(t_minihell *minihell, t_cmds *cmds);
 
 /* argv.c */
-void			create_argv(t_minihell *minihell);
+void			create_argv(t_minihell *mini, t_cmds *tmp, int i, int options);
 
 /* file.c */
-void			open_files(t_minihell *minihell, int cmd);
+void			open_files(t_minihell *mini, int cmd, bool flag, bool error);
 
 /* heredoc.c */
 int				heredoc(char *delim, char *name);
 void			get_heredoc_name(t_minihell *mini, int cmd);
-
-/* pipe */
-// void			open_pipes(t_tokens *lst_tokens);
 
 /*---------------------------------Builtins-----------------------------------*/
 
 /* builtin.c */
 void			execute_builtin(t_minihell *minihell, int builtin);
 
-void  			init_env(t_minihell *minihell, char **envp);
-
+/* exit.c */
 void			exit_builtin(t_minihell *minihell);
-void			echo_builtin(t_minihell *minihell, int j, int flag, int i);
-void			pwd_builtin(t_minihell *minihell);
-void			env_builtin(t_minihell *minihell);
-void			unset_builtin(t_minihell *minihell);
-void			export_builtin(t_minihell *minihell);
-void			cd_builtin(t_minihell *minihell);
 
-int				already_exists(char **env, char *arg);
-void			modify_variable(t_minihell *minihell, char *arg);
-char			**export_variable(char **env, char *arg);
+/* echo.c */
+void			echo_builtin(t_minihell *minihell, int j, int flag, int i);
+
+/* pwd.c */
+void			pwd_builtin(t_minihell *minihell);
+
+/* env.c */
+void			env_builtin(t_minihell *minihell);
+void			init_env(t_minihell *minihell, char **envp);
+
+/* unset.c */
+void			unset_builtin(t_minihell *mini);
+
+/* export.c */
+void			export_builtin(t_minihell *mini, int i, int argv_size);
+
+/* cd.c */
+void			cd_builtin(t_minihell *mini);
 
 /* builtin_utils.c */
 int				check_builtin(char *cmd);
 int				invalid_variable(char *arg, int type);
+int				already_exists(char **env, char *arg);
+void			modify_variable(t_minihell *minihell, char *arg);
+char			**export_variable(char **env, char *arg);
 
 /*----------------------------------Signals-----------------------------------*/
 
@@ -198,8 +211,6 @@ int				count_strings(char **array);
 /* error.c */
 void			malloc_error(void);
 void			dup_error(void);
-
-
 
 char			*get_value(char *path, int len, char **envp);
 
