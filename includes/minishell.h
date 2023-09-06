@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 18:38:35 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/06 18:57:28 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void			lst_add_back(t_tokens **lst_tokens, t_tokens *node);
 char			*expand_variables(char *str, char **envp);
 
 /* removing_quotes.c */
-char			*remove_quotes(char *str, int i, int j, int len);
+char			*remove_quotes(char *str, int i, int j);
 
 /*---------------------------------Execution----------------------------------*/
 

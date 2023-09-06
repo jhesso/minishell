@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/05 16:02:53 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/06 18:58:34 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	open_input(t_minihell *minihell, int i, bool *error_flag)
 	{
 		if (minihell->lst_tokens->fd_in > 0)
 			close(minihell->lst_tokens->fd_in);
-		minihell->tokens[i] = remove_quotes(minihell->tokens[i], 0, 0, 0);
+		minihell->tokens[i] = remove_quotes(minihell->tokens[i], 0, 0);
 		minihell->lst_tokens->fd_in = open_file(minihell->tokens[i], 0, NULL);
 		if (minihell->lst_tokens->fd_in == -1)
 		{
@@ -55,7 +55,7 @@ static int	open_input(t_minihell *minihell, int i, bool *error_flag)
 	{
 		if (minihell->lst_tokens->fd_in > 0)
 			close(minihell->lst_tokens->fd_in);
-		minihell->tokens[i] = remove_quotes(minihell->tokens[i], 0, 0, 0);
+		minihell->tokens[i] = remove_quotes(minihell->tokens[i], 0, 0);
 		minihell->lst_tokens->fd_in = open_file(minihell->tokens[i], 1, minihell);
 	}
 	return (i);
@@ -75,21 +75,21 @@ static int	open_output(t_minihell *minihell, int i, bool *flag, bool *error_flag
 		if (minihell->lst_tokens->fd_out > 0)
 			close(minihell->lst_tokens->fd_out);
 		*(flag) = true;
-		minihell->tokens[i] = remove_quotes(minihell->tokens[i], 0, 0, 0);
+		minihell->tokens[i] = remove_quotes(minihell->tokens[i], 0, 0);
 		minihell->lst_tokens->fd_out = open_file(minihell->tokens[i], 2, NULL);
 	}
 	else if (!ft_strncmp(minihell->tokens[i - 1], ">>\0", 3) && *(flag) == false)
 	{
 		if (minihell->lst_tokens->fd_out > 0)
 			close(minihell->lst_tokens->fd_out);
-		minihell->tokens[i] = remove_quotes(minihell->tokens[i], 0, 0, 0);
+		minihell->tokens[i] = remove_quotes(minihell->tokens[i], 0, 0);
 		minihell->lst_tokens->fd_out = open_file(minihell->tokens[i], 3, NULL);
 	}
 	else if (!ft_strncmp(minihell->tokens[i - 1], ">>\0", 3) && *(flag) == true)
 	{
 		if (minihell->lst_tokens->fd_out > 0)
 			close(minihell->lst_tokens->fd_out);
-		minihell->tokens[i] = remove_quotes(minihell->tokens[i], 0, 0, 0);
+		minihell->tokens[i] = remove_quotes(minihell->tokens[i], 0, 0);
 		minihell->lst_tokens->fd_out = open_file(minihell->tokens[i], 2, NULL);
 	}
 	if (minihell->lst_tokens->fd_out == -1)
