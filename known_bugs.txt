@@ -1,7 +1,6 @@
 known bugs in minishell:
 
-1. cat Makefile || << end cat ; this should print a warning about the 2 pipes
-2. exit status changes in the parent process
+1. exit status changes in the parent process
 
 Dardan:
 	Test cd error message at school!
@@ -11,10 +10,6 @@ notes:
 	this doesn't happen with EOF or normally exiting with the delimiter
 
 	2. running a command that is not found -> memory leaks
-
-	3. PWD env variable is not restored after unsetting it. tried using cd and PWD
-	neither worked
-		- also this resulted in OLDPWD being empty (probably after cd)
 
 	4. echo "123'rrr" -> open quotes error, should print: 123'rrr
 

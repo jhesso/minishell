@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/05 16:01:39 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/06 18:36:29 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,92 +68,80 @@ static void	child(t_tokens *cmd, t_minihell *mini, int not_first_cmd)
 */
 static void	parent(t_minihell *mini)
 {
-	int		status;
-	int		i;
+	int			status;
+	int			i;
+	t_tokens	*tmp;
 
 	i = 0;
-	usleep(1000);
 	close_pipes(mini);
+	tmp = mini->lst_tokens;
 	while(i < mini->nb_cmds)
 	{
 		if (mini->pids[i] != -2)
 			waitpid(mini->pids[i], &status, 0);
-		if (WIFEXITED(status))
+		if (!check_builtin(mini->lst_tokens->command) && WIFEXITED(status))
 			global.error_code = WEXITSTATUS(status);
 		i++;
+		mini->lst_tokens = mini->lst_tokens->next;
 	}
-	if (WIFEXITED(status))
-		global.error_code = WEXITSTATUS(status);
 }
-
-// static void	print_fds(t_tokens *lst_tokens)
-// {
-// 	if (lst_tokens) // changed it an if, because we are going to print it for each node!
-// 	{
-// 		printf("fd_in: %d, fd_out: %d\n", lst_tokens->fd_in, lst_tokens->fd_out);
-// 		// lst_tokens = lst_tokens->next;
-// 	}
-// }
 
 /*	execute()
 *	Execute the command line
 *	global.error_code is set to the exit status of the last command
 *	Returns TRUE if execution was successful, FALSE otherwise
 */
-bool	execute(t_minihell *minihell)
+void	execute(t_minihell *mini)
 {
 	t_tokens	*head;
 	int			i;
 	int			status;
 	int			stdout_cpy;
 
-	prepare_execution(minihell);
-	head = minihell->lst_tokens;
+	prepare_execution(mini);
+	head = mini->lst_tokens;
 	i = 0;
-	while (minihell->lst_tokens)
+	while (mini->lst_tokens)
 	{
-		open_files(minihell, i);
-		// print_fds(minihell->lst_tokens);
-		status = pipe(minihell->pipe_fds[i]);
+		open_files(mini, i);
+		status = pipe(mini->pipe_fds[i]);
 		if (status == -1)
 		{
 			perror(strerror(errno));
 			global.error_code = errno;
 			break ;
 		}
-		if (minihell->lst_tokens->fd_in == -1)
+		if (mini->lst_tokens->fd_in == -1)
 		{
-			free(minihell->lst_tokens->command);
-			minihell->lst_tokens->command = NULL;
+			free(mini->lst_tokens->command);
+			mini->lst_tokens->command = NULL;
 		}
-		if (check_builtin(minihell->lst_tokens->command) && minihell->nb_cmds == 1)
+		if (check_builtin(mini->lst_tokens->command) && mini->nb_cmds == 1)
 		{
-			if (minihell->lst_tokens->fd_out > 0)
+			if (mini->lst_tokens->fd_out > 0)
 				stdout_cpy = dup(STDOUT_FILENO);
-			if (minihell->lst_tokens->fd_out > 0)
+			if (mini->lst_tokens->fd_out > 0)
 				stdout_cpy = dup(STDOUT_FILENO);
-			redirect_io(minihell->lst_tokens, minihell->pipe_fds, i);
-			close_pipes(minihell);
-			execute_builtin(minihell, check_builtin(minihell->lst_tokens->command));
+			redirect_io(mini->lst_tokens, mini->pipe_fds, i);
+			close_pipes(mini);
+			execute_builtin(mini, check_builtin(mini->lst_tokens->command));
 			dup2(stdout_cpy, STDOUT_FILENO);
 		}
 		else
-			minihell->pids[i] = fork();
-		if (minihell->pids[i] == -1)
+			mini->pids[i] = fork();
+		if (mini->pids[i] == -1)
 		{
 			perror(strerror(errno));
 			global.error_code = errno;
 			break ;
 		}
-		else if (minihell->pids[i] == 0)
-			child(minihell->lst_tokens, minihell, i);
+		else if (mini->pids[i] == 0)
+			child(mini->lst_tokens, mini, i);
 		else
-			close(minihell->pipe_fds[i][1]);
+			close(mini->pipe_fds[i][1]);
 		i++;
-		minihell->lst_tokens = minihell->lst_tokens->next;
+		mini->lst_tokens = mini->lst_tokens->next;
 	}
-	parent(minihell);
-	unlink(".heredoc.tmp");
-	minihell->lst_tokens = head;
-	return (true);
+	mini->lst_tokens = head;
+	parent(mini);
 }

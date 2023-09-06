@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/05 15:53:53 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/06 18:36:48 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ char			*remove_quotes(char *str, int i, int j, int len);
 /*---------------------------------Execution----------------------------------*/
 
 /* execute.c */
-bool			execute(t_minihell *minihell);
+void			execute(t_minihell *mini);
 
 /* prepare_execution.c */
 void			prepare_execution(t_minihell *minihell);
