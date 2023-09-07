@@ -11,7 +11,22 @@ notes:
 
 	2. running a command that is not found -> memory leaks
 
-	4. echo "123'rrr" -> open quotes error, should print: 123'rrr
-
-	5. export PATH=$PWD/exe -> path is now empty
+	3. export PATH=$PWD/exe -> path is now empty
 		- export PATH=/home/jhesso/dev/minishell/exe -> this sets it correctly
+
+	4. echo hello > out
+		- leaves 'out' open
+		==6547== Open file descriptor 7: /dev/ttys002
+		==6547==    at 0x100579EE2: dup (in /usr/lib/system/libsystem_kernel.dylib)
+		==6547==    by 0x1000049A1: solo_builtin (execute_utils.c:49)
+		==6547==    by 0x100003DBF: execute_continue (execute.c:72)
+		==6547==    by 0x100003CD2: execute (execute.c:103)
+		==6547==    by 0x100000F43: minishell (main.c:48)
+		==6547==    by 0x100001013: main (main.c:80)
+
+	5. also echo hello >in
+		==6547== Conditional jump or move depends on uninitialised value(s)
+		==6547==    at 0x100003EF4: parent (execute.c:54)
+		==6547==    by 0x100003D16: execute (execute.c:109)
+		==6547==    by 0x100000F43: minishell (main.c:48)
+		==6547==    by 0x100001013: main (main.c:80)
