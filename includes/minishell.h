@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/07 14:42:36 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/07 15:51:52 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ char			*insert_value(char *str, char *value, int start, int new_start);
 int				get_end_index(char *str, int i, int type);
 
 /* removing_quotes.c */
-char			*remove_quotes(char *str, int i, int j);
+char			*remove_quotes(char *str, int i, int j, char c);
 
 /*---------------------------------Execution----------------------------------*/
 
