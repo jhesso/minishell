@@ -6,7 +6,7 @@
 #    By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 16:12:22 by jhesso            #+#    #+#              #
-#    Updated: 2023/09/07 10:26:25 by dgerguri         ###   ########.fr        #
+#    Updated: 2023/09/07 15:56:38 by dgerguri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRC			=	main.c utils.c cleanup.c error.c\
 				lexer/tokenization.c \
 				parser/parsing.c parser/expanding.c parser/removing_quotes.c \
 				parser/expanding_utils.c \
-				parser/list/list.c \
+				parser/list.c \
 				execution/execute.c execution/path.c execution/argv.c \
 				execution/prepare_execution.c execution/execute_utils.c \
 				execution/file/file.c execution/file/heredoc.c \
@@ -46,7 +46,6 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
 	@mkdir -p $(OBJ_PATH)/lexer
 	@mkdir -p $(OBJ_PATH)/parser
-	@mkdir -p $(OBJ_PATH)/parser/list
 	@mkdir -p $(OBJ_PATH)/builtins
 	@mkdir -p $(OBJ_PATH)/execution
 	@mkdir -p $(OBJ_PATH)/execution/file
