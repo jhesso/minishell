@@ -6,16 +6,17 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 18:57:05 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/07 15:12:44 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	handle_eof(void)
+static void	handle_eof(t_minihell *minihell)
 {
 	ft_putendl_fd("exit", STDOUT_FILENO);
 	rl_clear_history();
+	free_str_arr(minihell->env);
 	exit(EXIT_SUCCESS);
 }
 
@@ -35,7 +36,7 @@ void	minishell(t_minihell *minihell)
 		signals_interactive();
 		command_line = readline(BLUE_BOLD "minishell$ " RESET_COLOR);
 		if (command_line == NULL)
-			handle_eof();
+			handle_eof(minihell);
 		signals_noninteractive();
 		if (command_line && *command_line)
 			add_history(command_line);
