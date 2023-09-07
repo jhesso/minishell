@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/07 15:51:32 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/07 16:31:24 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,30 @@ static int	open_file(char *filename, int mode, t_minihell *mini)
 		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
 		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (fd == -1)
-	{
-		ft_printf(2, "minishell: %s: %s\n", filename, strerror(errno));
-		g_global.error_code = 1;
-	}
 	return (fd);
 }
 
 static int	file_error(t_minihell *mini, int i, bool *error_flag)
 {
+	char	*error;
+
+	if (!mini->tokens[i])
+		mini->tokens[i] = ft_calloc(1, 1);
+	if (!mini->tokens[i])
+		malloc_error();
+	error = mini->tokens[i];
 	while (mini->tokens[i + 1] && mini->tokens[i][0] != '|')
-		i++;
+	{
+		if (!ft_strncmp(mini->tokens[i++], "<<\0", 3))
+		{
+			if (mini->cmds->fd_in > 0)
+				close(mini->cmds->fd_in);
+			mini->tokens[i] = remove_quotes(mini->tokens[i], 0, 0, 0);
+			mini->cmds->fd_in = open_file(mini->tokens[i], 1, mini);
+		}
+	}
+	ft_printf(2, "minishell: %s: No such file or directory\n", error);
+	g_global.error_code = 1;
 	*(error_flag) = true;
 	free(mini->cmds->command);
 	mini->cmds->command = NULL;
