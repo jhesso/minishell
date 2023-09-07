@@ -11,7 +11,7 @@ notes:
 
 	2. running a command that is not found -> memory leaks
 
-	3. export PATH=$PWD/exe -> path is now empty
+	3. export PATH=$PWD/exe -> path is now empty | I think this is fine!
 		- export PATH=/home/jhesso/dev/minishell/exe -> this sets it correctly
 
 	4. echo hello > out
@@ -24,7 +24,9 @@ notes:
 		==6547==    by 0x100000F43: minishell (main.c:48)
 		==6547==    by 0x100001013: main (main.c:80)
 
-	5. also echo hello >in | FIXED test it!
+	5. when you ctrlc the error code should be 1!
+
+	6. also echo hello >in | FIXED test it!
 		==6547== Conditional jump or move depends on uninitialised value(s)
 		==6547==    at 0x100003EF4: parent (execute.c:54)
 		==6547==    by 0x100003D16: execute (execute.c:109)
