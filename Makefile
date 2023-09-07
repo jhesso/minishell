@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+         #
+#    By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 16:12:22 by jhesso            #+#    #+#              #
-#    Updated: 2023/09/06 20:56:53 by jhesso           ###   ########.fr        #
+#    Updated: 2023/09/07 10:26:25 by dgerguri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,26 +40,22 @@ RED				=	\033[0;31m
 BLUE			=	\033[0;34m
 RESET			=	\033[0m
 
-all: $(LIBFT) $(OBJ_PATH) $(NAME)
-
-$(LIBFT):
-	@$(MAKE) -C $(LIBFT_DIR)
-
-$(OBJ_PATH):
-	@mkdir $(OBJ_PATH)
-	@mkdir $(OBJ_PATH)/lexer
-	@mkdir $(OBJ_PATH)/parser
-	@mkdir $(OBJ_PATH)/parser/list
-	@mkdir $(OBJ_PATH)/builtins
-	@mkdir $(OBJ_PATH)/execution
-	@mkdir $(OBJ_PATH)/execution/file
-	@mkdir $(OBJ_PATH)/signals
+all: $(NAME)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
+	@mkdir -p $(OBJ_PATH)
+	@mkdir -p $(OBJ_PATH)/lexer
+	@mkdir -p $(OBJ_PATH)/parser
+	@mkdir -p $(OBJ_PATH)/parser/list
+	@mkdir -p $(OBJ_PATH)/builtins
+	@mkdir -p $(OBJ_PATH)/execution
+	@mkdir -p $(OBJ_PATH)/execution/file
+	@mkdir -p $(OBJ_PATH)/signals
 	@cc $(CFLAGS) -I ~/.brew/opt/readline/include -c $< -o $@ $(INCS)
 
 $(NAME): $(OBJS)
 	@echo "$(BLUE)Compiling $(NAME)$(RESET)"
+	@$(MAKE) -C $(LIBFT_DIR)
 	@cc $(CFLAGS) $(OBJS) -o $(NAME) -L $(LIBFT_DIR) -lft $(READLINE)
 	@echo "$(GREEN)done$(RESET)"
 
