@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   removing_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:42:59 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/06 18:57:06 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/07 15:50:07 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,11 @@ static int	len_without_quotes(char *str)
 *		(int) i: index of new string
 *		(int) j: index of old string
 */
-char	*remove_quotes(char *str, int i, int j)
+char	*remove_quotes(char *str, int i, int j, char c)
 {
 	char	*new_str;
-	char	c;
 
-	if (!str)
+	if (!str || !*str)
 		return (NULL);
 	new_str = ft_calloc(sizeof(char), (len_without_quotes(str) + 1));
 	if (!new_str)

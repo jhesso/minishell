@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 20:55:01 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/06 19:52:09 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/07 15:40:38 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	free_on_exit(t_minihell *mini)
+{
+	free_str_arr(mini->env);
+	cleanup(mini);
+	rl_clear_history();
+	exit(g_global.error_code);
+}
 
 static void	overflows(long long int number, char *arg, bool *error)
 {
@@ -43,14 +51,14 @@ static void	exit_checks(t_minihell *mini, int arg_size, int number, bool *error)
 	if (arg_size == 2 && error && !arg_is_digit(mini->cmds->argv[1]))
 	{
 		g_global.error_code = number % 256;
-		exit(g_global.error_code);
+		free_on_exit(mini);
 	}
 	else if (arg_size >= 2 && (!error || arg_is_digit(mini->cmds->argv[1])))
 	{
 		ft_printf(2, "minishell: exit: %s: numeric argument required\n", \
 			mini->cmds->argv[1]);
 		g_global.error_code = 255;
-		exit(g_global.error_code);
+		free_on_exit(mini);
 	}
 	else if (arg_size >= 2)
 	{
@@ -60,7 +68,7 @@ static void	exit_checks(t_minihell *mini, int arg_size, int number, bool *error)
 	else
 	{
 		g_global.error_code = 0;
-		exit(g_global.error_code);
+		free_on_exit(mini);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:41:34 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 21:02:58 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/07 15:52:13 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ static int	create_node(char **c_line, int s, t_minihell *mini, int c)
 			parse_str(++s, mini);
 		else
 		{
-			ret = remove_quotes(parse_str(s, mini), 0, 0);
+			ret = remove_quotes(parse_str(s, mini), 0, 0, 0);
 			if (node->command != NULL && ret)
 				node->opt[c++] = ret;
 			else if (ret)
