@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/07 17:00:52 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/07 22:31:29 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@
 static void	child(t_cmds *cmd, t_minihell *mini, int not_first_cmd)
 {
 	if (!cmd->command)
+	{
+		close_pipes(mini);
 		exit(g_global.error_code);
+	}
 	redirect_io(cmd, mini->pipe_fds, not_first_cmd);
 	close(mini->pipe_fds[not_first_cmd][0]);
 	if (check_builtin(cmd->command))
