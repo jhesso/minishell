@@ -24,7 +24,7 @@ notes:
 		==6547==    by 0x100000F43: minishell (main.c:48)
 		==6547==    by 0x100001013: main (main.c:80)
 
-	5. also echo hello >in
+	5. also echo hello >in | FIXED test it!
 		==6547== Conditional jump or move depends on uninitialised value(s)
 		==6547==    at 0x100003EF4: parent (execute.c:54)
 		==6547==    by 0x100003D16: execute (execute.c:109)

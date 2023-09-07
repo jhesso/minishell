@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/07 13:33:47 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/07 17:00:52 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static void	parent(t_minihell *mini)
 	t_cmds	*tmp;
 
 	i = 0;
+	status = 0;
 	close_pipes(mini);
 	tmp = mini->cmds;
 	while (i < mini->nb_cmds)
