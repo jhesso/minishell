@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/07 00:28:53 by dardangergu      ###   ########.fr       */
+/*   Updated: 2023/09/07 13:33:47 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	parent(t_minihell *mini)
 	{
 		if (mini->pids[i] != -2)
 			waitpid(mini->pids[i], &status, 0);
-		if (!check_builtin(mini->cmds->command) && WIFEXITED(status))
+		if (WIFEXITED(status))
 			g_global.error_code = WEXITSTATUS(status);
 		i++;
 		mini->cmds = mini->cmds->next;
