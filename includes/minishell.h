@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 21:50:40 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/07 14:42:36 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ void			unset_builtin(t_minihell *mini);
 void			export_builtin(t_minihell *mini, int i, int argv_size);
 
 /* cd.c */
-void			cd_builtin(t_minihell *mini);
+void			cd_builtin(t_minihell *mini, char *old_pwd, char *home, int i);
 
 /* builtin_utils.c */
 int				check_builtin(char *cmd);
