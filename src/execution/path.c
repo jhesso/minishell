@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:23:18 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/07 10:53:10 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/07 13:49:35 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ void	append_command_path(t_minihell *minihell, t_cmds *cmds)
 		{
 			free(cmds->command);
 			cmds->command = check_valid_path(cmd, path);
+			if (!path)
+				ft_printf(2, "minishell: %s: No such file or directory\n", cmd);
 			if (!cmds->command)
 				ft_printf(2, "minishell: %s: command not found\n", cmd);
 			g_global.error_code = 127;
