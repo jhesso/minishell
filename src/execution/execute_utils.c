@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 20:46:58 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/07 16:54:58 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/07 22:36:05 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,11 @@ void	solo_builtin(t_minihell *mini, int i)
 
 	stdout_cpy = -2;
 	if (mini->cmds->fd_out > 0)
+	{
 		stdout_cpy = dup(STDOUT_FILENO);
+		if (stdout_cpy == -1)
+			dup_error();
+	}
 	redirect_io(mini->cmds, mini->pipe_fds, i);
 	close_pipes(mini);
 	execute_builtin(mini, check_builtin(mini->cmds->command));

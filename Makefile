@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME		=	minishell
-CFLAGS		=	-Wall -Wextra -Werror -g -fsanitize=address -g
+CFLAGS		=	-Wall -Wextra -Werror -ggdb3 #-fsanitize=address -g
 READLINE	=	-lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
 LIBFT		=	libft.a
 LIBFT_DIR	=	libft/
