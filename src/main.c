@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/07 15:12:44 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/07 15:15:09 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,17 @@ int	main(int ac, char **av, char **envp)
 {
 	t_minihell	minihell;
 
-	(void)ac;
-	(void)av;
-	init_minihell(&minihell);
-	init_env(&minihell, envp);
-	minishell(&minihell);
-	rl_clear_history();
+	if (ac > 1)
+	{
+		ft_printf(2, "bash: %s: No such file or directory\n", av[1]);
+		g_global.error_code = 127;
+	}
+	else
+	{
+		init_minihell(&minihell);
+		init_env(&minihell, envp);
+		minishell(&minihell);
+		rl_clear_history();
+	}
 	return (0);
 }

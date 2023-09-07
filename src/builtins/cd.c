@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 19:11:36 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/06 19:49:19 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/07 14:44:29 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,8 @@ static void	modify_env(t_minihell *mini, char *old_pwd, char *home, int flag)
 	free(pwd);
 }
 
-void	cd_builtin(t_minihell *mini)
+void	cd_builtin(t_minihell *mini, char *old_pwd, char *home, int flag)
 {
-	char	*old_pwd;
-	char	*home;
-	int		flag;
-
-	flag = 0;
 	old_pwd = ft_strjoin("OLDPWD=", \
 	get_value(ft_strdup("$PWD="), 5, mini->env));
 	home = get_value(ft_strdup("$HOME="), 6, mini->env);
@@ -54,7 +49,11 @@ void	cd_builtin(t_minihell *mini)
 	{
 		if (chdir(home))
 		{
-			ft_printf(2, "minishell: cd: HOME not set\n");
+			if (!home[0])
+				ft_printf(2, "minishell: cd: HOME not set\n");
+			else
+				ft_printf(2, "minishell: cd: %s: No such file or directory\n", \
+				home);
 			flag = 1;
 		}
 	}
