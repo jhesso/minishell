@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:23:18 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/07 00:57:35 by dardangergu      ###   ########.fr       */
+/*   Updated: 2023/09/07 10:53:10 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static char	*check_valid_path(char *command, char **path)
 	char	*cmd;
 
 	i = 0;
-	if (!command[0] || !path)
+	if (!command[0] || !path || command[0] == '.')
 		return (NULL);
 	cmd = ft_strjoin("/", command);
 	if (!cmd)
