@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 23:22:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/08 17:53:00 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/08 18:01:54 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static void	close_heredocs(t_minihell *mini)
 static void	free_list(t_cmds *cmds)
 {
 	t_cmds	*tmp;
-	int		i = 0;
 
 	while (cmds)
 	{
@@ -61,7 +60,6 @@ static void	free_list(t_cmds *cmds)
 		free(tmp->argv[0]);
 		free(tmp->argv);
 		free(tmp);
-		i++;
 	}
 }
 
