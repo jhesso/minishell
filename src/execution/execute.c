@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/08 19:27:27 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/08 20:24:06 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ static void	parent(t_minihell *mini)
 	{
 		if (mini->pids[i] != -2)
 			waitpid(mini->pids[i], &status, 0);
-		if (WIFEXITED(status) && (!check_builtin(mini->cmds->command)
-			|| ((check_builtin(mini->cmds->command) && mini->nb_cmds != 1))))
+		if (WIFEXITED(status) && (!check_builtin(mini->cmds->command) || \
+		((check_builtin(mini->cmds->command) && mini->nb_cmds != 1))))
 			g_global.error_code = WEXITSTATUS(status);
 		i++;
 		mini->cmds = mini->cmds->next;
