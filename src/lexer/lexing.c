@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 15:46:22 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/06 19:19:00 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/08 18:00:16 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ static char	**tokenize_cmd(char const *s, char c)
 
 bool	lexing(t_minihell *minihell, char *command_line)
 {
+	if (!command_line[0])
+		return (false);
 	if (!char_checker(command_line, 0, 0))
 	{
 		g_global.error_code = 258;

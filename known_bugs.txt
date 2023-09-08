@@ -7,6 +7,4 @@ notes:
 
 	2. when you ctrlc the error code should be 1!
 
-	3. the error code if there are empty commands is always 0!
-
 
