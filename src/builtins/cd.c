@@ -6,17 +6,42 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 19:11:36 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/08 19:42:58 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/08 20:22:13 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static char	*ft_strjoin_free(char *s1, char *s2)
+{
+	int		size;
+	char	*ret;
+	int		i;
+	int		j;
+
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	size = ft_strlen((char *)s1) + ft_strlen((char *)s2);
+	ret = malloc(sizeof(char) * size + 1);
+	if (ret == NULL)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s1[i] != '\0')
+		ret[j++] = s1[i++];
+	i = 0;
+	while (s2[i] != '\0')
+		ret[j++] = s2[i++];
+	ret[j] = '\0';
+	free(s2);
+	return (ret);
+}
+
 static void	modify_env(t_minihell *mini, char *old_pwd, char *home, int flag)
 {
 	char	*pwd;
 
-	pwd = ft_strjoin("PWD=", getcwd(NULL, 0));
+	pwd = ft_strjoin_free("PWD=", getcwd(NULL, 0));
 	if (!pwd)
 		malloc_error();
 	if (!flag)
@@ -40,7 +65,7 @@ static void	modify_env(t_minihell *mini, char *old_pwd, char *home, int flag)
 
 void	cd_builtin(t_minihell *mini, char *old_pwd, char *home, int flag)
 {
-	old_pwd = ft_strjoin("OLDPWD=", \
+	old_pwd = ft_strjoin_free("OLDPWD=", \
 	get_value(ft_strdup("$PWD="), 5, mini->env));
 	home = get_value(ft_strdup("$HOME="), 6, mini->env);
 	if (!old_pwd || !home)
