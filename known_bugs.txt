@@ -1,27 +1,12 @@
 known bugs in minishell:
 
-1. exit status changes in the parent process
-
-Dardan:
-	Test cd error message at school!
 
 notes:
 	1. exiting heredoc with SIGINT leaves the process open until minishell is exited
 	this doesn't happen with EOF or normally exiting with the delimiter
 
-	2. running a command that is not found -> memory leaks
+	2. when you ctrlc the error code should be 1!
 
-	3. export PATH=$PWD/exe -> path is now empty | I think this is fine!
-		- export PATH=/home/jhesso/dev/minishell/exe -> this sets it correctly
+	3. the error code if there are empty commands is always 0!
 
-	4. echo hello > out
-		- leaves 'out' open
-		==6547== Open file descriptor 7: /dev/ttys002
-		==6547==    at 0x100579EE2: dup (in /usr/lib/system/libsystem_kernel.dylib)
-		==6547==    by 0x1000049A1: solo_builtin (execute_utils.c:49)
-		==6547==    by 0x100003DBF: execute_continue (execute.c:72)
-		==6547==    by 0x100003CD2: execute (execute.c:103)
-		==6547==    by 0x100000F43: minishell (main.c:48)
-		==6547==    by 0x100001013: main (main.c:80)
 
-	5. when you ctrlc the error code should be 1!
