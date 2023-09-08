@@ -5,6 +5,16 @@ notes:
 	1. exiting heredoc with SIGINT leaves the process open until minishell is exited
 	this doesn't happen with EOF or normally exiting with the delimiter
 
+	2. if you run two minishells simultaneously and open heredocs in both, on of them freezes when trying to exit!
+
+	3. if you open heredoc in a directory that doesnt exist, it freezes!
+	Example: mkdir a
+	cd a
+	mkdir b
+	cd b
+	rm -rf ../../a
+	<< end
+
 	2. when you ctrlc the error code should be 1!
 
 
