@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 16:25:07 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/09 22:50:59 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/09 23:15:20 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ int	heredoc(char *delim, char *name, t_minihell *mini)
 		g_global.error_code = 0;
 	signal(SIGQUIT, handle_cmd);
 	signal(SIGINT, handle_cmd);
-	printf("error_code: %d\n", g_global.error_code);
 	return (g_global.error_code);
 }
 
