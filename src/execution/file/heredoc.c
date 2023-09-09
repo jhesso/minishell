@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 16:25:07 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/09 17:15:51 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/09 19:17:39 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ static int	get_heredoc(char *delim, char *name)
 	char	*line;
 
 	g_global.heredoc_tmp = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	g_global.heredoc_tmp_name = name;
 	if (g_global.heredoc_tmp == -1)
 		return (-1);
-	while (1)
+	while (true)
 	{
 		line = readline("> ");
 		if (line == NULL || (ft_strncmp(line, delim, ft_strlen(delim)) == 0 && \
@@ -39,6 +40,8 @@ static int	get_heredoc(char *delim, char *name)
 		free(line);
 	}
 	close(g_global.heredoc_tmp);
+	// if (g_global.heredoc_interrupt)
+	// 	unlink(name);
 	return (0);
 }
 
@@ -47,6 +50,7 @@ static void	heredoc_child(char *delim, char *name)
 	int					ret;
 	struct sigaction	sa;
 
+	signal(SIGINT, SIG_DFL);
 	sa.sa_handler = &heredoc_sigint;
 	sa.sa_flags = 0;
 	sigemptyset(&sa.sa_mask);
@@ -68,6 +72,8 @@ static void	heredoc_child(char *delim, char *name)
 int	heredoc(char *delim, char *name)
 {
 	pid_t	pid;
+	int		status;
+	// int		i;
 
 	pid = fork();
 	if (pid == -1)
@@ -75,7 +81,17 @@ int	heredoc(char *delim, char *name)
 	if (pid == 0)
 		heredoc_child(delim, name);
 	else
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &status, 0);
+	// i = 0;
+	// while (i < 1000)
+	// 	i++;
+	// printf("done waiting\n");
+	// sleep(10);
+	// if (WIFSIGNALED(status))
+	// {
+	// 	printf("signaled\n");
+	// 	unlink(name);
+	// }
 	if (access(name, F_OK) == -1)
 		g_global.error_code = 1;
 	else
