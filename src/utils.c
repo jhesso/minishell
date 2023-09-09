@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 17:41:52 by jhesso            #+#    #+#             */
-/*   Updated: 2023/08/29 22:24:28 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/09 23:08:51 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,17 @@ char	*get_value(char *path, int len, char **envp)
 	value = ft_calloc(1, 1);
 	free(path);
 	return (value);
+}
+
+struct termios	set_termios(int mode)
+{
+	struct termios	t;
+
+	tcgetattr(0, &t);
+	if (mode == 1)
+		t.c_lflag &= ~ECHOCTL;
+	else
+		t.c_lflag &= ~ECHOCTL;
+	tcsetattr(0, TCSANOW, &t);
+	return (t);
 }

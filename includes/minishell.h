@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/09 22:56:22 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/09 23:08:40 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,6 +219,7 @@ void			close_pipes(t_minihell *mini);
 void			*free_str_arr(char **s);
 int				count_strings(char **array);
 char			*get_value(char *path, int len, char **envp);
+struct termios	set_termios(int mode);
 
 /* error.c */
 void			malloc_error(void);

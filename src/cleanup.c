@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 23:22:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/08 18:01:54 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/09 23:11:31 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void	free_list(t_cmds *cmds)
 */
 void	cleanup(t_minihell *minihell)
 {
-	int	i;
+	int				i;
 
 	free_list(minihell->cmds);
 	free_str_arr(minihell->tokens);

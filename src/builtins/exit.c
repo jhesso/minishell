@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 20:55:01 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/07 15:40:38 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/09 23:11:13 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 static void	free_on_exit(t_minihell *mini)
 {
+	struct termios	t;
+
 	free_str_arr(mini->env);
 	cleanup(mini);
 	rl_clear_history();
+	t = set_termios(2);
 	exit(g_global.error_code);
 }
 

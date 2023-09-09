@@ -6,17 +6,18 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/09 22:53:43 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/09 23:10:33 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	handle_eof(t_minihell *minihell)
+static void	handle_eof(t_minihell *minihell, struct termios t)
 {
 	ft_putendl_fd("exit", STDOUT_FILENO);
 	rl_clear_history();
 	free_str_arr(minihell->env);
+	t = set_termios(2);
 	exit(EXIT_SUCCESS);
 }
 
@@ -24,24 +25,18 @@ static void	handle_eof(t_minihell *minihell)
 *	The main loop of minishell
 *	Print a prompt, read user input and send that input to parsing
 */
-void	minishell(t_minihell *minihell)
+void	minishell(t_minihell *minihell, char *command_line, bool ret)
 {
-	char			*command_line;
-	bool			ret;
 	struct termios	t;
 
-	using_history();
-	ret = true;
 	while (1)
 	{
-		tcgetattr(0, &t);
-		t.c_lflag &= ~ECHOCTL;
-		tcsetattr(0, TCSANOW, &t);
+		t = set_termios(1);
 		signal(SIGINT, handle_signal);
 		signal(SIGQUIT, SIG_IGN);
 		command_line = readline(BLUE_BOLD "minishell$ " RESET_COLOR);
 		if (command_line == NULL)
-			handle_eof(minihell);
+			handle_eof(minihell, t);
 		signal(SIGQUIT, handle_cmd);
 		signal(SIGINT, handle_cmd);
 		if (command_line && *command_line)
@@ -55,9 +50,6 @@ void	minishell(t_minihell *minihell)
 			cleanup(minihell);
 		}
 	}
-	tcgetattr(0, &t);
-	t.c_lflag |= ECHOCTL;
-	tcsetattr(0, TCSANOW, &t);
 }
 
 static void	init_minihell(t_minihell *minihell)
@@ -84,9 +76,10 @@ int	main(int ac, char **av, char **envp)
 	}
 	else
 	{
+		using_history();
 		init_minihell(&minihell);
 		init_env(&minihell, envp);
-		minishell(&minihell);
+		minishell(&minihell, NULL, true);
 		rl_clear_history();
 	}
 	return (0);
