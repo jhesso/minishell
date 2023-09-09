@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 16:25:07 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 20:24:04 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/09 17:03:27 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	heredoc_sigint(int sign)
 {
 	(void)sign;
 	close(g_global.heredoc_tmp);
-	exit (0);
+	exit (1);
 }
 
 /*	get_heredoc()
@@ -90,16 +90,48 @@ int	heredoc(char *delim, char *name)
 	return (g_global.error_code);
 }
 
+static char	*get_num(char *name, int cmd)
+{
+	char	*nb;
+	char	*tmp;
+
+	nb = ft_itoa(cmd);
+	tmp = ft_strjoin(name, nb);
+	if (!tmp)
+		return (NULL);
+	while (access(tmp, F_OK) == 0)
+	{
+		free(nb);
+		free(tmp);
+		cmd++;
+		nb = ft_itoa(cmd);
+		tmp = ft_strjoin(name, nb);
+		if (!tmp)
+			return (NULL);
+	}
+	free(tmp);
+	return (nb);
+}
+
 void	get_heredoc_name(t_minihell *mini, int cmd)
 {
 	char	*nb;
+	char	*path;
+	char	*name;
 
 	mini->heredoc_nb = cmd;
-	nb = ft_itoa(cmd);
-	if (!nb)
-		malloc_error();
-	mini->heredocs[cmd] = ft_strjoin(".heredoc.tmp", nb);
+	path = get_value(ft_strdup("$_="), 3, mini->env);
+	if (!*path)
+	{
+		ft_printf(STDERR_FILENO, "minishell: error: no path for heredoc\n");
+		exit(1);
+	}
+	name = ft_strjoin(path, ".heredoc.tmp");
+	nb = get_num(name, cmd);
+	mini->heredocs[cmd] = ft_strjoin(name, nb);
 	if (!mini->heredocs[cmd])
 		malloc_error();
+	free(path);
+	free(name);
 	free(nb);
 }
