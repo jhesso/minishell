@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/07 15:51:52 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/09 17:16:24 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,10 @@ void			open_files(t_minihell *mini, int cmd, bool flag, bool error);
 /* heredoc.c */
 int				heredoc(char *delim, char *name);
 void			get_heredoc_name(t_minihell *mini, int cmd);
+
+/* heredoc_utils.c */
+void	heredoc_sigint(int sign);
+char	*get_num(char *name, int cmd);
 
 /*---------------------------------Builtins-----------------------------------*/
 

@@ -6,18 +6,11 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 16:25:07 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/09 17:03:27 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/09 17:15:51 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	heredoc_sigint(int sign)
-{
-	(void)sign;
-	close(g_global.heredoc_tmp);
-	exit (1);
-}
 
 /*	get_heredoc()
 *	Open/create a temporary heredoc file and save user input to it
@@ -88,29 +81,6 @@ int	heredoc(char *delim, char *name)
 	else
 		g_global.error_code = 0;
 	return (g_global.error_code);
-}
-
-static char	*get_num(char *name, int cmd)
-{
-	char	*nb;
-	char	*tmp;
-
-	nb = ft_itoa(cmd);
-	tmp = ft_strjoin(name, nb);
-	if (!tmp)
-		return (NULL);
-	while (access(tmp, F_OK) == 0)
-	{
-		free(nb);
-		free(tmp);
-		cmd++;
-		nb = ft_itoa(cmd);
-		tmp = ft_strjoin(name, nb);
-		if (!tmp)
-			return (NULL);
-	}
-	free(tmp);
-	return (nb);
 }
 
 void	get_heredoc_name(t_minihell *mini, int cmd)
