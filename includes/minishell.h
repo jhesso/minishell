@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/09 19:17:55 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/09 22:56:22 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/ioctl.h>
+# include <termios.h>
 
 # include "../libft/includes/libft.h"
 
@@ -84,6 +86,7 @@ typedef struct s_global
 {
 	int			heredoc_tmp;
 	int			error_code;
+	bool		heredoc_signal;
 	char		*heredoc_tmp_name;
 }				t_global;
 
@@ -155,12 +158,12 @@ void			create_argv(t_minihell *mini, t_cmds *tmp, int i, int options);
 void			open_files(t_minihell *mini, int cmd, bool flag, bool error);
 
 /* heredoc.c */
-int				heredoc(char *delim, char *name);
+int				heredoc(char *delim, char *name, t_minihell *mini);
 void			get_heredoc_name(t_minihell *mini, int cmd);
 
 /* heredoc_utils.c */
-void	heredoc_sigint(int sign);
-char	*get_num(char *name, int cmd);
+void			heredoc_sigint(int sign);
+char			*get_num(char *name, int cmd);
 
 /*---------------------------------Builtins-----------------------------------*/
 
@@ -201,6 +204,9 @@ char			**export_variable(char **env, char *arg);
 /* signals.c */
 void			signals_interactive(void);
 void			signals_noninteractive(void);
+
+void			handle_signal(int sig);
+void			handle_cmd(int sig);
 
 /*----------------------------------Utils-------------------------------------*/
 

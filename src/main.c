@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/07 15:15:09 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/09 22:53:43 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,24 @@ static void	handle_eof(t_minihell *minihell)
 */
 void	minishell(t_minihell *minihell)
 {
-	char		*command_line;
-	bool		ret;
+	char			*command_line;
+	bool			ret;
+	struct termios	t;
 
 	using_history();
 	ret = true;
 	while (1)
 	{
-		signals_interactive();
+		tcgetattr(0, &t);
+		t.c_lflag &= ~ECHOCTL;
+		tcsetattr(0, TCSANOW, &t);
+		signal(SIGINT, handle_signal);
+		signal(SIGQUIT, SIG_IGN);
 		command_line = readline(BLUE_BOLD "minishell$ " RESET_COLOR);
 		if (command_line == NULL)
 			handle_eof(minihell);
-		signals_noninteractive();
+		signal(SIGQUIT, handle_cmd);
+		signal(SIGINT, handle_cmd);
 		if (command_line && *command_line)
 			add_history(command_line);
 		ret = lexing(minihell, command_line);
@@ -49,6 +55,9 @@ void	minishell(t_minihell *minihell)
 			cleanup(minihell);
 		}
 	}
+	tcgetattr(0, &t);
+	t.c_lflag |= ECHOCTL;
+	tcsetattr(0, TCSANOW, &t);
 }
 
 static void	init_minihell(t_minihell *minihell)

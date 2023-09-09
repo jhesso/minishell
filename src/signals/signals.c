@@ -6,55 +6,39 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 21:16:24 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/09 18:09:19 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/09 22:54:01 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*	signal_reset_prompt()
-*	Reset the readline user input prompt.
-*/
-static void	signal_reset_prompt(int sign)
+void	handle_signal(int sig)
 {
-	(void)sign;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	if (sig == SIGINT)
+	{
+		if (g_global.error_code == 256 || g_global.error_code == 386)
+			g_global.error_code = 386;
+		else
+		{
+			printf("\n");
+			g_global.error_code = 1;
+		}
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+		(void)sig;
+		return ;
+	}
 }
 
-static void	ignore_sigquit(void)
+void	handle_cmd(int sig)
 {
-	struct sigaction	act;
-
-	ft_memset(&act, 0, sizeof(act));
-	act.sa_handler = SIG_IGN;
-	sigaction(SIGQUIT, &act, NULL);
-}
-
-void	signals_interactive(void)
-{
-	struct sigaction	act;
-
-	ignore_sigquit();
-	ft_memset(&act, 0, sizeof(act));
-	act.sa_handler = &signal_reset_prompt;
-	sigaction(SIGINT, &act, NULL);
-}
-
-static void	signal_print_newline(int sign)
-{
-	(void)sign;
-	rl_on_new_line();
-}
-
-void	signals_noninteractive(void)
-{
-	struct sigaction	act;
-
-	ft_memset(&act, 0, sizeof(act));
-	act.sa_handler = &signal_print_newline;
-	sigaction(SIGINT, &act, NULL);
-	sigaction(SIGQUIT, &act, NULL);
+	if (sig == SIGINT)
+	{
+		printf("\n");
+		(void)sig;
+	}
+	else if (sig == SIGQUIT)
+		printf("Quit: %d\n", sig);
+	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/09 17:32:23 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/09 22:54:15 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ static int	open_file(char *filename, int mode, t_minihell *mini)
 		fd = open(filename, O_RDONLY, 0644);
 	else if (mode == 1)
 	{
-		fd = heredoc(filename, mini->heredocs[mini->heredoc_nb]);
+		fd = heredoc(filename, mini->heredocs[mini->heredoc_nb], mini);
 		if (fd == 0)
 			fd = open(mini->heredocs[mini->heredoc_nb], O_RDONLY, 0644);
+		else
+			fd = -2;
 	}
 	else if (mode == 2)
 		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
