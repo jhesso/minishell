@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 16:25:07 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/09 23:15:20 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/10 14:35:47 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,10 @@ int	heredoc(char *delim, char *name, t_minihell *mini)
 	signal(SIGQUIT, SIG_IGN);
 	g_global.heredoc_signal = true;
 	ret = get_heredoc(delim, name);
-	if (ret == -1)
-	{
-		perror(strerror(errno));
+	if (ret == -1 || access(name, F_OK) == -1)
 		g_global.error_code = 1;
-	}
-	else if (access(name, F_OK) == -1)
+	if (g_global.error_code == 1)
 	{
-		g_global.error_code = 1;
 		free(mini->cmds->command);
 		mini->cmds->command = NULL;
 	}
