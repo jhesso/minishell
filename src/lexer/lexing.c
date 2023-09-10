@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 15:46:22 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/10 20:59:15 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/10 22:13:48 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,20 @@ static char	**tokenize_cmd(char const *s, char c)
 	return (ret);
 }
 
+static bool	is_all_space(const char *command_line)
+{
+	while (*command_line)
+	{
+		if (*command_line != ' ')
+			return (false);
+		command_line++;
+	}
+	return (true);
+}
+
 bool	lexing(t_minihell *minihell, char *command_line)
 {
-	if (!command_line[0])
+	if (!command_line[0] || is_all_space(command_line))
 	{
 		free(command_line);
 		return (false);
