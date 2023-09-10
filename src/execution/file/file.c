@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/09 22:54:15 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/10 21:17:45 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	file_error(t_minihell *mini, int i, bool *error_flag)
 			mini->cmds->fd_in = open_file(mini->tokens[i], 1, mini);
 		}
 	}
-	ft_printf(2, "minishell: %s: No such file or directory\n", error);
+	ft_printf(2, "minishell: %s: %s\n", error, strerror(errno));
 	g_global.error_code = 1;
 	*(error_flag) = true;
 	free(mini->cmds->command);
