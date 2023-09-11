@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/11 18:45:13 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/11 19:00:09 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,14 @@ static int	open_file(char *filename, int mode, t_minihell *mini)
 static int	file_error(t_minihell *mini, int i, bool *error_flag)
 {
 	char	*error;
+	int		errno_code;
 
 	if (!mini->tokens[i])
 		mini->tokens[i] = ft_calloc(1, 1);
 	if (!mini->tokens[i])
 		malloc_error();
 	error = mini->tokens[i];
+	errno_code = errno;
 	while (mini->tokens[i + 1] && mini->tokens[i][0] != '|')
 	{
 		if (!ft_strncmp(mini->tokens[i++], "<<\0", 3))
@@ -52,7 +54,7 @@ static int	file_error(t_minihell *mini, int i, bool *error_flag)
 			mini->cmds->fd_in = open_file(mini->tokens[i], 1, mini);
 		}
 	}
-	ft_printf(2, "minishell: %s: %s\n", error, strerror(errno));
+	ft_printf(2, "minishell: %s: %s\n", error, strerror(errno_code));
 	g_global.error_code = 1;
 	*(error_flag) = true;
 	free(mini->cmds->command);
