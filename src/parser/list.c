@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 16:06:14 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/07 16:34:33 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/11 18:44:26 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ static int	create_node(char **c_line, int s, t_minihell *mini, int c)
 			parse_str(++s, mini);
 		else
 		{
-			ret = remove_quotes(parse_str(s, mini), 0, 0, 0);
+			ret = remove_quotes(parse_str(s, mini));
 			if (node->command != NULL && ret)
 				node->opt[c++] = ret;
 			else if (ret)

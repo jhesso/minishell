@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/10 21:17:45 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/11 18:45:13 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	file_error(t_minihell *mini, int i, bool *error_flag)
 		{
 			if (mini->cmds->fd_in > 0)
 				close(mini->cmds->fd_in);
-			mini->tokens[i] = remove_quotes(mini->tokens[i], 0, 0, 0);
+			mini->tokens[i] = remove_quotes(mini->tokens[i]);
 			mini->cmds->fd_in = open_file(mini->tokens[i], 1, mini);
 		}
 	}
@@ -66,7 +66,7 @@ static int	open_input(t_minihell *minihell, int i, bool *error_flag)
 	{
 		if (minihell->cmds->fd_in > 0)
 			close(minihell->cmds->fd_in);
-		minihell->tokens[i] = remove_quotes(minihell->tokens[i], 0, 0, 0);
+		minihell->tokens[i] = remove_quotes(minihell->tokens[i]);
 		minihell->cmds->fd_in = open_file(minihell->tokens[i], 0, NULL);
 		if (minihell->cmds->fd_in == -1)
 			i = file_error(minihell, i, error_flag);
@@ -75,7 +75,7 @@ static int	open_input(t_minihell *minihell, int i, bool *error_flag)
 	{
 		if (minihell->cmds->fd_in > 0)
 			close(minihell->cmds->fd_in);
-		minihell->tokens[i] = remove_quotes(minihell->tokens[i], 0, 0, 0);
+		minihell->tokens[i] = remove_quotes(minihell->tokens[i]);
 		minihell->cmds->fd_in = open_file(minihell->tokens[i], 1, minihell);
 	}
 	return (i);
@@ -95,21 +95,21 @@ static int	open_output(t_minihell *mini, int i, bool *flag, bool *error_flag)
 		if (mini->cmds->fd_out > 0)
 			close(mini->cmds->fd_out);
 		*(flag) = true;
-		mini->tokens[i] = remove_quotes(mini->tokens[i], 0, 0, 0);
+		mini->tokens[i] = remove_quotes(mini->tokens[i]);
 		mini->cmds->fd_out = open_file(mini->tokens[i], 2, NULL);
 	}
 	else if (!ft_strncmp(mini->tokens[i - 1], ">>\0", 3) && *(flag) == false)
 	{
 		if (mini->cmds->fd_out > 0)
 			close(mini->cmds->fd_out);
-		mini->tokens[i] = remove_quotes(mini->tokens[i], 0, 0, 0);
+		mini->tokens[i] = remove_quotes(mini->tokens[i]);
 		mini->cmds->fd_out = open_file(mini->tokens[i], 3, NULL);
 	}
 	else if (!ft_strncmp(mini->tokens[i - 1], ">>\0", 3) && *(flag) == true)
 	{
 		if (mini->cmds->fd_out > 0)
 			close(mini->cmds->fd_out);
-		mini->tokens[i] = remove_quotes(mini->tokens[i], 0, 0, 0);
+		mini->tokens[i] = remove_quotes(mini->tokens[i]);
 		mini->cmds->fd_out = open_file(mini->tokens[i], 2, NULL);
 	}
 	if (mini->cmds->fd_out == -1)

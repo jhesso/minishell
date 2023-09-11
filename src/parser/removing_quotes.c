@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   removing_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:42:59 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/07 15:50:07 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/11 18:43:07 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,15 @@ static int	len_without_quotes(char *str)
 	return (len - flag);
 }
 
-/*	remove_quotes()
-*	Removes quotes from string
-*	Return value: char * (modified string)
-*	Parameters:
-*		(char *) str: string to be modified
-*		(int) i: index of new string
-*		(int) j: index of old string
-*/
-char	*remove_quotes(char *str, int i, int j, char c)
+static char	*remove_quotes_continues(char *new_str, char *str)
 {
-	char	*new_str;
+	int		i;
+	int		j;
+	char	c;
 
-	if (!str || !*str)
-		return (NULL);
-	new_str = ft_calloc(sizeof(char), (len_without_quotes(str) + 1));
-	if (!new_str)
-		malloc_error();
+	i = 0;
+	j = 0;
+	c = 0;
 	while (str[j] && (size_t)j <= ft_strlen(str))
 	{
 		if (str[j] == '\'' || str[j] == '\"')
@@ -75,6 +67,26 @@ char	*remove_quotes(char *str, int i, int j, char c)
 		if (str[j] && str[j] == c)
 			j++;
 	}
+	return (new_str);
+}
+/*	remove_quotes()
+*	Removes quotes from string
+*	Return value: char * (modified string)
+*	Parameters:
+*		(char *) str: string to be modified
+*		(int) i: index of new string
+*		(int) j: index of old string
+*/
+char	*remove_quotes(char *str)
+{
+	char	*new_str;
+
+	if (!str || !*str)
+		return (NULL);
+	new_str = ft_calloc(sizeof(char), (len_without_quotes(str) + 1));
+	if (!new_str)
+		malloc_error();
+	new_str = remove_quotes_continues(new_str, str);
 	free(str);
 	return (new_str);
 }
