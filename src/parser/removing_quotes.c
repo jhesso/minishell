@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:42:59 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/11 18:43:07 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/11 18:56:21 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,16 @@ char	*remove_quotes(char *str)
 {
 	char	*new_str;
 
-	if (!str || !*str)
+	if (!str)
 		return (NULL);
 	new_str = ft_calloc(sizeof(char), (len_without_quotes(str) + 1));
 	if (!new_str)
 		malloc_error();
+	if (!*str)
+	{
+		free(str);
+		return (new_str);
+	}
 	new_str = remove_quotes_continues(new_str, str);
 	free(str);
 	return (new_str);
