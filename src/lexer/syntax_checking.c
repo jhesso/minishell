@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_checking.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 20:11:37 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/06 18:55:56 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/12 15:11:58 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static bool	syntax_error_messages(int type, char *message)
 
 static bool	char_syntax_check_continue(char **tokens, int array)
 {
+	if (tokens[array + 1][0] == '|')
+		return (syntax_error_messages(2, tokens[array + 1]));
 	if (ft_strrchr("<>", tokens[array + 1][0]) || ft_strlen(tokens[array]) > 2)
 	{
 		if (tokens[array][0] == '<' && !ft_strrchr("><", tokens[array + 1][0])
