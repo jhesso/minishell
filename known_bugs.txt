@@ -1,10 +1,11 @@
 known bugs in minishell:
 
-
-notes:
-	1. exiting heredoc with SIGINT leaves the process open until minishell is exited
-	this doesn't happen with EOF or normally exiting with the delimiter
-
-	2. when you ctrlc the error code should be 1!
-
-
+needs to be tested at school:
+	1. exit hello
+		- minishell: exit code: 255
+		- bash 2
+	2. cd $PWD hi
+		- minishell: (no error msg) exit code: 0
+		- bash: "-bash: cd: too many arguments" exit code: 1
+	3. echo "$   a"
+		- minishell: infinite loop (same as we had with "$" im guessing)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:45:20 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/12 16:55:03 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/12 22:44:25 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	*expand_quotes(char *str, char **envp, int start)
 				return (NULL);
 			}
 		}
-		if (new_str[1] != '$')
+		if (new_str[1] != '$' || new_str[2] == '"')
 			start++;
 	}
 	free(str);
