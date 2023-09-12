@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 19:11:15 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 19:11:27 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/12 15:03:43 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,29 @@
 *		int i: index of the '$' character
 *		int type: type of the string
 */
-int	get_end_index(char *str, int i, int type)
+int	get_end_index(char *s, int i, int type)
 {
 	if (type == 1)
 	{
-		while (str[i] && str[i] != '\'' && str[i] != '\"'
-			&& str[i] != '$' && str[i] != ' ' && str[i] != '=')
+		while (s[i] && !(s[i] > 31 && s[i] < 48) && !(s[i] > 57 && s[i] < 64)
+		&& !(s[i] > 90 && s[i] < 97) && !(s[i] > 122 && s[i] < 127))
 			i++;
 		return (i);
 	}
 	else if (type == 2)
 	{
 		i++;
-		while (str[i] && str[i] != '\'')
+		while (s[i] && s[i] != '\'')
 			i++;
-		if (str[i])
+		if (s[i])
 			i++;
 		return (i);
 	}
 	else if (type == 3)
 	{
-		while (str[i] && str[i] != '\"')
+		while (s[i] && s[i] != '\"')
 			i++;
-		if (str[i])
+		if (s[i])
 			i++;
 		return (i);
 	}
