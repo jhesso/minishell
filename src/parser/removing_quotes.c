@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:42:59 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/11 18:56:21 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/12 15:15:49 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static char	*remove_quotes_continues(char *new_str, char *str)
 	}
 	return (new_str);
 }
+
 /*	remove_quotes()
 *	Removes quotes from string
 *	Return value: char * (modified string)

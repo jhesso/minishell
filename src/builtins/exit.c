@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 20:55:01 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/11 19:13:03 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/12 15:15:05 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,10 @@ static void	overflows(long long int number, char *arg, bool *error)
 {
 	if (arg[0] == '-' && number == 0
 		&& ft_strncmp(arg, "-9223372036854775808\0", 21))
-	{
-		printf("comes\n");
 		*error = false;
-	}
 	else if (arg[0] != '-'
 		&& number == -1 && ft_strncmp(arg, "9223372036854775807\0", 20))
-		{
-		printf("comes\n");
 		*error = false;
-		}
 }
 
 static int	arg_is_digit(char *arg)
