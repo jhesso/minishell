@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 17:17:54 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/13 20:01:24 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/13 23:06:38 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ void	export_builtin(t_minihell *mini, int i, int argv_size)
 			{
 				if (ft_strrchr(mini->cmds->argv[i], '='))
 				{
-					if (!already_exists(mini->env, mini->cmds->argv[i]))
-						modify_variable(mini, mini->cmds->argv[i]);
-					else
+					if (already_exists(mini, mini->cmds->argv[i], 0, 0))
 						mini->env = export_variable(mini->env, \
 						mini->cmds->argv[i]);
 				}

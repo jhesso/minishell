@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/13 20:24:30 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/13 23:05:08 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,8 +195,7 @@ void			cd_builtin(t_minihell *mini, char *old_pwd, char *home, int i);
 /* builtin_utils.c */
 int				check_builtin(char *cmd);
 int				invalid_variable(t_minihell *minihell, char *arg, int type);
-int				already_exists(char **env, char *arg);
-void			modify_variable(t_minihell *minihell, char *arg);
+int				already_exists(t_minihell *mini, char *arg, int i, int len);
 char			**export_variable(char **env, char *arg);
 
 /*----------------------------------Signals-----------------------------------*/

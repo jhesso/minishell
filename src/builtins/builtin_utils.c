@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:19:14 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/13 20:00:47 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/13 23:07:13 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,45 +48,31 @@ int	invalid_variable(t_minihell *minihell, char *arg, int type)
 	return (1);
 }
 
-int	already_exists(char **env, char *arg)
+int	already_exists(t_minihell *mini, char *arg, int i, int len)
 {
-	int	i;
-	int	len;
+	int env_len;
 
-	i = 0;
-	len = 0;
 	while (arg[len] != '=')
 		len++;
-	while (env[i])
+	while (mini->env[i])
 	{
-		if (!ft_strncmp(env[i], arg, len))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-void	modify_variable(t_minihell *minihell, char *arg)
-{
-	int		i;
-	int		len;
-
-	i = 0;
-	len = 0;
-	while (arg[len] != '=')
-		len++;
-	while (minihell->env[i])
-	{
-		if (!ft_strncmp(minihell->env[i], arg, len))
+		env_len = 0;
+		while (mini->env[i][env_len] != '=')
+			env_len++;
+		if (env_len == len)
 		{
-			free(minihell->env[i]);
-			minihell->env[i] = ft_strdup(arg);
-			if (!minihell->env[i])
+			if (!ft_strncmp(mini->env[i], arg, len))
+			{
+				free(mini->env[i]);
+				mini->env[i] = ft_strdup(arg);
+				if (!mini->env[i])
 				malloc_error();
-			break ;
+				return (0);
+			}
 		}
 		i++;
 	}
+	return (1);
 }
 
 char	**export_variable(char **env, char *arg)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 19:11:36 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/13 20:01:44 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/13 23:05:59 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,9 @@ static void	modify_env(t_minihell *mini, char *old_pwd, char *home, int flag)
 		malloc_error();
 	if (!flag)
 	{
-		if (!already_exists(mini->env, old_pwd))
-			modify_variable(mini, old_pwd);
-		else
+		if (already_exists(mini, old_pwd, 0, 0))
 			mini->env = export_variable(mini->env, old_pwd);
-		if (!already_exists(mini->env, pwd))
-			modify_variable(mini, pwd);
-		else
+		if (already_exists(mini, pwd, 0, 0))
 			mini->env = export_variable(mini->env, pwd);
 		mini->error_code = 0;
 	}
