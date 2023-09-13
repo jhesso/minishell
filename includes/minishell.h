@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/11 18:44:00 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/13 20:07:51 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_minihell
 	int				nb_cmds;
 	char			**heredocs;
 	int				heredoc_nb;
+	int				error_code;
 	struct s_cmds	*cmds;
 }					t_minihell;
 
@@ -85,7 +86,6 @@ typedef struct s_cmds
 typedef struct s_global
 {
 	int			heredoc_tmp;
-	int			error_code;
 	bool		heredoc_signal;
 	char		*heredoc_tmp_name;
 }				t_global;
@@ -114,7 +114,7 @@ int				get_amount_of_words(char const *s, char c);
 int				get_word_len(char const *s, char c, int start);
 
 /* syntax_checking.c */
-bool			syntax_checker(char **tokens);
+bool			syntax_checker(t_minihell *minihell, char **tokens);
 
 /*----------------------------------Parsing-----------------------------------*/
 
@@ -126,7 +126,7 @@ char			*parse_str(int c, t_minihell *mini);
 bool			create_cmds(t_minihell *minihell);
 
 /* expanding.c */
-char			*expand_variables(char *str, char **envp);
+char			*expand_variables(t_minihell *minihell, char *str, char **envp);
 
 /* expanding_utils.c */
 char			*expand(char *str, char **envp, int start, int end);
@@ -194,7 +194,7 @@ void			cd_builtin(t_minihell *mini, char *old_pwd, char *home, int i);
 
 /* builtin_utils.c */
 int				check_builtin(char *cmd);
-int				invalid_variable(char *arg, int type);
+int				invalid_variable(t_minihell *minihell, char *arg, int type);
 int				already_exists(char **env, char *arg);
 void			modify_variable(t_minihell *minihell, char *arg);
 char			**export_variable(char **env, char *arg);

@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/11 19:00:09 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/13 19:55:41 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	file_error(t_minihell *mini, int i, bool *error_flag)
 		}
 	}
 	ft_printf(2, "minishell: %s: %s\n", error, strerror(errno_code));
-	g_global.error_code = 1;
+	mini->error_code = 1;
 	*(error_flag) = true;
 	free(mini->cmds->command);
 	mini->cmds->command = NULL;

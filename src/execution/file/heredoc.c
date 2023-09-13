@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 16:25:07 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/10 14:35:47 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/13 19:57:27 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 /*	get_heredoc()
 *	Open/create a temporary heredoc file and save user input to it
 */
-static int	write_line(char *line, char *delim, int fd)
+static int	write_line(t_minihell *minihell, char *line, char *delim, int fd)
 {
 	char	*doc;
 
 	if (!line && !errno)
 	{
-		g_global.error_code = 256;
+		minihell->error_code = 256;
 		rl_redisplay();
 		return (1);
 	}
@@ -41,7 +41,7 @@ static int	write_line(char *line, char *delim, int fd)
 	return (0);
 }
 
-static int	get_heredoc(char *delim, char *name)
+static int	get_heredoc(t_minihell *minihell, char *delim, char *name)
 {
 	int		fd;
 	char	*line;
@@ -56,7 +56,7 @@ static int	get_heredoc(char *delim, char *name)
 	{
 		signal(SIGINT, heredoc_sigint);
 		line = readline("> ");
-		if (write_line(line, delim, fd))
+		if (write_line(minihell, line, delim, fd))
 			break ;
 	}
 	close(fd);
@@ -72,19 +72,19 @@ int	heredoc(char *delim, char *name, t_minihell *mini)
 	signal(SIGINT, handle_signal);
 	signal(SIGQUIT, SIG_IGN);
 	g_global.heredoc_signal = true;
-	ret = get_heredoc(delim, name);
+	ret = get_heredoc(mini, delim, name);
 	if (ret == -1 || access(name, F_OK) == -1)
-		g_global.error_code = 1;
-	if (g_global.error_code == 1)
+		mini->error_code = 1;
+	if (mini->error_code == 1)
 	{
 		free(mini->cmds->command);
 		mini->cmds->command = NULL;
 	}
 	else
-		g_global.error_code = 0;
+		mini->error_code = 0;
 	signal(SIGQUIT, handle_cmd);
 	signal(SIGINT, handle_cmd);
-	return (g_global.error_code);
+	return (mini->error_code);
 }
 
 void	get_heredoc_name(t_minihell *mini, int cmd)

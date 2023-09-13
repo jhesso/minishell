@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 19:11:36 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/08 20:22:13 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/13 20:01:44 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ static void	modify_env(t_minihell *mini, char *old_pwd, char *home, int flag)
 			modify_variable(mini, pwd);
 		else
 			mini->env = export_variable(mini->env, pwd);
-		g_global.error_code = 0;
+		mini->error_code = 0;
 	}
 	else
-		g_global.error_code = 1;
+		mini->error_code = 1;
 	free(old_pwd);
 	free(home);
 	free(pwd);

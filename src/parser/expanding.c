@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:45:20 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/13 15:42:24 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/13 19:52:49 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static char	*expand_str_continue(char *str, char **envp, int s)
 *		char **envp: environment variables
 *		int s: index of the '$' character
 */
-char	*expand_str(char *str, char **envp, int s)
+static char	*expand_str(t_minihell *minihell, char *str, char **envp, int s)
 {
 	char	*new_str;
 
@@ -81,7 +81,7 @@ char	*expand_str(char *str, char **envp, int s)
 			malloc_error();
 	}
 	else if (str[s + 1] == '?')
-		new_str = insert_value(str, ft_itoa(g_global.error_code), s, s + 2);
+		new_str = insert_value(str, ft_itoa(minihell->error_code), s, s + 2);
 	else
 		new_str = expand_str_continue(str, envp, s);
 	free(str);
@@ -96,7 +96,7 @@ char	*expand_str(char *str, char **envp, int s)
 *		char **envp: environment variables
 *		int start: index of the first quote
 */
-char	*expand_quotes(char *str, char **envp, int start)
+static char	*expand_quotes(t_minihell *mini, char *str, char **envp, int start)
 {
 	char	*new_str;
 
@@ -108,7 +108,7 @@ char	*expand_quotes(char *str, char **envp, int start)
 	{
 		if (new_str[start] == '$' && !handle_expand_char(new_str, start, 2))
 		{
-			new_str = expand_str(new_str, envp, start);
+			new_str = expand_str(mini, new_str, envp, start);
 			if (!new_str)
 			{
 				free(str);
@@ -129,7 +129,7 @@ char	*expand_quotes(char *str, char **envp, int start)
 *		char *str: string to expand
 *		char **envp: environment variables
 */
-char	*expand_variables(char *str, char **envp)
+char	*expand_variables(t_minihell *minihell, char *str, char **envp)
 {
 	int	start;
 
@@ -138,14 +138,14 @@ char	*expand_variables(char *str, char **envp)
 	{
 		if (str[start] == '$' && !handle_expand_char(str, start, 1))
 		{
-			str = expand_str(str, envp, start);
+			str = expand_str(minihell, str, envp, start);
 			if (!str)
 				return (NULL);
 		}
 		else if (str[start] == '\"')
 		{
 			start++;
-			str = expand_quotes(str, envp, start - 1);
+			str = expand_quotes(minihell, str, envp, start - 1);
 			if (!str)
 				return (NULL);
 			start = get_end_index(str, start, 3);
