@@ -3,14 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:45:20 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/12 22:44:25 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/13 14:26:04 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	handle_expand_char(char *str, int start, int type)
+{
+	if (type == 1 && str[start + 1])
+	{
+		if (!(str[start + 1] > 31 && str[start + 1] < 34) \
+			&& !(str[start + 1] > 34 && str[start + 1] < 39) \
+			&& !(str[start + 1] > 39 && str[start + 1] < 48) \
+			&& !(str[start + 1] > 57 && str[start + 1] < 63) \
+			&& !(str[start + 1] > 90 && str[start + 1] < 97) \
+			&& !(str[start + 1] > 122 && str[start + 1] < 127) \
+			&& str[start + 1] != 64)
+			return (0);
+	}
+	else if (type == 2 && str[start + 1])
+	{
+		if (!(str[start + 1] > 31 && str[start + 1] < 34) \
+			&& !(str[start + 1] > 34 && str[start + 1] < 48) \
+			&& !(str[start + 1] > 57 && str[start + 1] < 63) \
+			&& !(str[start + 1] > 90 && str[start + 1] < 97) \
+			&& !(str[start + 1] > 122 && str[start + 1] < 127) \
+			&& str[start + 1] != 64)
+			return (0);
+	}
+	return (1);
+}
 
 static char	*expand_str_continue(char *str, char **envp, int s)
 {
@@ -81,8 +107,7 @@ char	*expand_quotes(char *str, char **envp, int start)
 	start++;
 	while (new_str[start] && new_str[start] != '\"')
 	{
-		if (new_str[start] == '$' && new_str[start + 1] != '\"' \
-			&& new_str[start + 1] != ' ')
+		if (new_str[start] == '$' && !handle_expand_char(new_str, start, 2))
 		{
 			new_str = expand_str(new_str, envp, start);
 			if (!new_str)
@@ -91,8 +116,7 @@ char	*expand_quotes(char *str, char **envp, int start)
 				return (NULL);
 			}
 		}
-		if (new_str[1] != '$' || new_str[2] == '"')
-			start++;
+		start++;
 	}
 	free(str);
 	return (new_str);
@@ -112,10 +136,7 @@ char	*expand_variables(char *str, char **envp)
 	start = 0;
 	while (str[start])
 	{
-		if (str[start] == '$' && str[start + 1] && !(str[start + 1] > 31 && str[start + 1] < 34) \
-			&& !(str[start + 1] > 34 && str[start + 1] < 39) && !(str[start + 1] > 39 && str[start + 1] < 48) \
-			&& !(str[start + 1] > 57 && str[start + 1] < 63) && !(str[start + 1] > 90 && str[start + 1] < 97)\
-			&& !(str[start + 1] > 122 && str[start + 1] < 127) && str[start + 1] != 64)
+		if (str[start] == '$' && !handle_expand_char(str, start, 1))
 		{
 			str = expand_str(str, envp, start);
 			if (!str)
