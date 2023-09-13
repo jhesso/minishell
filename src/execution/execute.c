@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/11 18:48:21 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/13 20:02:30 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	parent(t_minihell *mini)
 
 static bool	execute_continue(t_minihell *mini, int i)
 {
-	open_files(mini, i, false, false);
+	open_files(mini, i, false);
 	if (pipe(mini->pipe_fds[i]) == -1)
 	{
 		perror(strerror(errno));

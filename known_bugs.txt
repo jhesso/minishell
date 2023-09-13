@@ -1,19 +1,6 @@
 known bugs in minishell:
 
-	1. cd $PWD
-		- bash: works as expected, Exit code: 0
-		- minishell: expands $PWD wrongly (adds random characters to the end), exit code: 1
+1. something fucky wucky happening with the _ env variable
+	- export _=test : once it created a new var (we had duplicate _ vars)
 
-	2. $PWD
-		- bash: $PWD: is a directory, exit code: 126
-		- minishell $PWD (+random garbage), exit code: 127
-
-	3. $EMPTY
-		- bash: does nothing, exit code: 0
-		- minishell: "random garbage": command not found, exit code: 127
-
-	4. $EMPTY echo hi
-		- bash: hi, exit code: 0
-		- minishell: randomly works as expected and randomly "random garbage: command not found", exit code: 0 or 127
-	
-
+2. output redirections infact dont work like we thought they do

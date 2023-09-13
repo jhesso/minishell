@@ -1,12 +1,5 @@
 #! /bin/bash
 
-# while true
-# do
-# 	clear
-# 	cat log.txt
-# 	read -n 1
-# done
-
 FILE_TO_WATCH="$HOME/log.txt"
 if [[ "$(uname)" == "Darwin" ]]; then
     last_modified=$(stat -f "%m" "$FILE_TO_WATCH")

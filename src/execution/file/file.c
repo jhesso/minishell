@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/11 19:00:09 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/13 20:01:19 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,36 +90,28 @@ static int	open_input(t_minihell *minihell, int i, bool *error_flag)
 *		(char *) filename: name of the file to be opened
 *		(int) mode: mode for opening the file
 */
-static int	open_output(t_minihell *mini, int i, bool *flag, bool *error_flag)
+static int	open_output(t_minihell *mini, int i, bool *error_flag)
 {
 	if (!ft_strncmp(mini->tokens[i - 1], ">\0", 2))
 	{
 		if (mini->cmds->fd_out > 0)
 			close(mini->cmds->fd_out);
-		*(flag) = true;
 		mini->tokens[i] = remove_quotes(mini->tokens[i]);
 		mini->cmds->fd_out = open_file(mini->tokens[i], 2, NULL);
 	}
-	else if (!ft_strncmp(mini->tokens[i - 1], ">>\0", 3) && *(flag) == false)
+	else if (!ft_strncmp(mini->tokens[i - 1], ">>\0", 3))
 	{
 		if (mini->cmds->fd_out > 0)
 			close(mini->cmds->fd_out);
 		mini->tokens[i] = remove_quotes(mini->tokens[i]);
 		mini->cmds->fd_out = open_file(mini->tokens[i], 3, NULL);
 	}
-	else if (!ft_strncmp(mini->tokens[i - 1], ">>\0", 3) && *(flag) == true)
-	{
-		if (mini->cmds->fd_out > 0)
-			close(mini->cmds->fd_out);
-		mini->tokens[i] = remove_quotes(mini->tokens[i]);
-		mini->cmds->fd_out = open_file(mini->tokens[i], 2, NULL);
-	}
 	if (mini->cmds->fd_out == -1)
 		i = file_error(mini, i, error_flag);
 	return (i);
 }
 
-void	open_files(t_minihell *mini, int cmd, bool flag, bool error_flag)
+void	open_files(t_minihell *mini, int cmd, bool error_flag)
 {
 	static int	i = 0;
 
@@ -131,7 +123,7 @@ void	open_files(t_minihell *mini, int cmd, bool flag, bool error_flag)
 		if (mini->tokens[i][0] == '<')
 			i = open_input(mini, i + 1, &error_flag);
 		else if (mini->tokens[i][0] == '>')
-			i = open_output(mini, i + 1, &flag, &error_flag);
+			i = open_output(mini, i + 1, &error_flag);
 		i++;
 	}
 	if (mini->tokens[i] && mini->tokens[i][0] == '|')
