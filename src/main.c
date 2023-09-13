@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/09 23:10:33 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/13 20:08:16 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static void	init_minihell(t_minihell *minihell)
 	minihell->nb_cmds = 0;
 	minihell->heredocs = NULL;
 	minihell->heredoc_nb = 0;
+	minihell->error_code = 0;
 }
 
 t_global	g_global;
@@ -72,7 +73,7 @@ int	main(int ac, char **av, char **envp)
 	if (ac > 1)
 	{
 		ft_printf(2, "bash: %s: No such file or directory\n", av[1]);
-		g_global.error_code = 127;
+		minihell.error_code = 127;
 	}
 	else
 	{

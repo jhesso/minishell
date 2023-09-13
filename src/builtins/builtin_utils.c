@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:19:14 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 19:39:57 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/13 20:00:47 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ int	check_builtin(char *cmd)
 	return (i);
 }
 
-int	invalid_variable(char *arg, int type)
+int	invalid_variable(t_minihell *minihell, char *arg, int type)
 {
 	if (type == 1)
 		ft_printf(2, "minishell: export: `%s': not a valid identifier\n", arg);
 	if (type == 2)
 		ft_printf(2, "minishell: unset: `%s': not a valid identifier\n", arg);
-	g_global.error_code = 1;
+	minihell->error_code = 1;
 	return (1);
 }
 

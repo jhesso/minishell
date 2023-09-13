@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/13 20:02:30 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/13 20:24:01 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@ static void	child(t_cmds *cmd, t_minihell *mini, int not_first_cmd)
 	if (!cmd->command)
 	{
 		close_pipes(mini);
-		exit(g_global.error_code);
+		exit(mini->error_code);
 	}
 	redirect_io(cmd, mini->pipe_fds, not_first_cmd);
 	close(mini->pipe_fds[not_first_cmd][0]);
 	if (check_builtin(cmd->command))
 	{
 		execute_builtin(mini, check_builtin(cmd->command));
-		exit(g_global.error_code);
+		exit(mini->error_code);
 	}
 	if (execve(cmd->command, cmd->argv, mini->env) == -1)
 	{
 		perror(strerror(errno));
-		g_global.error_code = errno;
+		mini->error_code = errno;
 	}
 }
 
@@ -57,9 +57,9 @@ static void	parent(t_minihell *mini)
 			waitpid(mini->pids[i], &status, 0);
 		if (WIFEXITED(status) && (!check_builtin(mini->cmds->command) || \
 		((check_builtin(mini->cmds->command) && mini->nb_cmds != 1))))
-			g_global.error_code = WEXITSTATUS(status);
+			mini->error_code = WEXITSTATUS(status);
 		if (WTERMSIG(status))
-			g_global.error_code = 128 + WTERMSIG(status);
+			mini->error_code = 128 + WTERMSIG(status);
 		i++;
 		mini->cmds = mini->cmds->next;
 	}
@@ -72,7 +72,7 @@ static bool	execute_continue(t_minihell *mini, int i)
 	if (pipe(mini->pipe_fds[i]) == -1)
 	{
 		perror(strerror(errno));
-		g_global.error_code = errno;
+		mini->error_code = errno;
 		return (false);
 	}
 	if (check_builtin(mini->cmds->command) && mini->nb_cmds == 1)
@@ -82,7 +82,7 @@ static bool	execute_continue(t_minihell *mini, int i)
 	if (mini->pids[i] == -1)
 	{
 		perror(strerror(errno));
-		g_global.error_code = errno;
+		mini->error_code = errno;
 		return (false);
 	}
 	else if (mini->pids[i] == 0)
@@ -94,7 +94,7 @@ static bool	execute_continue(t_minihell *mini, int i)
 
 /*	execute()
 *	Execute the command line
-*	g_global.error_code is set to the exit status of the last command
+*	minihell->error_code is set to the exit status of the last command
 *	Returns TRUE if execution was successful, FALSE otherwise
 */
 void	execute(t_minihell *mini)

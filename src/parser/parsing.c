@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 05:12:42 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/06 19:38:23 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/13 19:48:20 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 char	*parse_str(int c, t_minihell *mini)
 {
 	if (c == 0 || ft_strncmp(mini->tokens[c - 1], "<<\0", 3))
-		mini->tokens[c] = expand_variables(mini->tokens[c], mini->env);
+		mini->tokens[c] = expand_variables(mini, mini->tokens[c], mini->env);
 	if (!mini->tokens[c])
 		malloc_error();
 	if (!mini->tokens[c][0])

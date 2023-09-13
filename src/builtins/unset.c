@@ -6,27 +6,27 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:11:25 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/07 14:25:32 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/13 20:00:30 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	check_validity(char *arg)
+static int	check_validity(t_minihell *minihell, char *arg)
 {
 	int	i;
 
 	i = 0;
 	if (!arg[i] || arg[i] == '=' || arg[i] == '+' || ft_isdigit(arg[i]))
-		return (invalid_variable(arg, 2));
+		return (invalid_variable(minihell, arg, 2));
 	while (arg[i])
 	{
 		if (ft_isalpha(arg[i]) || ft_isdigit(arg[i]) || arg[i] == '_')
 			i++;
 		else if (arg[i] == '=')
-			return (invalid_variable(arg, 2));
+			return (invalid_variable(minihell, arg, 2));
 		else
-			return (invalid_variable(arg, 2));
+			return (invalid_variable(minihell, arg, 2));
 	}
 	return (0);
 }
@@ -89,10 +89,10 @@ void	unset_builtin(t_minihell *mini)
 	int	remove_env;
 
 	i = 1;
-	g_global.error_code = 0;
+	mini->error_code = 0;
 	while (mini->cmds->argv[i])
 	{
-		if (!check_validity(mini->cmds->argv[i]))
+		if (!check_validity(mini, mini->cmds->argv[i]))
 		{
 			remove_env = identifier_exists(mini->env, mini->cmds->argv[i]);
 			if (remove_env)

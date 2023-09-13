@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 20:55:01 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/12 15:15:05 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/13 20:02:10 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	free_on_exit(t_minihell *mini)
 	cleanup(mini);
 	rl_clear_history();
 	t = set_termios(2);
-	exit(g_global.error_code);
+	exit(mini->error_code);
 }
 
 static void	overflows(long long int number, char *arg, bool *error)
@@ -53,24 +53,24 @@ static void	exit_checks(t_minihell *mini, int arg_size, int number, bool *error)
 {
 	if (arg_size == 2 && *error && !arg_is_digit(mini->cmds->argv[1]))
 	{
-		g_global.error_code = number % 256;
+		mini->error_code = number % 256;
 		free_on_exit(mini);
 	}
 	else if (arg_size >= 2 && (!*error || arg_is_digit(mini->cmds->argv[1])))
 	{
 		ft_printf(2, "minishell: exit: %s: numeric argument required\n", \
 			mini->cmds->argv[1]);
-		g_global.error_code = 255;
+		mini->error_code = 255;
 		free_on_exit(mini);
 	}
 	else if (arg_size >= 2)
 	{
 		ft_printf(2, "minishell: exit: too many arguments\n");
-		g_global.error_code = 1;
+		mini->error_code = 1;
 	}
 	else
 	{
-		g_global.error_code = 0;
+		mini->error_code = 0;
 		free_on_exit(mini);
 	}
 }

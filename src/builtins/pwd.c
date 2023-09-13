@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:07:36 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/06 18:55:56 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/13 19:42:11 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@ void	pwd_builtin(t_minihell *minihell)
 		malloc_error();
 	printf("%s\n", pwd);
 	free(pwd);
-	g_global.error_code = 0;
+	minihell->error_code = 0;
 }

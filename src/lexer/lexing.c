@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 15:46:22 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/10 22:13:48 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/13 19:42:11 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ bool	lexing(t_minihell *minihell, char *command_line)
 	}
 	if (!char_checker(command_line, 0, 0))
 	{
-		g_global.error_code = 258;
+		minihell->error_code = 258;
 		free(command_line);
 		return (false);
 	}
@@ -72,7 +72,7 @@ bool	lexing(t_minihell *minihell, char *command_line)
 		return (false);
 	}
 	free(command_line);
-	if (!syntax_checker(minihell->tokens))
+	if (!syntax_checker(minihell, minihell->tokens))
 	{
 		free_str_arr(minihell->tokens);
 		return (false);
