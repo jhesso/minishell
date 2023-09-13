@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 18:45:20 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/13 14:59:06 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/13 15:42:24 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,8 @@ char	*expand_quotes(char *str, char **envp, int start)
 				return (NULL);
 			}
 		}
-		start++;
+		if (new_str[1] != '$' || handle_expand_char(new_str, 1, 2))
+			start++;
 	}
 	free(str);
 	return (new_str);
