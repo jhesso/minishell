@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 19:11:15 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/13 14:20:13 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/13 15:01:22 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@
 */
 int	get_end_index(char *s, int i, int type)
 {
-	if (type == 1 && s[i])
+	if (type == 1)
 	{
-		while (!(s[i] > 31 && s[i] < 48) && !(s[i] > 57 && s[i] < 63) && \
-		!(s[i] > 90 && s[i] < 97) && !(s[i] > 122 && s[i] < 127) && s[i] != 64)
+		while (s[i] && !(s[i] > 31 && s[i] < 48) && !(s[i] > 57 && s[i] < 63) \
+			&& !(s[i] > 90 && s[i] < 97) && !(s[i] > 122 && s[i] < 127) \
+			&& s[i] != 64)
 			i++;
-		return (i);
 	}
 	else if (type == 2)
 	{
@@ -36,7 +36,6 @@ int	get_end_index(char *s, int i, int type)
 			i++;
 		if (s[i])
 			i++;
-		return (i);
 	}
 	else if (type == 3)
 	{
@@ -44,9 +43,8 @@ int	get_end_index(char *s, int i, int type)
 			i++;
 		if (s[i])
 			i++;
-		return (i);
 	}
-	return (0);
+	return (i);
 }
 
 /*	insert_value()
