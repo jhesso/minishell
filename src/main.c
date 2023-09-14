@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/14 17:17:11 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/14 18:32:22 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ void	minishell(t_minihell *minihell, char *command_line, bool ret)
 			handle_eof(minihell, t);
 		signal(SIGQUIT, handle_cmd);
 		signal(SIGINT, handle_cmd);
+		if (g_global.signal_sigint == 1)
+		{
+			minihell->error_code = 1;
+			g_global.signal_sigint = 0;
+		}
 		if (command_line && *command_line)
 			add_history(command_line);
 		ret = lexing(minihell, command_line);

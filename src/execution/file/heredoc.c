@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 16:25:07 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/14 18:07:23 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/14 18:34:11 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ static int	get_heredoc(t_minihell *minihell, char *delim, char *name)
 	while (g_global.heredoc_signal)
 	{
 		signal(SIGINT, heredoc_sigint);
+		if (g_global.signal_sigint == 1)
+		{
+			minihell->error_code = 1;
+			g_global.signal_sigint = 0;
+		}
 		line = readline("> ");
 		if (write_line(minihell, line, delim, fd))
 			break ;

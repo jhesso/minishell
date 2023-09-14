@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 17:15:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/10 14:27:50 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/14 18:52:07 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	heredoc_sigint(int sig)
 		ioctl(0, TIOCSTI, "\n");
 		printf("\033[1A");
 		g_global.heredoc_signal = false;
+		g_global.signal_sigint = 1;
 	}
 	else
 		g_global.heredoc_signal = true;

@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 21:16:24 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/14 17:18:36 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/14 18:28:21 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ void	handle_signal(int sig)
 		// else
 		// {
 			printf("\n");
-		// 	minihell->error_code = 1;
+			// minihell->error_code = 1;
+			g_global.signal_sigint = 1;
+
 		// }
 		rl_on_new_line();
 		rl_replace_line("", 0);
