@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/13 20:08:16 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/14 17:17:11 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	handle_eof(t_minihell *minihell, struct termios t)
 	rl_clear_history();
 	free_str_arr(minihell->env);
 	t = set_termios(2);
-	exit(EXIT_SUCCESS);
+	exit(minihell->error_code);
 }
 
 /*	minishell()

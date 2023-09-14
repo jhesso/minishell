@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 20:55:01 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/13 20:02:10 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/14 17:17:43 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,7 @@ static void	exit_checks(t_minihell *mini, int arg_size, int number, bool *error)
 		mini->error_code = 1;
 	}
 	else
-	{
-		mini->error_code = 0;
 		free_on_exit(mini);
-	}
 }
 
 void	exit_builtin(t_minihell *minihell)
