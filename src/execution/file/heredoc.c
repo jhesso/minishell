@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 16:25:07 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/13 19:57:27 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/14 18:07:23 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	get_heredoc_name(t_minihell *mini, int cmd)
 	char	*name;
 
 	mini->heredoc_nb = cmd;
-	path = get_value(ft_strdup("$_="), 3, mini->env);
+	path = ft_strdup("./minishell");
 	if (!*path)
 	{
 		ft_printf(STDERR_FILENO, "minishell: error: no path for heredoc\n");
