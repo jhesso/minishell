@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/13 20:24:16 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/15 15:44:11 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ static int	file_error(t_minihell *mini, int i, bool *error_flag)
 			mini->cmds->fd_in = open_file(mini->tokens[i], 1, mini);
 		}
 	}
-	ft_printf(2, "minishell: %s: %s\n", error, strerror(errno_code));
+	if (!g_global.signal_sigint)
+		ft_printf(2, "minishell: %s: %s\n", error, strerror(errno_code));
 	mini->error_code = 1;
 	*(error_flag) = true;
 	free(mini->cmds->command);
@@ -128,7 +129,7 @@ void	open_files(t_minihell *mini, int cmd, bool error_flag)
 	}
 	if (mini->tokens[i] && mini->tokens[i][0] == '|')
 		i++;
-	if (!mini->tokens[i])
+	if (!mini->tokens[i] || g_global.signal_sigint == 1)
 		i = 0;
 	if (error_flag == false)
 		append_command_path(mini, mini->cmds);

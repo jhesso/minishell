@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/13 20:24:01 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/15 15:02:06 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ void	execute(t_minihell *mini)
 	i = 0;
 	while (mini->cmds)
 	{
+		if (g_global.signal_sigint == 1)
+			break ;
 		if (!execute_continue(mini, i))
 			break ;
 		i++;
