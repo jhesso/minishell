@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:19:38 by dgerguri          #+#    #+#             */
-/*   Updated: 2023/09/13 19:42:11 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/15 06:49:04 by dardangergu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@ static void	print_line(t_minihell *minihell, int start, int flag)
 {
 	if (minihell->cmds->argv[start])
 	{
-		printf("%s", minihell->cmds->argv[start]);
+		ft_printf(1, "%s", minihell->cmds->argv[start]);
 		start++;
 	}
 	while (minihell->cmds->argv[start])
 	{
-		printf(" ");
-		printf("%s", minihell->cmds->argv[start]);
+		ft_printf(1, " ");
+		ft_printf(1, "%s", minihell->cmds->argv[start]);
 		start++;
 	}
 	if (!flag)
-		printf("\n");
+		ft_printf(1, "\n");
 }
 
 void	echo_builtin(t_minihell *minihell, int j, int flag, int i)
@@ -35,7 +35,7 @@ void	echo_builtin(t_minihell *minihell, int j, int flag, int i)
 
 	argv_size = count_strings(minihell->cmds->argv);
 	if (argv_size == 1)
-		printf("\n");
+		ft_printf(1, "\n");
 	else if (argv_size > 1)
 	{
 		while (!ft_strncmp(minihell->cmds->argv[j], "-n", 2))
