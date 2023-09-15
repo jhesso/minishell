@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/15 15:44:11 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/15 16:04:43 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,16 @@ static int	open_file(char *filename, int mode, t_minihell *mini)
 	return (fd);
 }
 
-static int	file_error(t_minihell *mini, int i, bool *error_flag)
+static int	file_error(t_minihell *mini, int i, bool *error_flag, int errno_c)
 {
 	char	*error;
-	int		errno_code;
 
 	if (!mini->tokens[i])
 		mini->tokens[i] = ft_calloc(1, 1);
 	if (!mini->tokens[i])
 		malloc_error();
 	error = mini->tokens[i];
-	errno_code = errno;
+	errno_c = errno;
 	while (mini->tokens[i + 1] && mini->tokens[i][0] != '|')
 	{
 		if (!ft_strncmp(mini->tokens[i++], "<<\0", 3))
@@ -55,7 +54,7 @@ static int	file_error(t_minihell *mini, int i, bool *error_flag)
 		}
 	}
 	if (!g_global.signal_sigint)
-		ft_printf(2, "minishell: %s: %s\n", error, strerror(errno_code));
+		ft_printf(2, "minishell: %s: %s\n", error, strerror(errno_c));
 	mini->error_code = 1;
 	*(error_flag) = true;
 	free(mini->cmds->command);
@@ -72,7 +71,7 @@ static int	open_input(t_minihell *minihell, int i, bool *error_flag)
 		minihell->tokens[i] = remove_quotes(minihell->tokens[i]);
 		minihell->cmds->fd_in = open_file(minihell->tokens[i], 0, NULL);
 		if (minihell->cmds->fd_in == -1)
-			i = file_error(minihell, i, error_flag);
+			i = file_error(minihell, i, error_flag, 0);
 	}
 	else if (!ft_strncmp(minihell->tokens[i - 1], "<<\0", 3))
 	{
@@ -108,7 +107,7 @@ static int	open_output(t_minihell *mini, int i, bool *error_flag)
 		mini->cmds->fd_out = open_file(mini->tokens[i], 3, NULL);
 	}
 	if (mini->cmds->fd_out == -1)
-		i = file_error(mini, i, error_flag);
+		i = file_error(mini, i, error_flag, 0);
 	return (i);
 }
 
