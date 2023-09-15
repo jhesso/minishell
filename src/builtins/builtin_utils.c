@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dardangerguri <dardangerguri@student.42    +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:19:14 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/13 23:07:13 by dardangergu      ###   ########.fr       */
+/*   Updated: 2023/09/15 15:59:34 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	invalid_variable(t_minihell *minihell, char *arg, int type)
 
 int	already_exists(t_minihell *mini, char *arg, int i, int len)
 {
-	int env_len;
+	int	env_len;
 
 	while (arg[len] != '=')
 		len++;
@@ -66,7 +66,7 @@ int	already_exists(t_minihell *mini, char *arg, int i, int len)
 				free(mini->env[i]);
 				mini->env[i] = ft_strdup(arg);
 				if (!mini->env[i])
-				malloc_error();
+					malloc_error();
 				return (0);
 			}
 		}

@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 16:25:07 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/15 14:58:25 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/15 15:58:06 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,17 +95,9 @@ int	heredoc(char *delim, char *name, t_minihell *mini)
 void	get_heredoc_name(t_minihell *mini, int cmd)
 {
 	char	*nb;
-	// char	*path;
 	char	*name;
 
 	mini->heredoc_nb = cmd;
-	// path = ft_strdup("./minishell");
-	// if (!*path)
-	// {
-	// 	ft_printf(STDERR_FILENO, "minishell: error: no path for heredoc\n");
-	// 	exit(1);
-	// }
-	// name = ft_strjoin(path, ".heredoc.tmp");
 	name = ft_strdup("./.minishell.here_doc.tmp");
 	if (!name)
 		malloc_error();
@@ -113,7 +105,6 @@ void	get_heredoc_name(t_minihell *mini, int cmd)
 	mini->heredocs[cmd] = ft_strjoin(name, nb);
 	if (!mini->heredocs[cmd])
 		malloc_error();
-	// free(path);
 	free(name);
 	free(nb);
 }
