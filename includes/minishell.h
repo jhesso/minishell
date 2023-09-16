@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/14 18:26:55 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/16 07:34:42 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,7 @@ typedef struct s_cmds
 
 typedef struct s_global
 {
-	int			heredoc_tmp;
 	bool		heredoc_signal;
-	char		*heredoc_tmp_name;
 	int			signal_sigint;
 }				t_global;
 

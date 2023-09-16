@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/16 07:32:47 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/16 07:33:39 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	handle_eof(t_minihell *minihell, struct termios t)
 	exit(minihell->error_code);
 }
 
-void	handle_sigint(t_minihell *minihell)
+static void	handle_sigint(t_minihell *minihell)
 {
 	minihell->error_code = 1;
 	g_global.signal_sigint = 0;
