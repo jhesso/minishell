@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:15:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/14 18:32:22 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/16 07:32:47 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@ static void	handle_eof(t_minihell *minihell, struct termios t)
 	free_str_arr(minihell->env);
 	t = set_termios(2);
 	exit(minihell->error_code);
+}
+
+void	handle_sigint(t_minihell *minihell)
+{
+	minihell->error_code = 1;
+	g_global.signal_sigint = 0;
 }
 
 /*	minishell()
@@ -40,10 +46,7 @@ void	minishell(t_minihell *minihell, char *command_line, bool ret)
 		signal(SIGQUIT, handle_cmd);
 		signal(SIGINT, handle_cmd);
 		if (g_global.signal_sigint == 1)
-		{
-			minihell->error_code = 1;
-			g_global.signal_sigint = 0;
-		}
+			handle_sigint(minihell);
 		if (command_line && *command_line)
 			add_history(command_line);
 		ret = lexing(minihell, command_line);
