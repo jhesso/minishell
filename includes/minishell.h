@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:13:35 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/16 07:34:42 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/16 12:38:13 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_minihell
 	char			**heredocs;
 	int				heredoc_nb;
 	int				error_code;
+	int				token_index;
 	struct s_cmds	*cmds;
 }					t_minihell;
 
@@ -154,7 +155,7 @@ void			append_command_path(t_minihell *minihell, t_cmds *cmds);
 void			create_argv(t_minihell *mini, t_cmds *tmp, int i, int options);
 
 /* file.c */
-void			open_files(t_minihell *mini, int cmd, bool error);
+void			open_files(t_minihell *mini, int cmd, bool error, int *i);
 
 /* heredoc.c */
 int				heredoc(char *delim, char *name, t_minihell *mini);

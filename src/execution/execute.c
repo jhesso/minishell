@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/15 15:02:06 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/16 12:46:01 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,11 @@ static void	parent(t_minihell *mini)
 
 static bool	execute_continue(t_minihell *mini, int i)
 {
-	open_files(mini, i, false);
+	open_files(mini, i, false, &(mini->token_index));
 	if (pipe(mini->pipe_fds[i]) == -1)
 	{
-		perror(strerror(errno));
-		mini->error_code = errno;
+		ft_printf(2, "minishell: pipe: %s\n", strerror(errno));
+		mini->token_index = 0;
 		return (false);
 	}
 	if (check_builtin(mini->cmds->command) && mini->nb_cmds == 1)
@@ -81,8 +81,8 @@ static bool	execute_continue(t_minihell *mini, int i)
 		mini->pids[i] = fork();
 	if (mini->pids[i] == -1)
 	{
-		perror(strerror(errno));
-		mini->error_code = errno;
+		ft_printf(2, "minishell: fork: %s\n", strerror(errno));
+		mini->token_index = 0;
 		return (false);
 	}
 	else if (mini->pids[i] == 0)
@@ -115,5 +115,6 @@ void	execute(t_minihell *mini)
 		mini->cmds = mini->cmds->next;
 	}
 	mini->cmds = head;
-	parent(mini);
+	if (g_global.signal_sigint == 0)
+		parent(mini);
 }

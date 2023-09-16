@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/15 16:04:43 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/16 12:38:31 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	open_file(char *filename, int mode, t_minihell *mini)
 
 	if (mode == 0)
 		fd = open(filename, O_RDONLY, 0644);
-	else if (mode == 1)
+	else if (mode == 1 && !g_global.signal_sigint)
 	{
 		fd = heredoc(filename, mini->heredocs[mini->heredoc_nb], mini);
 		if (fd == 0)
@@ -111,26 +111,24 @@ static int	open_output(t_minihell *mini, int i, bool *error_flag)
 	return (i);
 }
 
-void	open_files(t_minihell *mini, int cmd, bool error_flag)
+void	open_files(t_minihell *mini, int cmd, bool error, int *i)
 {
-	static int	i = 0;
-
 	mini->cmds->fd_in = 0;
 	mini->cmds->fd_out = 0;
 	get_heredoc_name(mini, cmd);
-	while (mini->tokens[i] && mini->tokens[i][0] != '|' && error_flag == false)
+	while (mini->tokens[*i] && mini->tokens[*i][0] != '|' && error == false)
 	{
-		if (mini->tokens[i][0] == '<')
-			i = open_input(mini, i + 1, &error_flag);
-		else if (mini->tokens[i][0] == '>')
-			i = open_output(mini, i + 1, &error_flag);
-		i++;
+		if (mini->tokens[*i][0] == '<')
+			*i = open_input(mini, *i + 1, &error);
+		else if (mini->tokens[*i][0] == '>')
+			*i = open_output(mini, *i + 1, &error);
+		(*i)++;
 	}
-	if (mini->tokens[i] && mini->tokens[i][0] == '|')
-		i++;
-	if (!mini->tokens[i] || g_global.signal_sigint == 1)
-		i = 0;
-	if (error_flag == false)
+	if (mini->tokens[*i] && mini->tokens[*i][0] == '|')
+		(*i)++;
+	if (!mini->tokens[*i] || g_global.signal_sigint == 1)
+		*i = 0;
+	if (error == false)
 		append_command_path(mini, mini->cmds);
 	else
 	{
