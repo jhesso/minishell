@@ -6,7 +6,7 @@
 /*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 23:22:23 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/09 23:11:31 by jhesso           ###   ########.fr       */
+/*   Updated: 2023/09/16 13:10:31 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ void	close_pipes(t_minihell *mini)
 	i = 0;
 	while (i < mini->nb_cmds)
 	{
-		close(mini->pipe_fds[i][0]);
-		close(mini->pipe_fds[i][1]);
+		if (mini->pipe_fds[i][0] != STDIN_FILENO)
+			close(mini->pipe_fds[i][0]);
+		if (mini->pipe_fds[i][1] != STDIN_FILENO)
+			close(mini->pipe_fds[i][1]);
 		i++;
 	}
 }

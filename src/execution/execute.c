@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhesso <jhesso@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 19:23:47 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/16 12:46:01 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/16 13:36:55 by jhesso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static void	parent(t_minihell *mini)
 
 	i = 0;
 	status = 0;
-	close_pipes(mini);
 	tmp = mini->cmds;
 	while (i < mini->nb_cmds)
 	{
@@ -115,6 +114,6 @@ void	execute(t_minihell *mini)
 		mini->cmds = mini->cmds->next;
 	}
 	mini->cmds = head;
-	if (g_global.signal_sigint == 0)
-		parent(mini);
+	close_pipes(mini);
+	parent(mini);
 }

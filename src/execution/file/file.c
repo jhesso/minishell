@@ -6,7 +6,7 @@
 /*   By: dgerguri <dgerguri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:21:21 by jhesso            #+#    #+#             */
-/*   Updated: 2023/09/16 12:38:31 by dgerguri         ###   ########.fr       */
+/*   Updated: 2023/09/16 13:45:53 by dgerguri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static int	open_file(char *filename, int mode, t_minihell *mini)
 {
 	int			fd;
 
+	fd = 0;
 	if (mode == 0)
 		fd = open(filename, O_RDONLY, 0644);
 	else if (mode == 1 && !g_global.signal_sigint)
@@ -28,7 +29,7 @@ static int	open_file(char *filename, int mode, t_minihell *mini)
 	}
 	else if (mode == 2)
 		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else
+	else if (!g_global.signal_sigint)
 		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	return (fd);
 }
